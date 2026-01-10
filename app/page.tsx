@@ -1,17 +1,40 @@
-import Section from '@/components/Section'
-import MarkdownRenderer from '@/components/MarkdownRenderer'
-import { taskDefinitionContent } from '@/content/task-definition'
-import { sotaContent } from '@/content/sota-identification'
-import { limitationsContent } from '@/content/limitations-future'
+import Link from 'next/link'
+
+const sections = [
+  {
+    href: '/task',
+    title: 'Task Definition',
+    description: 'Bimanual LEGO assembly specification, challenges, and success metrics',
+    color: 'blue',
+  },
+  {
+    href: '/sota',
+    title: 'SOTA Analysis',
+    description: 'VLA landscape comparison and EO-1 selection rationale',
+    color: 'emerald',
+  },
+  {
+    href: '/limitations',
+    title: 'Limitations & Future',
+    description: 'Known limitations, unsolved problems, and research opportunities',
+    color: 'purple',
+  },
+  {
+    href: '/roadmap',
+    title: 'Project Roadmap',
+    description: '13-week execution plan with phases, milestones, and risk analysis',
+    color: 'cyan',
+  },
+]
 
 export default function HomePage() {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-slate-800 via-slate-900 to-slate-900 relative overflow-hidden">
+      <section className="min-h-[70vh] flex items-center justify-center bg-gradient-to-b from-slate-800 via-slate-900 to-slate-900 relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl" />
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl" />
         </div>
 
@@ -21,7 +44,7 @@ export default function HomePage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-blue-400 via-primary-400 to-emerald-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
               Vision-Language-Action
             </span>
             <br />
@@ -32,23 +55,8 @@ export default function HomePage() {
             Replicating and extending the <strong className="text-white">EO-1 model</strong> for precision bimanual manipulation using the <strong className="text-white">Unitree H1 humanoid robot</strong>
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="#task-definition"
-              className="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25"
-            >
-              Explore Research
-            </a>
-            <a
-              href="/roadmap"
-              className="px-8 py-3 border border-slate-600 hover:border-slate-500 hover:bg-slate-800/50 rounded-lg font-medium transition-all duration-200"
-            >
-              View Roadmap
-            </a>
-          </div>
-
           {/* Key stats */}
-          <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             <div>
               <div className="text-3xl font-bold text-blue-400">8x</div>
               <div className="text-sm text-slate-400">A100 GPUs</div>
@@ -69,18 +77,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Content Sections */}
-      <Section id="task-definition" title="Task Definition & Analysis">
-        <MarkdownRenderer content={taskDefinitionContent} />
-      </Section>
-
-      <Section id="sota" title="SOTA Identification & Selection" className="bg-slate-800/30">
-        <MarkdownRenderer content={sotaContent} />
-      </Section>
-
-      <Section id="limitations" title="Limitations & Future Directions">
-        <MarkdownRenderer content={limitationsContent} />
-      </Section>
+      {/* Navigation Cards */}
+      <section className="py-16 px-4 bg-slate-900">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl font-bold text-white mb-8 text-center">Explore the Research</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {sections.map((section) => (
+              <Link
+                key={section.href}
+                href={section.href}
+                className="group p-6 bg-slate-800/50 border border-slate-700 rounded-xl hover:border-slate-600 hover:bg-slate-800 transition-all duration-200"
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className={`text-xl font-semibold mb-2 text-${section.color}-400 group-hover:text-${section.color}-300 transition-colors`}>
+                      {section.title}
+                    </h3>
+                    <p className="text-slate-400 group-hover:text-slate-300 transition-colors">
+                      {section.description}
+                    </p>
+                  </div>
+                  <svg
+                    className="w-5 h-5 text-slate-500 group-hover:text-slate-300 group-hover:translate-x-1 transition-all"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-slate-800 text-center text-slate-400">
