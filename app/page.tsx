@@ -84,7 +84,7 @@ export default function HomePage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 bg-[#FF6D29]/10 border border-[#FF6D29]/30 rounded-full backdrop-blur-sm">
               <span className="w-2 h-2 bg-[#FF6D29] rounded-full" />
-              <span className="text-sm text-[#FF6D29] font-medium">Master&apos;s Thesis 2026</span>
+              <span className="text-sm text-[#BABABA] font-medium">Master&apos;s Thesis 2026</span>
             </div>
 
             {/* Main Title */}
