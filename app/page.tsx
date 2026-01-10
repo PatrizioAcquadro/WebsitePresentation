@@ -82,46 +82,26 @@ export default function HomePage() {
         <div className="relative z-10 flex-grow flex items-center justify-center">
           <div className="text-center px-4 max-w-6xl mx-auto pt-24">
             {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="inline-flex items-center gap-2 mb-8 px-4 py-2 bg-[#FF6D29]/10 border border-[#FF6D29]/30 rounded-full backdrop-blur-sm"
-            >
-              <span className="w-2 h-2 bg-[#FF6D29] rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 bg-[#FF6D29]/10 border border-[#FF6D29]/30 rounded-full backdrop-blur-sm">
+              <span className="w-2 h-2 bg-[#FF6D29] rounded-full" />
               <span className="text-sm text-[#FF6D29] font-medium">Master&apos;s Thesis 2026</span>
-            </motion.div>
+            </div>
 
             {/* Main Title */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-6 leading-[1.15] tracking-tight"
-            >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-6 leading-[1.15] tracking-tight">
               <span className="text-[#FF6D29] whitespace-nowrap">Vision-Language-Action</span>
               <br />
               <span className="text-white whitespace-nowrap">for Bimanual LEGO Assembly</span>
-            </motion.h1>
+            </h1>
 
             {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-              className="text-lg sm:text-xl text-[#BABABA] max-w-3xl mx-auto mb-10 leading-relaxed"
-            >
+            <p className="text-lg sm:text-xl text-[#BABABA] max-w-3xl mx-auto mb-10 leading-relaxed">
               Replicating and extending the <span className="text-white font-medium">EO-1 model</span> for
               precision bimanual manipulation using the <span className="text-white font-medium">Unitree H1</span> humanoid robot
-            </motion.p>
+            </p>
 
             {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
-            >
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <Link
                 href="/task"
                 className="group px-8 py-4 bg-[#FF6D29] text-white font-medium rounded-lg hover:bg-[#ff8c4a] transition-all duration-300 flex items-center gap-2"
@@ -137,46 +117,29 @@ export default function HomePage() {
               >
                 View Roadmap
               </Link>
-            </motion.div>
+            </div>
 
             {/* Stats Grid */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
-            >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               {stats.map((stat, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, ease: 'easeOut', delay: 0.5 + index * 0.1 }}
                   className="p-4 md:p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10"
                 >
                   <div className="text-2xl md:text-3xl font-semibold text-[#FF6D29] mb-1">{stat.value}</div>
                   <div className="text-white font-medium text-sm">{stat.label}</div>
                   <div className="text-[#BABABA]/70 text-xs">{stat.sublabel}</div>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
 
         {/* Scroll indicator - positioned below content */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="relative z-10 pb-8 pt-6 flex flex-col items-center gap-2 text-[#BABABA]/50"
-        >
+        <div className="relative z-10 pb-8 pt-6 flex flex-col items-center gap-2 text-[#BABABA]/50">
           <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-px h-8 bg-gradient-to-b from-[#BABABA]/50 to-transparent"
-          />
-        </motion.div>
+          <div className="w-px h-8 bg-gradient-to-b from-[#BABABA]/50 to-transparent" />
+        </div>
       </section>
 
       {/* Explore the Research Section */}
