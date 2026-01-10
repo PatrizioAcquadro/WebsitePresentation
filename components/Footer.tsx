@@ -42,21 +42,21 @@ export default function Footer() {
   return (
     <footer className="relative mt-auto">
       {/* Gradient accent line */}
-      <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500" />
+      <div className="h-1 bg-gradient-to-r from-[#453027] via-[#FF6D29] to-[#453027]" />
 
-      <div className="bg-slate-900 border-t border-slate-800">
+      <div className="bg-[#161316] border-t border-[#453027]">
         {/* Main footer content */}
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Brand Section */}
             <div className="lg:col-span-1">
-              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mb-3">
+              <h3 className="text-xl font-semibold text-[#FF6D29] mb-3">
                 VLA Thesis
               </h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
+              <p className="text-[#BABABA] text-sm leading-relaxed">
                 Vision-Language-Action for Bimanual LEGO Assembly
               </p>
-              <p className="text-slate-500 text-sm mt-2">
+              <p className="text-[#BABABA]/70 text-sm mt-2">
                 Master&apos;s Thesis Research Project
               </p>
             </div>
@@ -71,7 +71,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-slate-400 hover:text-white text-sm transition-colors duration-200"
+                      className="text-[#BABABA] hover:text-[#FF6D29] text-sm transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -87,18 +87,18 @@ export default function Footer() {
               </h4>
               <div className="space-y-3">
                 <div>
-                  <p className="text-slate-300 text-sm font-medium">Politecnico di Milano</p>
-                  <p className="text-slate-500 text-xs">MSc Computer Science & Engineering</p>
+                  <p className="text-white text-sm font-medium">Politecnico di Milano</p>
+                  <p className="text-[#BABABA]/70 text-xs">MSc Computer Science & Engineering</p>
                 </div>
                 <div>
-                  <p className="text-slate-300 text-sm font-medium">Purdue University</p>
-                  <p className="text-slate-500 text-xs">Exchange Program</p>
+                  <p className="text-white text-sm font-medium">Purdue University</p>
+                  <p className="text-[#BABABA]/70 text-xs">Exchange Program</p>
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-slate-800">
-                <p className="text-slate-500 text-xs">Advisors</p>
-                <p className="text-slate-400 text-sm">Prof. Eugenio Culurciello</p>
-                <p className="text-slate-400 text-sm">Prof. Marcello Restelli</p>
+              <div className="mt-4 pt-4 border-t border-[#453027]">
+                <p className="text-[#BABABA]/70 text-xs">Advisors</p>
+                <p className="text-[#BABABA] text-sm">Prof. Eugenio Culurciello</p>
+                <p className="text-[#BABABA] text-sm">Prof. Marcello Restelli</p>
               </div>
             </div>
 
@@ -114,9 +114,9 @@ export default function Footer() {
                     href={link.href}
                     target={link.href.startsWith('mailto') ? undefined : '_blank'}
                     rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                    className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors duration-200 group"
+                    className="flex items-center gap-3 text-[#BABABA] hover:text-[#FF6D29] transition-colors duration-200 group"
                   >
-                    <span className="p-2 bg-slate-800 rounded-lg group-hover:bg-slate-700 transition-colors">
+                    <span className="p-2 bg-[#453027]/50 rounded-lg group-hover:bg-[#453027] transition-colors">
                       {link.icon}
                     </span>
                     <span className="text-sm">{link.label}</span>
@@ -128,13 +128,13 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-slate-800">
+        <div className="border-t border-[#453027]">
           <div className="max-w-6xl mx-auto px-4 py-6">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <p className="text-slate-500 text-sm">
+              <p className="text-[#BABABA]/70 text-sm">
                 © 2026 Patrizio Acquadro. All rights reserved.
               </p>
-              <p className="text-slate-600 text-xs">
+              <p className="text-[#BABABA]/50 text-xs">
                 Built with Next.js • Hosted on Vercel
               </p>
             </div>
