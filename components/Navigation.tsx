@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { motion } from 'framer-motion'
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -29,11 +30,15 @@ export default function Navigation() {
               className="group flex items-center gap-2"
             >
               {/* Logo mark */}
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow">
+              <motion.div
+                className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-blue-500/20"
+                whileHover={{ scale: 1.05, boxShadow: '0 10px 40px -10px rgba(59, 130, 246, 0.5)' }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+              >
                 <span className="text-white font-bold text-sm">VLA</span>
-              </div>
+              </motion.div>
               {/* Text logo */}
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent group-hover:from-blue-300 group-hover:to-emerald-300 transition-all">
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
                 Thesis
               </span>
             </Link>
@@ -47,27 +52,52 @@ export default function Navigation() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 group"
+                    className="relative px-4 py-2 rounded-lg text-sm font-medium group"
                   >
-                    {/* Background */}
-                    <span className={`absolute inset-0 rounded-lg transition-all duration-300 ${
-                      isActive
-                        ? 'bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border border-blue-500/30'
-                        : 'group-hover:bg-slate-800/80'
-                    }`} />
+                    {/* Animated background pill */}
+                    {isActive && (
+                      <motion.span
+                        layoutId="navbar-active-bg"
+                        className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border border-blue-500/30"
+                        transition={{
+                          type: 'spring',
+                          stiffness: 380,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+
+                    {/* Hover background (only when not active) */}
+                    {!isActive && (
+                      <span className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 bg-slate-800/80 transition-opacity duration-200" />
+                    )}
 
                     {/* Text */}
-                    <span className={`relative z-10 transition-colors duration-300 ${
-                      isActive
-                        ? 'bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent font-semibold'
-                        : 'text-slate-300 group-hover:text-white'
-                    }`}>
+                    <motion.span
+                      className={`relative z-10 ${
+                        isActive
+                          ? 'bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent font-semibold'
+                          : 'text-slate-300 group-hover:text-white'
+                      }`}
+                      animate={{
+                        opacity: 1,
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
                       {item.label}
-                    </span>
+                    </motion.span>
 
-                    {/* Active indicator line */}
+                    {/* Animated active indicator line */}
                     {isActive && (
-                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full" />
+                      <motion.span
+                        layoutId="navbar-active-indicator"
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"
+                        transition={{
+                          type: 'spring',
+                          stiffness: 380,
+                          damping: 30,
+                        }}
+                      />
                     )}
                   </Link>
                 )
