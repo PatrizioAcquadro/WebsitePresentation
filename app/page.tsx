@@ -111,11 +111,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-slate-800 text-center text-slate-400">
-        <p>VLA Thesis Project - 2026</p>
-      </footer>
     </div>
   )
 }

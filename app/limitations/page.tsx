@@ -47,11 +47,6 @@ export default function LimitationsPage() {
       <Section id="limitations" title="" className="py-12">
         <MarkdownRenderer content={limitationsContent} />
       </Section>
-
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-slate-800 text-center text-slate-400">
-        <p>VLA Thesis Project - 2026</p>
-      </footer>
     </div>
   )
 }
