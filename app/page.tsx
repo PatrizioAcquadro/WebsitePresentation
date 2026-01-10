@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 const sections = [
@@ -60,153 +61,191 @@ const stats = [
 export default function HomePage() {
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#161316]">
-        {/* Background glow effect - orange arc at bottom like reference */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Main orange glow */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[140%] h-[600px] bg-gradient-to-t from-[#FF6D29]/20 via-[#FF6D29]/5 to-transparent rounded-[100%] blur-3xl" />
-          {/* Secondary warm glow */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[100%] h-[400px] bg-gradient-to-t from-[#FF6D29]/30 via-[#453027]/10 to-transparent rounded-[100%] blur-2xl" />
-          {/* Subtle top gradient */}
-          <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#161316] to-transparent" />
+      {/* Hero Section with Background Image */}
+      <section className="relative min-h-screen flex flex-col overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/robotTask.png"
+            alt="Robot performing bimanual LEGO assembly"
+            fill
+            className="object-cover object-center"
+            priority
+            quality={90}
+          />
+          {/* Gradient overlays for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#161316] via-[#161316]/70 to-[#161316]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#161316]/80 via-transparent to-[#161316]/80" />
         </div>
 
-        {/* Content */}
+        {/* Content - centered with flex-grow */}
         <div className="relative z-10 flex-grow flex items-center justify-center">
-          <div className="text-center px-4 max-w-5xl mx-auto pt-20">
+          <div className="text-center px-4 max-w-6xl mx-auto pt-24">
             {/* Badge */}
-            <div className="inline-flex items-center gap-3 mb-10 px-5 py-2.5 bg-[#1d1a1d] border border-[#453027] rounded-full">
-              <span className="text-sm text-[#BABABA]">Master&apos;s Thesis 2026</span>
-              <span className="flex items-center gap-1 text-sm text-[#FF6D29] font-medium">
-                Read more
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </span>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="inline-flex items-center gap-2 mb-8 px-4 py-2 bg-[#FF6D29]/10 border border-[#FF6D29]/30 rounded-full backdrop-blur-sm"
+            >
+              <span className="w-2 h-2 bg-[#FF6D29] rounded-full animate-pulse" />
+              <span className="text-sm text-[#FF6D29] font-medium">Master&apos;s Thesis 2026</span>
+            </motion.div>
 
             {/* Main Title */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-semibold mb-8 leading-[1.1] tracking-tight">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-6 leading-[1.15] tracking-tight"
+            >
               <span className="text-[#FF6D29] whitespace-nowrap">Vision-Language-Action</span>
               <br />
               <span className="text-white whitespace-nowrap">for Bimanual LEGO Assembly</span>
-            </h1>
+            </motion.h1>
 
             {/* Description */}
-            <p className="text-lg sm:text-xl md:text-2xl text-[#BABABA] max-w-3xl mx-auto mb-12 leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
+              className="text-lg sm:text-xl text-[#BABABA] max-w-3xl mx-auto mb-10 leading-relaxed"
+            >
               Replicating and extending the <span className="text-white font-medium">EO-1 model</span> for
               precision bimanual manipulation using the <span className="text-white font-medium">Unitree H1</span> humanoid robot
-            </p>
+            </motion.p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <Link
-                href="/roadmap"
-                className="group px-8 py-4 bg-transparent text-white font-medium rounded-full border border-[#453027] hover:border-[#BABABA] transition-all duration-300 flex items-center gap-3"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-                View Roadmap
-              </Link>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+            >
               <Link
                 href="/task"
-                className="group px-8 py-4 bg-[#FF6D29] text-white font-medium rounded-full hover:bg-[#ff8c4a] transition-all duration-300"
+                className="group px-8 py-4 bg-[#FF6D29] text-white font-medium rounded-lg hover:bg-[#ff8c4a] transition-all duration-300 flex items-center gap-2"
               >
                 Explore the Research
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </Link>
-            </div>
+              <Link
+                href="/roadmap"
+                className="px-8 py-4 bg-white/5 text-white font-medium rounded-lg border border-white/20 hover:bg-white/10 hover:border-white/30 backdrop-blur-sm transition-all duration-300"
+              >
+                View Roadmap
+              </Link>
+            </motion.div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
+            >
               {stats.map((stat, index) => (
-                <div
+                <motion.div
                   key={index}
-                  className="p-5 bg-[#1d1a1d]/80 backdrop-blur-sm rounded-2xl border border-[#453027]/50"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, ease: 'easeOut', delay: 0.5 + index * 0.1 }}
+                  className="p-4 md:p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10"
                 >
-                  <div className="text-3xl md:text-4xl font-semibold text-[#FF6D29] mb-1">{stat.value}</div>
+                  <div className="text-2xl md:text-3xl font-semibold text-[#FF6D29] mb-1">{stat.value}</div>
                   <div className="text-white font-medium text-sm">{stat.label}</div>
-                  <div className="text-[#BABABA]/60 text-xs mt-1">{stat.sublabel}</div>
-                </div>
+                  <div className="text-[#BABABA]/70 text-xs">{stat.sublabel}</div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="relative z-10 pb-10 pt-8 flex flex-col items-center gap-2 text-[#BABABA]/40">
+        {/* Scroll indicator - positioned below content */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+          className="relative z-10 pb-8 pt-6 flex flex-col items-center gap-2 text-[#BABABA]/50"
+        >
           <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-[#BABABA]/40 to-transparent" />
-        </div>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="w-px h-8 bg-gradient-to-b from-[#BABABA]/50 to-transparent"
+          />
+        </motion.div>
       </section>
 
       {/* Explore the Research Section */}
-      <section className="py-32 px-4 bg-[#161316] relative overflow-hidden">
-        {/* Top glow transition */}
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[120%] h-[300px] bg-gradient-to-b from-[#FF6D29]/10 via-[#FF6D29]/5 to-transparent rounded-[100%] blur-3xl" />
+      <section className="py-24 px-4 bg-[#161316] relative overflow-hidden">
+        {/* Subtle top border glow */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF6D29]/30 to-transparent" />
 
-        <div className="max-w-6xl mx-auto relative z-10">
+        <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <motion.div
-            initial={{ opacity: 0, y: 60 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-center mb-20"
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className="text-center mb-16"
           >
-            <span className="text-[#FF6D29] text-base font-medium uppercase tracking-[0.2em]">Deep Dive</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white mt-4 mb-6">Explore the Research</h2>
-            <p className="text-[#BABABA] text-xl md:text-2xl">
-              Navigate through the complete thesis documentation
+            <span className="text-[#FF6D29] text-base font-medium uppercase tracking-widest">Deep Dive</span>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white mt-4 mb-5">Explore the Research</h2>
+            <p className="text-[#BABABA] text-lg md:text-xl whitespace-nowrap">
+              Navigate through the complete thesis documentation, from task specification to implementation roadmap
             </p>
           </motion.div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {sections.map((section, index) => (
               <motion.div
                 key={section.href}
-                initial={{ opacity: 0, y: 80 }}
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
-                transition={{
-                  duration: 0.7,
-                  ease: [0.25, 0.1, 0.25, 1],
-                  delay: index * 0.15
-                }}
+                transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.1 }}
               >
                 <Link
                   href={section.href}
-                  className="group relative p-8 lg:p-10 bg-[#1d1a1d] border border-[#453027] rounded-3xl hover:border-[#FF6D29]/50 transition-all duration-500 overflow-hidden block h-full"
+                  className="group relative p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl hover:border-[#FF6D29]/50 transition-all duration-500 overflow-hidden block h-full"
                 >
                   {/* Background number */}
-                  <span className="absolute -right-2 -top-6 text-[140px] font-bold text-[#453027]/15 select-none group-hover:text-[#FF6D29]/10 transition-colors duration-500">
+                  <span className="absolute -right-4 -top-4 text-[120px] font-bold text-[#453027]/20 select-none group-hover:text-[#FF6D29]/10 transition-colors duration-500">
                     {section.number}
                   </span>
 
                   {/* Content */}
                   <div className="relative z-10">
                     {/* Icon */}
-                    <div className="w-14 h-14 rounded-2xl bg-[#FF6D29]/10 border border-[#FF6D29]/20 flex items-center justify-center text-[#FF6D29] mb-6 group-hover:bg-[#FF6D29] group-hover:text-white transition-all duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-[#FF6D29]/10 border border-[#FF6D29]/20 flex items-center justify-center text-[#FF6D29] mb-6 group-hover:bg-[#FF6D29] group-hover:text-white transition-all duration-300">
                       {section.icon}
                     </div>
 
                     {/* Title & Description */}
-                    <h3 className="text-2xl font-semibold text-white mb-3 group-hover:text-[#FF6D29] transition-colors">
+                    <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-[#FF6D29] transition-colors">
                       {section.title}
                     </h3>
-                    <p className="text-[#BABABA] text-lg leading-relaxed mb-6">
+                    <p className="text-[#BABABA] leading-relaxed mb-6">
                       {section.description}
                     </p>
 
                     {/* Link indicator */}
-                    <div className="flex items-center gap-2 text-[#FF6D29] font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex items-center gap-2 text-[#FF6D29] font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <span>Read more</span>
-                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </div>
+                  </div>
+
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    <div className="absolute -inset-px bg-gradient-to-r from-[#FF6D29]/0 via-[#FF6D29]/5 to-[#FF6D29]/0 rounded-2xl" />
                   </div>
                 </Link>
               </motion.div>
