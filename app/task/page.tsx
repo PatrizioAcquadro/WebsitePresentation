@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import SectionWrapper from '@/components/task/SectionWrapper'
-import ExpandableCard from '@/components/task/ExpandableCard'
 import ChallengeCategory from '@/components/task/ChallengeCategory'
 import MetricTable from '@/components/task/MetricTable'
 import CoordinationModeCard from '@/components/task/CoordinationModeCard'
@@ -147,22 +146,30 @@ export default function TaskPage() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {inputModalities.map((modality) => (
-                <ExpandableCard
+                <div
                   key={modality.id}
-                  icon={inputModalityIcons[modality.id]}
-                  title={modality.title}
-                  summary={modality.description}
-                  defaultExpanded={true}
+                  className="bg-gradient-to-br from-[#161316] to-[#1d1a1d] border border-[#453027]/50 rounded-xl overflow-hidden"
                 >
-                  <ul className="space-y-2">
-                    {modality.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-[#BABABA]">
-                        <span className="text-[#FF6D29] leading-5 shrink-0">•</span>
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </ExpandableCard>
+                  <div className="p-5 md:p-6">
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-[#FF6D29]/10 border border-[#FF6D29]/20 flex items-center justify-center text-[#FF6D29] shrink-0">
+                        {inputModalityIcons[modality.id]}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-base md:text-lg font-semibold text-white mb-1">{modality.title}</h4>
+                        <p className="text-[#BABABA] text-sm">{modality.description}</p>
+                      </div>
+                    </div>
+                    <ul className="space-y-2 border-t border-[#453027]/50 pt-4">
+                      {modality.details.map((detail, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-[#BABABA]">
+                          <span className="text-[#FF6D29] leading-5 shrink-0">•</span>
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
