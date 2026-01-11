@@ -8,7 +8,6 @@ import ChallengeCategory from '@/components/task/ChallengeCategory'
 import MetricTable from '@/components/task/MetricTable'
 import CoordinationModeCard from '@/components/task/CoordinationModeCard'
 import {
-  coreSpecs,
   inputModalities,
   outputSpace,
   atomicSkills,
@@ -131,37 +130,14 @@ export default function TaskPage() {
       <SectionWrapper
         id="overview"
         title="Task Overview"
-        subtitle="Core specifications, input modalities, and action representation"
+        subtitle="The objective is to develop a Vision-Language-Action system capable of performing bimanual LEGO assembly tasks using a robotic torso with two arms. The system will handle 5-10 LEGO blocks per assembly across multiple distinct configurations, targeting the Unitree H1 humanoid robot through a simulation-first approach with subsequent sim-to-real transfer."
       >
-        {/* Core specs grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
-          className="mb-12"
-        >
-          <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Core Specifications</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-            {coreSpecs.map((spec, index) => (
-              <motion.div
-                key={spec.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="p-4 bg-[#1d1a1d] border border-[#453027] rounded-xl"
-              >
-                <div className="text-xs md:text-sm text-[#BABABA] mb-1">{spec.label}</div>
-                <div className="text-sm md:text-base text-white font-medium">{spec.value}</div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
         {/* Input Modalities */}
         <div className="mb-12">
-          <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Input Modalities</h3>
+          <h3 className="text-lg md:text-xl font-semibold text-white mb-4 text-center">Input Modalities</h3>
+          <p className="text-[#BABABA] text-center mb-6 max-w-2xl mx-auto">
+            The VLA system receives three primary input streams to understand and interact with the environment.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {inputModalities.map((modality) => (
               <ExpandableCard
@@ -169,11 +145,12 @@ export default function TaskPage() {
                 icon={inputModalityIcons[modality.id]}
                 title={modality.title}
                 summary={modality.description}
+                defaultExpanded={true}
               >
                 <ul className="space-y-2">
                   {modality.details.map((detail, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-sm text-[#BABABA]">
-                      <span className="text-[#FF6D29] mt-1">•</span>
+                      <span className="text-[#FF6D29] leading-5 shrink-0">•</span>
                       <span>{detail}</span>
                     </li>
                   ))}
@@ -190,20 +167,22 @@ export default function TaskPage() {
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.5 }}
         >
-          <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Output Space (Action Representation)</h3>
-          <div className="p-5 md:p-6 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
-            <p className="text-[#BABABA] mb-4">Following the EO-1 paradigm, actions are represented as:</p>
+          <div className="p-6 md:p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
+            <h3 className="text-lg md:text-xl font-semibold text-white mb-3 text-center">Output Space</h3>
+            <p className="text-[#BABABA] text-center mb-6 max-w-2xl mx-auto">
+              Following the EO-1 paradigm, our action representation bridges discrete reasoning with continuous motor control, enabling both high-level planning and precise manipulation.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
-                <div className="text-[#FF6D29] text-sm font-medium mb-1">Action Chunks</div>
+              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center">
+                <div className="text-[#FF6D29] text-sm font-medium mb-2">Action Chunks</div>
                 <div className="text-white text-sm">{outputSpace.actionChunks}</div>
               </div>
-              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
-                <div className="text-[#FF6D29] text-sm font-medium mb-1">Continuous Space</div>
+              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center">
+                <div className="text-[#FF6D29] text-sm font-medium mb-2">Continuous Space</div>
                 <div className="text-white text-sm">{outputSpace.continuousSpace}</div>
               </div>
-              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
-                <div className="text-[#FF6D29] text-sm font-medium mb-1">Control Frequency</div>
+              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center">
+                <div className="text-[#FF6D29] text-sm font-medium mb-2">Control Frequency</div>
                 <div className="text-white text-sm">{outputSpace.controlFrequency}</div>
               </div>
             </div>

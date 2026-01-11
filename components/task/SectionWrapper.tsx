@@ -38,7 +38,7 @@ export default function SectionWrapper({
             {title}
           </h2>
           {subtitle && (
-            <p className="text-[#BABABA] text-lg max-w-2xl mx-auto">
+            <p className="text-[#BABABA] text-base md:text-lg max-w-4xl mx-auto leading-relaxed">
               {subtitle}
             </p>
           )}
