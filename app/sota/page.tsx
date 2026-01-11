@@ -75,20 +75,20 @@ export default function SotaPage() {
           <div className="absolute bottom-[20%] right-[20%] w-[300px] h-[300px] bg-[#FF6D29]/[0.015] rounded-full blur-[80px]" />
         </div>
 
-        {/* Robot background image - reduced by ~15% */}
-        <div className="absolute right-0 top-0 bottom-0 w-[60%] md:w-[50%] pointer-events-none overflow-hidden">
-          {/* Robot image - sized down ~15% from 700/800/900 to 595/680/765 */}
-          <div className="absolute right-[-8%] top-[-3%] w-[595px] md:w-[680px] lg:w-[765px] h-[115%]">
+        {/* Robot background image - constrained to hero + carousel area only */}
+        <div className="absolute right-0 top-0 h-[65%] w-[60%] md:w-[50%] pointer-events-none overflow-hidden">
+          {/* Robot image - further reduced to not overwhelm */}
+          <div className="absolute right-[-5%] top-[0%] w-[480px] md:w-[540px] lg:w-[600px] h-[100%]">
             <Image
               src="/robot.png"
               alt=""
               fill
-              className="object-contain object-right-top opacity-[0.32]"
+              className="object-contain object-right-top opacity-[0.30]"
               priority
             />
           </div>
           {/* Bottom fade-out gradient */}
-          <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#161316] via-[#161316]/80 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-[50%] bg-gradient-to-t from-[#161316] via-[#161316]/90 to-transparent" />
           {/* Left fade for smooth blend with text */}
           <div className="absolute top-0 bottom-0 left-0 w-[35%] bg-gradient-to-r from-[#161316] to-transparent" />
         </div>
@@ -107,7 +107,7 @@ export default function SotaPage() {
             </h2>
           </motion.div>
 
-          {/* Hero text block - widened ~20% (max-w-2xl is ~672px vs max-w-lg ~512px) */}
+          {/* Hero text block - widened to ~700px (just past mid-screen) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ export default function SotaPage() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <div className="max-w-2xl lg:max-w-[600px]">
+            <div className="max-w-2xl lg:max-w-[700px]">
               <p className="text-[#BABABA] text-base md:text-lg leading-relaxed">
                 {whyEO1Narrative}
               </p>
