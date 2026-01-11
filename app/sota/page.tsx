@@ -65,39 +65,49 @@ export default function SotaPage() {
         {/* Gradient divider at top */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
 
-        {/* Large robot background image */}
+        {/* Soft orange haze/bloom background effect */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Primary orange bloom - top right */}
+          <div className="absolute top-[10%] right-[15%] w-[500px] h-[500px] bg-[#FF6D29]/[0.03] rounded-full blur-[120px]" />
+          {/* Secondary subtle bloom - center */}
+          <div className="absolute top-[30%] right-[30%] w-[400px] h-[400px] bg-[#FF6D29]/[0.02] rounded-full blur-[100px]" />
+          {/* Tertiary warm accent - lower */}
+          <div className="absolute bottom-[20%] right-[20%] w-[300px] h-[300px] bg-[#FF6D29]/[0.015] rounded-full blur-[80px]" />
+        </div>
+
+        {/* Robot background image - reduced by ~15% */}
         <div className="absolute right-0 top-0 bottom-0 w-[60%] md:w-[50%] pointer-events-none overflow-hidden">
-          {/* Robot image - positioned to extend behind carousel */}
-          <div className="absolute right-[-10%] top-[-5%] w-[700px] md:w-[800px] lg:w-[900px] h-[120%]">
+          {/* Robot image - sized down ~15% from 700/800/900 to 595/680/765 */}
+          <div className="absolute right-[-8%] top-[-3%] w-[595px] md:w-[680px] lg:w-[765px] h-[115%]">
             <Image
               src="/robot.png"
               alt=""
               fill
-              className="object-contain object-right-top opacity-[0.35]"
+              className="object-contain object-right-top opacity-[0.32]"
               priority
             />
           </div>
           {/* Bottom fade-out gradient */}
           <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#161316] via-[#161316]/80 to-transparent" />
           {/* Left fade for smooth blend with text */}
-          <div className="absolute top-0 bottom-0 left-0 w-[30%] bg-gradient-to-r from-[#161316] to-transparent" />
+          <div className="absolute top-0 bottom-0 left-0 w-[35%] bg-gradient-to-r from-[#161316] to-transparent" />
         </div>
 
         <div className="relative max-w-6xl mx-auto">
-          {/* Section title - centered, no subtitle */}
+          {/* Section title - left-aligned with text block */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="text-center mb-10 md:mb-12"
+            className="mb-6 md:mb-8"
           >
             <h2 className="text-3xl md:text-4xl font-semibold text-white">
-              Why EO-1
+              The Optimal Foundation
             </h2>
           </motion.div>
 
-          {/* Hero text block - shifted left with reduced width */}
+          {/* Hero text block - widened ~20% (max-w-2xl is ~672px vs max-w-lg ~512px) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +115,7 @@ export default function SotaPage() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <div className="max-w-xl lg:max-w-lg">
+            <div className="max-w-2xl lg:max-w-[600px]">
               <p className="text-[#BABABA] text-base md:text-lg leading-relaxed">
                 {whyEO1Narrative}
               </p>
