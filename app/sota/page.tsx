@@ -78,8 +78,8 @@ export default function SotaPage() {
           <div className="absolute bottom-[20%] right-[20%] w-[300px] h-[300px] bg-[#FF6D29]/[0.015] rounded-full blur-[80px]" />
         </div>
 
-        {/* Robot background image - positioned at top of section */}
-        <div className="absolute right-0 top-[2%] h-[55%] w-[60%] md:w-[50%] pointer-events-none">
+        {/* Robot background image - positioned very close to top of section */}
+        <div className="absolute right-0 top-[0.5%] h-[55%] w-[60%] md:w-[50%] pointer-events-none">
           {/* Robot image */}
           <div className="absolute right-[-5%] top-[0%] w-[480px] md:w-[540px] lg:w-[600px] h-[100%]">
             <Image
@@ -90,13 +90,13 @@ export default function SotaPage() {
               priority
             />
           </div>
-          {/* Bottom fade-out gradient - z-10 to appear above image */}
-          <div className="absolute bottom-0 left-0 right-0 h-[60%] z-10 bg-gradient-to-t from-[#161316] via-[#161316]/95 to-transparent" />
+          {/* Bottom fade-out gradient */}
+          <div className="absolute bottom-0 left-0 right-0 h-[60%] bg-gradient-to-t from-[#161316] via-[#161316]/95 to-transparent" />
           {/* Left fade for smooth blend with text */}
-          <div className="absolute top-0 bottom-0 left-0 w-[35%] z-10 bg-gradient-to-r from-[#161316] to-transparent" />
+          <div className="absolute top-0 bottom-0 left-0 w-[35%] bg-gradient-to-r from-[#161316] to-transparent" />
         </div>
 
-        <div className="relative max-w-6xl mx-auto">
+        <div className="relative z-10 max-w-6xl mx-auto">
           {/* Section title - left-aligned with text block */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
