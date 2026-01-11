@@ -83,79 +83,75 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                 return (
                   <div
                     key={group.label}
-                    className="flex flex-col items-center"
-                    style={{ flex: 1, maxWidth: `${100 / chart.groups.length}%` }}
+                    className="flex items-end justify-center gap-[3px]"
+                    style={{ flex: 1, maxWidth: `${100 / chart.groups.length}%`, height: chartHeight }}
                   >
-                    {/* Bars for this group */}
-                    <div className="flex items-end justify-center gap-[3px] h-full pb-1">
-                      {validBars.map((item, barIndex) => {
-                        const isEO1 = item.model === 'EO-1'
-                        const colors = modelColors[item.model] || modelColors['π0']
-                        const heightPercent = (item.value! / maxValue) * 100
-                        const barKey = `${group.label}-${item.model}`
-                        const isHovered = hoveredBar === barKey
+                    {validBars.map((item, barIndex) => {
+                      const isEO1 = item.model === 'EO-1'
+                      const colors = modelColors[item.model] || modelColors['π0']
+                      const barHeight = (item.value! / maxValue) * (chartHeight - 20) // Reserve space for labels
+                      const barKey = `${group.label}-${item.model}`
+                      const isHovered = hoveredBar === barKey
 
-                        return (
-                          <motion.div
-                            key={item.model}
-                            className="relative flex flex-col items-center"
-                            onMouseEnter={() => setHoveredBar(barKey)}
-                            onMouseLeave={() => setHoveredBar(null)}
+                      return (
+                        <motion.div
+                          key={item.model}
+                          className="relative flex flex-col items-center justify-end h-full"
+                          onMouseEnter={() => setHoveredBar(barKey)}
+                          onMouseLeave={() => setHoveredBar(null)}
+                          animate={{
+                            y: isHovered ? -4 : 0,
+                          }}
+                          transition={{
+                            duration: 0.2,
+                            ease: 'easeOut',
+                          }}
+                        >
+                          {/* Value label */}
+                          <motion.span
+                            className={`mb-1 text-[9px] font-medium whitespace-nowrap ${
+                              isEO1 ? 'text-[#FF6D29]' : 'text-[#9a9598]'
+                            }`}
                             animate={{
-                              y: isHovered ? -4 : 0,
+                              scale: isHovered ? 1.15 : 1,
                             }}
                             transition={{
                               duration: 0.2,
                               ease: 'easeOut',
                             }}
                           >
-                            {/* Value label */}
-                            <motion.span
-                              className={`mb-1 text-[9px] font-medium whitespace-nowrap ${
-                                isEO1 ? 'text-[#FF6D29]' : 'text-[#9a9598]'
-                              }`}
-                              animate={{
-                                scale: isHovered ? 1.15 : 1,
-                              }}
-                              transition={{
-                                duration: 0.2,
-                                ease: 'easeOut',
-                              }}
-                            >
-                              {item.value!.toFixed(2)}
-                            </motion.span>
+                            {item.value!.toFixed(2)}
+                          </motion.span>
 
-                            {/* Bar */}
-                            <motion.div
-                              initial={{ height: 0 }}
-                              whileInView={{ height: `${heightPercent}%` }}
-                              viewport={{ once: true }}
-                              animate={{
-                                scaleX: isHovered ? 1.15 : 1,
-                                scaleY: isHovered ? 1.02 : 1,
-                              }}
-                              transition={{
-                                height: {
-                                  duration: 0.6,
-                                  delay: groupIndex * 0.08 + barIndex * 0.03,
-                                  ease: 'easeOut',
-                                },
-                                scaleX: { duration: 0.2, ease: 'easeOut' },
-                                scaleY: { duration: 0.2, ease: 'easeOut' },
-                              }}
-                              className={`rounded-t cursor-pointer ${
-                                isEO1 ? 'shadow-[0_0_10px_rgba(255,109,41,0.35)]' : ''
-                              }`}
-                              style={{
-                                width: 14,
-                                backgroundColor: colors.hex,
-                                transformOrigin: 'bottom center',
-                              }}
-                            />
-                          </motion.div>
-                        )
-                      })}
-                    </div>
+                          {/* Bar */}
+                          <motion.div
+                            initial={{ height: 0 }}
+                            animate={{
+                              height: barHeight,
+                              scaleX: isHovered ? 1.15 : 1,
+                              scaleY: isHovered ? 1.02 : 1,
+                            }}
+                            transition={{
+                              height: {
+                                duration: 0.6,
+                                delay: groupIndex * 0.08 + barIndex * 0.03,
+                                ease: 'easeOut',
+                              },
+                              scaleX: { duration: 0.2, ease: 'easeOut' },
+                              scaleY: { duration: 0.2, ease: 'easeOut' },
+                            }}
+                            className={`rounded-t cursor-pointer ${
+                              isEO1 ? 'shadow-[0_0_10px_rgba(255,109,41,0.35)]' : ''
+                            }`}
+                            style={{
+                              width: 14,
+                              backgroundColor: colors.hex,
+                              transformOrigin: 'bottom center',
+                            }}
+                          />
+                        </motion.div>
+                      )
+                    })}
                   </div>
                 )
               })}
