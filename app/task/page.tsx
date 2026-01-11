@@ -148,7 +148,7 @@ export default function TaskPage() {
               {inputModalities.map((modality) => (
                 <div
                   key={modality.id}
-                  className="bg-gradient-to-br from-[#161316] to-[#1d1a1d] border border-[#453027]/50 rounded-xl overflow-hidden"
+                  className="bg-gradient-to-br from-[#161316] to-[#1d1a1d] border border-[#453027]/50 rounded-xl overflow-hidden hover:border-[#FF6D29]/30 transition-colors"
                 >
                   <div className="p-5 md:p-6">
                     <div className="flex items-start gap-4 mb-4">
@@ -188,15 +188,15 @@ export default function TaskPage() {
               Following the EO-1 paradigm, our action representation bridges discrete reasoning with continuous motor control, enabling both high-level planning and precise manipulation.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center">
+              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center hover:border-[#FF6D29]/30 transition-colors">
                 <div className="text-[#FF6D29] text-sm font-medium mb-2">Action Chunks</div>
                 <div className="text-white text-sm">{outputSpace.actionChunks}</div>
               </div>
-              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center">
+              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center hover:border-[#FF6D29]/30 transition-colors">
                 <div className="text-[#FF6D29] text-sm font-medium mb-2">Continuous Space</div>
                 <div className="text-white text-sm">{outputSpace.continuousSpace}</div>
               </div>
-              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center">
+              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center hover:border-[#FF6D29]/30 transition-colors">
                 <div className="text-[#FF6D29] text-sm font-medium mb-2">Control Frequency</div>
                 <div className="text-white text-sm">{outputSpace.controlFrequency}</div>
               </div>
