@@ -217,11 +217,11 @@ export default function TaskPage() {
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.5 }}
         >
-          {/* Unified container with gradient from lighter top to darker bottom */}
-          <div className="bg-gradient-to-b from-[#1d1a1d] via-[#1a171a] to-[#141214] border border-[#453027] rounded-2xl overflow-hidden">
-            {/* Atomic Skills - Two column layout */}
-            <div className="p-6 md:p-10">
-              <div className="space-y-4 md:space-y-5">
+          {/* Two-column layout: Skills box on left, Coordination cards on right */}
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Left: Skills Box */}
+            <div className="lg:w-1/2 bg-gradient-to-b from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl p-6 md:p-8">
+              <div className="space-y-6">
                 {atomicSkills.map((skill, index) => (
                   <motion.div
                     key={skill.category}
@@ -229,60 +229,53 @@ export default function TaskPage() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
-                    className="flex flex-col md:flex-row md:items-start gap-2 md:gap-8 py-3 border-b border-[#453027]/30 last:border-b-0"
+                    className="border-b border-[#453027]/30 pb-5 last:border-b-0 last:pb-0"
                   >
-                    {/* Left: Category + Bimanual Requirement */}
-                    <div className="md:w-1/3 lg:w-1/4 shrink-0">
+                    {/* Category + Bimanual Requirement */}
+                    <div className="mb-2">
                       <span className="text-base md:text-lg font-semibold text-white">
                         {skill.category}
                       </span>
-                      <span className="text-sm md:text-base text-[#BABABA] ml-2">
+                      <span className="text-sm text-[#BABABA] ml-2">
                         ({skill.bimanualRequirement})
                       </span>
                     </div>
-                    {/* Right: Skills */}
-                    <div className="md:flex-1">
-                      <p className="text-sm md:text-base text-[#BABABA] leading-relaxed">
-                        {skill.skills}
-                      </p>
-                    </div>
+                    {/* Skills description below */}
+                    <p className="text-sm md:text-base text-[#BABABA] leading-relaxed">
+                      {skill.skills}
+                    </p>
                   </motion.div>
                 ))}
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="h-px bg-gradient-to-r from-transparent via-[#453027] to-transparent" />
+            {/* Right: Coordination Modes - 2x2 grid */}
+            <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4 content-stretch">
+              {coordinationModes.map((mode, index) => (
+                <motion.div
+                  key={mode.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className="relative bg-gradient-to-b from-[#1d1a1d] to-[#161316] border border-[#453027]/50 rounded-xl overflow-hidden hover:border-[#FF6D29]/30 transition-colors flex flex-col"
+                >
+                  {/* Large background number */}
+                  <span className="absolute right-2 top-0 text-[100px] font-bold text-[#453027]/30 select-none leading-none">
+                    {mode.id}
+                  </span>
 
-            {/* Coordination Modes */}
-            <div className="p-6 md:p-10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {coordinationModes.map((mode, index) => (
-                  <motion.div
-                    key={mode.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="relative bg-gradient-to-b from-[#1d1a1d] to-[#161316] border border-[#453027]/50 rounded-xl overflow-hidden hover:border-[#FF6D29]/30 transition-colors"
-                  >
-                    {/* Large background number */}
-                    <span className="absolute right-2 top-0 text-[120px] md:text-[140px] font-bold text-[#453027]/30 select-none leading-none">
-                      {mode.id}
-                    </span>
-
-                    {/* Content */}
-                    <div className="relative z-10 p-5 md:p-6 min-h-[280px] flex flex-col">
-                      <h4 className="text-base md:text-lg font-semibold text-white mb-2">{mode.name}</h4>
-                      <p className="text-sm text-[#BABABA] mb-4 flex-grow">{mode.description}</p>
-                      <div className="border-t border-[#453027]/50 pt-4">
-                        <span className="text-[#FF6D29] text-xs font-medium uppercase tracking-wider">Example</span>
-                        <p className="text-sm text-[#BABABA] mt-1">{mode.example}</p>
-                      </div>
+                  {/* Content */}
+                  <div className="relative z-10 p-4 md:p-5 flex flex-col flex-1">
+                    <h4 className="text-sm md:text-base font-semibold text-white mb-1.5">{mode.name}</h4>
+                    <p className="text-xs md:text-sm text-[#BABABA] mb-3 line-clamp-2 flex-grow">{mode.description}</p>
+                    <div className="border-t border-[#453027]/50 pt-3">
+                      <span className="text-[#FF6D29] text-xs font-medium uppercase tracking-wider">Example</span>
+                      <p className="text-xs md:text-sm text-[#BABABA] mt-1 line-clamp-2">{mode.example}</p>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </motion.div>
