@@ -1,9 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import SectionWrapper from '@/components/task/SectionWrapper'
-import ChallengeCategory from '@/components/task/ChallengeCategory'
 import MetricTable from '@/components/task/MetricTable'
 import {
   inputModalities,
@@ -12,7 +12,143 @@ import {
   coordinationModes,
   getChallengesByCategory,
   metricCategories,
+  Challenge,
 } from '@/content/task-definition-data'
+
+// Severity order and colors
+const severityOrder = { Critical: 0, High: 1, Medium: 2 }
+const severityColors = {
+  Critical: 'bg-red-500',
+  High: 'bg-[#FF6D29]',
+  Medium: 'bg-yellow-500',
+}
+
+// Expandable Challenge Item component
+function ChallengeItem({ challenge, isExpanded, onToggle }: {
+  challenge: Challenge
+  isExpanded: boolean
+  onToggle: () => void
+}) {
+  return (
+    <div className="mb-2">
+      <button
+        onClick={onToggle}
+        className="flex items-start gap-2 text-left w-full group"
+      >
+        <span className={`w-2 h-2 rounded-full ${severityColors[challenge.severity]} mt-1.5 shrink-0`} />
+        <span className="text-sm text-white group-hover:text-[#FF6D29] transition-colors">
+          {challenge.name}
+        </span>
+      </button>
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden"
+          >
+            <p className="text-xs text-[#BABABA] mt-1 ml-4 leading-relaxed">
+              {challenge.description}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// Key Challenges Section with 4 columns
+function KeyChallengesSection() {
+  const [expandedChallenges, setExpandedChallenges] = useState<Set<string>>(new Set())
+
+  const toggleChallenge = (name: string) => {
+    setExpandedChallenges(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(name)) {
+        newSet.delete(name)
+      } else {
+        newSet.add(name)
+      }
+      return newSet
+    })
+  }
+
+  // Categories in the requested order
+  const categories = [
+    { id: 'manipulation' as const, title: 'Manipulation' },
+    { id: 'perception' as const, title: 'Perception' },
+    { id: 'coordination' as const, title: 'Coordination' },
+    { id: 'reasoning' as const, title: 'Reasoning' },
+  ]
+
+  // Sort challenges by severity
+  const sortBySeverity = (challenges: Challenge[]) => {
+    return [...challenges].sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity])
+  }
+
+  return (
+    <SectionWrapper
+      id="challenges"
+      title="Key Challenges"
+      subtitle="Technical hurdles organized by category with severity ratings. Click on any challenge to see its description."
+    >
+      {/* Legend */}
+      <div className="flex justify-center gap-6 mb-8">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-red-500" />
+          <span className="text-xs text-[#BABABA]">Critical</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#FF6D29]" />
+          <span className="text-xs text-[#BABABA]">High</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-yellow-500" />
+          <span className="text-xs text-[#BABABA]">Medium</span>
+        </div>
+      </div>
+
+      {/* 4-column grid */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        {categories.map((category, index) => {
+          const challenges = sortBySeverity(getChallengesByCategory(category.id))
+          return (
+            <motion.div
+              key={category.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-gradient-to-b from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl p-5 md:p-6"
+            >
+              <h3 className="text-base md:text-lg font-semibold text-white mb-4 pb-3 border-b border-[#453027]/50">
+                {category.title}
+              </h3>
+              <div>
+                {challenges.map(challenge => (
+                  <ChallengeItem
+                    key={challenge.name}
+                    challenge={challenge}
+                    isExpanded={expandedChallenges.has(challenge.name)}
+                    onToggle={() => toggleChallenge(challenge.name)}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          )
+        })}
+      </motion.div>
+    </SectionWrapper>
+  )
+}
 
 // Icons for input modalities
 const TextIcon = () => (
@@ -31,32 +167,6 @@ const VisionIcon = () => (
 const SensorIcon = () => (
   <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-  </svg>
-)
-
-// Icons for challenge categories
-const PerceptionIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-  </svg>
-)
-
-const ManipulationIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
-  </svg>
-)
-
-const CoordinationIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-  </svg>
-)
-
-const ReasoningIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
   </svg>
 )
 
@@ -282,36 +392,7 @@ export default function TaskPage() {
       </SectionWrapper>
 
       {/* SECTION 3: Key Challenges */}
-      <SectionWrapper
-        id="challenges"
-        title="Key Challenges"
-        subtitle="Technical hurdles organized by category with severity ratings"
-      >
-        <ChallengeCategory
-          title="Perception Challenges"
-          icon={<PerceptionIcon />}
-          challenges={getChallengesByCategory('perception')}
-          index={0}
-        />
-        <ChallengeCategory
-          title="Manipulation Challenges"
-          icon={<ManipulationIcon />}
-          challenges={getChallengesByCategory('manipulation')}
-          index={1}
-        />
-        <ChallengeCategory
-          title="Coordination Challenges"
-          icon={<CoordinationIcon />}
-          challenges={getChallengesByCategory('coordination')}
-          index={2}
-        />
-        <ChallengeCategory
-          title="Reasoning Challenges"
-          icon={<ReasoningIcon />}
-          challenges={getChallengesByCategory('reasoning')}
-          index={3}
-        />
-      </SectionWrapper>
+      <KeyChallengesSection />
 
       {/* SECTION 4: Success Metrics */}
       <SectionWrapper
