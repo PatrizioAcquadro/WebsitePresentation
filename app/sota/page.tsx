@@ -92,6 +92,8 @@ export default function SotaPage() {
           <div className="absolute bottom-0 left-0 right-0 h-[250px] bg-gradient-to-t from-[#161316] via-[#161316]/90 to-transparent" />
           {/* Left fade for smooth blend with text */}
           <div className="absolute top-0 bottom-0 left-0 w-[40%] bg-gradient-to-r from-[#161316] to-transparent" />
+          {/* Right fade for smooth edge */}
+          <div className="absolute top-0 bottom-0 right-0 w-[25%] bg-gradient-to-l from-[#161316] to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto">
