@@ -64,9 +64,9 @@ export default function SotaPage() {
       </div>
 
       {/* ==================== SECTION 1: The Optimal Foundation ==================== */}
-      <section id="why-eo1" className="relative py-16 md:py-20 px-4 bg-[#161316] overflow-hidden">
+      <section id="why-eo1" className="relative py-16 md:py-20 px-4 bg-[#161316]">
         {/* Gradient divider at top - matching other section dividers */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px z-20 bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
 
         {/* Soft orange haze/bloom background effect */}
         <div className="absolute inset-0 pointer-events-none">
@@ -78,8 +78,8 @@ export default function SotaPage() {
           <div className="absolute bottom-[20%] right-[20%] w-[300px] h-[300px] bg-[#FF6D29]/[0.015] rounded-full blur-[80px]" />
         </div>
 
-        {/* Robot background image - positioned higher in section */}
-        <div className="absolute right-0 top-[-5%] h-[55%] w-[60%] md:w-[50%] pointer-events-none overflow-hidden">
+        {/* Robot background image - positioned at top of section */}
+        <div className="absolute right-0 top-[2%] h-[55%] w-[60%] md:w-[50%] pointer-events-none">
           {/* Robot image */}
           <div className="absolute right-[-5%] top-[0%] w-[480px] md:w-[540px] lg:w-[600px] h-[100%]">
             <Image
@@ -90,10 +90,10 @@ export default function SotaPage() {
               priority
             />
           </div>
-          {/* Bottom fade-out gradient */}
-          <div className="absolute bottom-0 left-0 right-0 h-[50%] bg-gradient-to-t from-[#161316] via-[#161316]/90 to-transparent" />
+          {/* Bottom fade-out gradient - z-10 to appear above image */}
+          <div className="absolute bottom-0 left-0 right-0 h-[60%] z-10 bg-gradient-to-t from-[#161316] via-[#161316]/95 to-transparent" />
           {/* Left fade for smooth blend with text */}
-          <div className="absolute top-0 bottom-0 left-0 w-[35%] bg-gradient-to-r from-[#161316] to-transparent" />
+          <div className="absolute top-0 bottom-0 left-0 w-[35%] z-10 bg-gradient-to-r from-[#161316] to-transparent" />
         </div>
 
         <div className="relative max-w-6xl mx-auto">
