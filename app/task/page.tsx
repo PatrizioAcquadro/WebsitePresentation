@@ -244,11 +244,7 @@ export default function TaskPage() {
                       </td>
                       <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA]">{skill.skills}</td>
                       <td className="px-4 md:px-6 py-4">
-                        <span className={`text-xs md:text-sm ${
-                          skill.bimanualRequirement === 'Dual' || skill.bimanualRequirement === 'Often Dual'
-                            ? 'text-[#FF6D29]'
-                            : 'text-[#BABABA]'
-                        }`}>
+                        <span className="text-xs md:text-sm text-[#BABABA]">
                           {skill.bimanualRequirement}
                         </span>
                       </td>
@@ -263,7 +259,7 @@ export default function TaskPage() {
         {/* Coordination Modes */}
         <div>
           <h3 className="text-lg md:text-xl font-semibold text-white mb-6 text-center">Bimanual Coordination Modes</h3>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {coordinationModes.map((mode, index) => (
               <motion.div
                 key={mode.id}
@@ -271,20 +267,20 @@ export default function TaskPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="relative bg-gradient-to-r from-[#FF6D29]/10 via-[#FF6D29]/5 to-transparent border border-[#FF6D29]/20 rounded-2xl overflow-hidden hover:border-[#FF6D29]/40 transition-colors"
+                className="relative bg-gradient-to-b from-[#FF6D29]/15 via-[#FF6D29]/5 to-[#161316] border border-[#FF6D29]/20 rounded-2xl overflow-hidden hover:border-[#FF6D29]/40 hover:from-[#FF6D29]/20 transition-all duration-300"
               >
                 {/* Large background number */}
-                <span className="absolute -left-4 md:left-4 top-1/2 -translate-y-1/2 text-[120px] md:text-[180px] font-bold text-[#FF6D29]/10 select-none leading-none">
+                <span className="absolute right-3 top-3 text-[80px] md:text-[100px] font-bold text-[#FF6D29]/10 select-none leading-none">
                   {mode.id}
                 </span>
 
                 {/* Content */}
-                <div className="relative z-10 p-6 md:p-8 md:pl-32 lg:pl-40">
-                  <h4 className="text-lg md:text-xl font-semibold text-white mb-2">{mode.name}</h4>
-                  <p className="text-[#BABABA] mb-3">{mode.description}</p>
-                  <div className="flex items-start gap-2">
-                    <span className="text-[#FF6D29] text-sm font-medium shrink-0">Example:</span>
-                    <p className="text-sm text-[#BABABA]">{mode.example}</p>
+                <div className="relative z-10 p-5 md:p-6 min-h-[280px] flex flex-col">
+                  <h4 className="text-base md:text-lg font-semibold text-white mb-2">{mode.name}</h4>
+                  <p className="text-sm text-[#BABABA] mb-4 flex-grow">{mode.description}</p>
+                  <div className="border-t border-[#FF6D29]/20 pt-4">
+                    <span className="text-[#FF6D29] text-xs font-medium uppercase tracking-wider">Example</span>
+                    <p className="text-sm text-[#BABABA] mt-1">{mode.example}</p>
                   </div>
                 </div>
               </motion.div>
