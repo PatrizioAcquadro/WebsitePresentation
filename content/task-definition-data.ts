@@ -127,10 +127,10 @@ export const coordinationModes: CoordinationMode[] = [
 
 export const challenges: Challenge[] = [
   // Perception
-  { name: 'Fine-grained pose estimation', description: 'LEGO studs are 4.8mm apart; requires sub-millimeter accuracy', severity: 'High', category: 'perception' },
+  { name: 'Granular pose estimation', description: 'LEGO studs require sub-millimeter accuracy', severity: 'High', category: 'perception' },
   { name: 'Occlusion handling', description: 'Arms, hands, and blocks frequently occlude workspace', severity: 'High', category: 'perception' },
-  { name: 'Color/shape disambiguation', description: 'Similar block shapes with different colors', severity: 'Medium', category: 'perception' },
-  { name: 'Partial assembly state', description: 'Recognizing assembly progress from visual observation', severity: 'Medium', category: 'perception' },
+  { name: 'Disambiguation', description: 'Similar block shapes with different colors', severity: 'Medium', category: 'perception' },
+  { name: 'Partial assembly state', description: 'Assembly progress from visual observation', severity: 'Medium', category: 'perception' },
   { name: 'Sim-to-real visual gap', description: 'Simulated textures/lighting vs. real-world appearance', severity: 'High', category: 'perception' },
   // Manipulation
   { name: 'Precision insertion', description: 'LEGO connections require ~0.1mm alignment tolerance', severity: 'Critical', category: 'manipulation' },

@@ -42,6 +42,39 @@ function ChallengeItem({ challenge }: { challenge: Challenge }) {
   )
 }
 
+// Icons for challenge categories
+const ManipulationIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+  </svg>
+)
+
+const PerceptionIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+  </svg>
+)
+
+const CoordinationIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+  </svg>
+)
+
+const ReasoningIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+  </svg>
+)
+
+const challengeCategoryIcons: Record<string, React.ReactNode> = {
+  manipulation: <ManipulationIcon />,
+  perception: <PerceptionIcon />,
+  coordination: <CoordinationIcon />,
+  reasoning: <ReasoningIcon />,
+}
+
 // Key Challenges Section with 4 columns
 function KeyChallengesSection() {
   // Categories in the requested order
@@ -82,7 +115,8 @@ function KeyChallengesSection() {
               transition={{ delay: index * 0.1 }}
               className="bg-gradient-to-b from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl p-5 md:p-6"
             >
-              <h3 className="text-base md:text-lg font-semibold text-white mb-4 pb-3 border-b border-[#453027]/50">
+              <h3 className="flex items-center gap-2 text-base md:text-lg font-semibold text-white mb-4 pb-3 border-b border-[#453027]/50">
+                <span className="text-[#FF6D29]">{challengeCategoryIcons[category.id]}</span>
                 {category.title}
               </h3>
               <div>
