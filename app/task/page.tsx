@@ -23,58 +23,27 @@ const severityColors = {
   Medium: 'bg-yellow-500',
 }
 
-// Expandable Challenge Item component
-function ChallengeItem({ challenge, isExpanded, onToggle }: {
-  challenge: Challenge
-  isExpanded: boolean
-  onToggle: () => void
-}) {
+// Challenge Item component (always shows description)
+function ChallengeItem({ challenge }: { challenge: Challenge }) {
   return (
-    <div className="mb-2">
-      <button
-        onClick={onToggle}
-        className="flex items-start gap-2 text-left w-full group"
-      >
-        <span className={`w-2 h-2 rounded-full ${severityColors[challenge.severity]} mt-1.5 shrink-0`} />
-        <span className="text-sm text-white group-hover:text-[#FF6D29] transition-colors">
-          {challenge.name}
-        </span>
-      </button>
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden"
-          >
-            <p className="text-xs text-[#BABABA] mt-1 ml-4 leading-relaxed">
-              {challenge.description}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div className="mb-4 last:mb-0">
+      <div className="flex items-start gap-2">
+        <span className={`w-2 h-2 rounded-full ${severityColors[challenge.severity]} mt-2 shrink-0`} />
+        <div>
+          <span className="text-sm md:text-base text-white font-medium">
+            {challenge.name}
+          </span>
+          <p className="text-xs md:text-sm text-[#BABABA] mt-1 leading-relaxed">
+            {challenge.description}
+          </p>
+        </div>
+      </div>
     </div>
   )
 }
 
 // Key Challenges Section with 4 columns
 function KeyChallengesSection() {
-  const [expandedChallenges, setExpandedChallenges] = useState<Set<string>>(new Set())
-
-  const toggleChallenge = (name: string) => {
-    setExpandedChallenges(prev => {
-      const newSet = new Set(prev)
-      if (newSet.has(name)) {
-        newSet.delete(name)
-      } else {
-        newSet.add(name)
-      }
-      return newSet
-    })
-  }
-
   // Categories in the requested order
   const categories = [
     { id: 'manipulation' as const, title: 'Manipulation' },
@@ -92,24 +61,8 @@ function KeyChallengesSection() {
     <SectionWrapper
       id="challenges"
       title="Key Challenges"
-      subtitle="Technical hurdles organized by category with severity ratings. Click on any challenge to see its description."
+      subtitle="Bimanual LEGO assembly presents unique difficulties across four fundamental dimensions: the physical precision required for manipulation, the visual understanding needed for perception, the synchronization demands of coordination, and the planning complexity of reasoning."
     >
-      {/* Legend */}
-      <div className="flex justify-center gap-6 mb-8">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-red-500" />
-          <span className="text-xs text-[#BABABA]">Critical</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#FF6D29]" />
-          <span className="text-xs text-[#BABABA]">High</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-yellow-500" />
-          <span className="text-xs text-[#BABABA]">Medium</span>
-        </div>
-      </div>
-
       {/* 4-column grid */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -134,18 +87,29 @@ function KeyChallengesSection() {
               </h3>
               <div>
                 {challenges.map(challenge => (
-                  <ChallengeItem
-                    key={challenge.name}
-                    challenge={challenge}
-                    isExpanded={expandedChallenges.has(challenge.name)}
-                    onToggle={() => toggleChallenge(challenge.name)}
-                  />
+                  <ChallengeItem key={challenge.name} challenge={challenge} />
                 ))}
               </div>
             </motion.div>
           )
         })}
       </motion.div>
+
+      {/* Legend */}
+      <div className="flex justify-center gap-6 mt-8">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-red-500" />
+          <span className="text-xs text-[#BABABA]">Critical</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#FF6D29]" />
+          <span className="text-xs text-[#BABABA]">High</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-yellow-500" />
+          <span className="text-xs text-[#BABABA]">Medium</span>
+        </div>
+      </div>
     </SectionWrapper>
   )
 }
