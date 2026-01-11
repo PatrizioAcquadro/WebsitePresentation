@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useCallback, useRef, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { KeyFeature } from '@/content/sota-data'
 
 // Icon components for each feature type
@@ -50,32 +50,47 @@ const iconMap = {
   compute: ComputeIcon,
 }
 
-// Feature card component - taller/portrait design
+// Feature card component - taller/portrait design with subtle orange tint
 function FeatureCard({ feature }: { feature: KeyFeature }) {
   const Icon = iconMap[feature.iconType]
 
   return (
     <div className="w-[200px] md:w-[220px] h-[280px] md:h-[300px] shrink-0 group">
-      <div className="h-full bg-gradient-to-b from-[#252225] to-[#1a171a] border border-[#3a3338] rounded-2xl p-5 flex flex-col transition-all duration-300 group-hover:border-[#FF6D29]/40 group-hover:shadow-lg group-hover:shadow-[#FF6D29]/5">
-        {/* Icon container */}
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#2a2528] to-[#1d1a1d] border border-[#453027]/60 flex items-center justify-center mb-5 group-hover:border-[#FF6D29]/30 transition-colors">
-          <span className="text-[#BABABA] group-hover:text-[#FF6D29] transition-colors">
-            <Icon />
-          </span>
+      <div className="relative h-full rounded-2xl p-5 flex flex-col transition-all duration-300 overflow-hidden">
+        {/* Background with subtle orange tint */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#262023] via-[#1f1b1e] to-[#1a171a] rounded-2xl" />
+
+        {/* Very subtle warm orange radial glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,109,41,0.04)_0%,_transparent_60%)] rounded-2xl" />
+
+        {/* Border with subtle orange warmth */}
+        <div className="absolute inset-0 rounded-2xl border border-[#3a3235] group-hover:border-[#FF6D29]/35 transition-colors duration-300" />
+
+        {/* Hover glow effect */}
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[inset_0_1px_1px_rgba(255,109,41,0.1),_0_0_20px_rgba(255,109,41,0.05)]" />
+
+        {/* Content - relative to sit above backgrounds */}
+        <div className="relative flex flex-col h-full">
+          {/* Icon container */}
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#2d282a] to-[#201c1f] border border-[#453027]/50 flex items-center justify-center mb-5 group-hover:border-[#FF6D29]/40 transition-colors">
+            <span className="text-[#a8a4a6] group-hover:text-[#FF6D29] transition-colors">
+              <Icon />
+            </span>
+          </div>
+
+          {/* Title */}
+          <h4 className="text-[15px] font-semibold text-white mb-3 leading-tight">
+            {feature.title}
+          </h4>
+
+          {/* Description */}
+          <p className="text-[13px] text-[#9a9598] leading-relaxed flex-1">
+            {feature.description}
+          </p>
+
+          {/* Subtle bottom accent line with warm tone */}
+          <div className="mt-4 h-[2px] w-10 bg-gradient-to-r from-[#FF6D29]/25 via-[#FF6D29]/15 to-transparent group-hover:from-[#FF6D29]/60 group-hover:via-[#FF6D29]/30 transition-all duration-300" />
         </div>
-
-        {/* Title */}
-        <h4 className="text-[15px] font-semibold text-white mb-3 leading-tight">
-          {feature.title}
-        </h4>
-
-        {/* Description */}
-        <p className="text-[13px] text-[#9a9a9a] leading-relaxed flex-1">
-          {feature.description}
-        </p>
-
-        {/* Subtle bottom accent line */}
-        <div className="mt-4 h-[2px] w-8 bg-gradient-to-r from-[#453027] to-transparent group-hover:from-[#FF6D29]/50 transition-colors" />
       </div>
     </div>
   )
@@ -118,32 +133,57 @@ interface FeatureCarouselProps {
 }
 
 export default function FeatureCarousel({ features }: FeatureCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
+  const totalItems = features.length
+  const cardWidth = 236 // 220px card + 16px gap
 
-  // Create extended array for infinite loop effect (duplicate items)
-  const extendedFeatures = [...features, ...features, ...features]
-  const totalOriginal = features.length
+  // Use a large multiplier to create virtually infinite scrolling
+  const multiplier = 100
+  const totalSets = multiplier * 2 + 1 // 201 sets total
+  const middleSetStart = multiplier * totalItems
+
+  // Start from the middle set
+  const [offset, setOffset] = useState(middleSetStart * cardWidth)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  // Create extended array - many copies for seamless infinite scroll
+  const extendedFeatures = Array(totalSets).fill(features).flat()
 
   const handlePrev = useCallback(() => {
     if (isAnimating) return
     setIsAnimating(true)
-    setCurrentIndex((prev) => prev - 1)
-    setTimeout(() => setIsAnimating(false), 400)
-  }, [isAnimating])
+    setOffset((prev) => prev - cardWidth)
+  }, [isAnimating, cardWidth])
 
   const handleNext = useCallback(() => {
     if (isAnimating) return
     setIsAnimating(true)
-    setCurrentIndex((prev) => prev + 1)
-    setTimeout(() => setIsAnimating(false), 400)
-  }, [isAnimating])
+    setOffset((prev) => prev + cardWidth)
+  }, [isAnimating, cardWidth])
 
-  // Calculate the transform offset
-  // Card width (220px) + gap (16px) = 236px per card
-  const cardWidth = 236
-  const baseOffset = totalOriginal * cardWidth // Start from middle set
-  const currentOffset = baseOffset + (currentIndex * cardWidth)
+  // Handle animation end - silently reposition if needed
+  const handleTransitionEnd = useCallback(() => {
+    setIsAnimating(false)
+
+    // Calculate bounds for repositioning
+    const minSafeOffset = (multiplier - 10) * totalItems * cardWidth
+    const maxSafeOffset = (multiplier + 10) * totalItems * cardWidth
+
+    // If we've scrolled too far in either direction, silently reposition
+    if (offset < minSafeOffset || offset > maxSafeOffset) {
+      // Jump to equivalent position in middle set without animation
+      const currentPosition = offset % (totalItems * cardWidth)
+      const newOffset = middleSetStart * cardWidth + currentPosition
+
+      if (trackRef.current) {
+        trackRef.current.style.transition = 'none'
+        setOffset(newOffset)
+        // Force reflow
+        trackRef.current.offsetHeight
+        trackRef.current.style.transition = ''
+      }
+    }
+  }, [offset, totalItems, cardWidth, middleSetStart, multiplier])
 
   return (
     <motion.div
@@ -167,60 +207,25 @@ export default function FeatureCarousel({ features }: FeatureCarouselProps) {
           <div className="absolute right-12 md:right-16 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-[#161316] to-transparent z-10 pointer-events-none" />
 
           {/* Scrolling track */}
-          <motion.div
+          <div
+            ref={trackRef}
             className="flex gap-4 py-2"
-            animate={{
-              x: -currentOffset,
+            style={{
+              transform: `translateX(-${offset}px)`,
+              transition: isAnimating ? 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none',
             }}
-            transition={{
-              type: 'spring',
-              stiffness: 300,
-              damping: 30,
-            }}
-            onAnimationComplete={() => {
-              // Reset to middle set for infinite loop illusion
-              if (currentIndex >= totalOriginal) {
-                setCurrentIndex(currentIndex - totalOriginal)
-              } else if (currentIndex < -totalOriginal) {
-                setCurrentIndex(currentIndex + totalOriginal)
-              }
-            }}
+            onTransitionEnd={handleTransitionEnd}
           >
             {extendedFeatures.map((feature, index) => (
               <FeatureCard key={`${feature.id}-${index}`} feature={feature} />
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* Right navigation */}
         <div className="absolute right-0 z-20 translate-x-1/2 md:translate-x-0">
           <NavButton direction="right" onClick={handleNext} />
         </div>
-      </div>
-
-      {/* Dot indicators */}
-      <div className="flex justify-center gap-2 mt-6">
-        {features.map((_, index) => {
-          const normalizedCurrent = ((currentIndex % totalOriginal) + totalOriginal) % totalOriginal
-          const isActive = normalizedCurrent === index
-          return (
-            <button
-              key={index}
-              onClick={() => {
-                if (!isAnimating) {
-                  setIsAnimating(true)
-                  setCurrentIndex(index)
-                  setTimeout(() => setIsAnimating(false), 400)
-                }
-              }}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                isActive
-                  ? 'bg-[#FF6D29] w-6'
-                  : 'bg-[#453027] hover:bg-[#5a4a3f]'
-              }`}
-            />
-          )
-        })}
       </div>
     </motion.div>
   )

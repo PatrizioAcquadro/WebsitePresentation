@@ -61,71 +61,64 @@ export default function SotaPage() {
       </div>
 
       {/* ==================== SECTION 1: Why EO-1 ==================== */}
-      <section id="why-eo1" className="relative py-20 md:py-24 px-4 bg-[#161316] overflow-hidden">
+      <section id="why-eo1" className="relative py-16 md:py-20 px-4 bg-[#161316] overflow-hidden">
         {/* Gradient divider at top */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
 
-        <div className="max-w-6xl mx-auto">
+        {/* Large robot background image */}
+        <div className="absolute right-0 top-0 bottom-0 w-[60%] md:w-[50%] pointer-events-none overflow-hidden">
+          {/* Robot image - positioned to extend behind carousel */}
+          <div className="absolute right-[-10%] top-[-5%] w-[700px] md:w-[800px] lg:w-[900px] h-[120%]">
+            <Image
+              src="/robot.png"
+              alt=""
+              fill
+              className="object-contain object-right-top opacity-[0.35]"
+              priority
+            />
+          </div>
+          {/* Bottom fade-out gradient */}
+          <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#161316] via-[#161316]/80 to-transparent" />
+          {/* Left fade for smooth blend with text */}
+          <div className="absolute top-0 bottom-0 left-0 w-[30%] bg-gradient-to-r from-[#161316] to-transparent" />
+        </div>
+
+        <div className="relative max-w-6xl mx-auto">
           {/* Section title - centered, no subtitle */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="text-center mb-12 md:mb-16"
+            className="text-center mb-10 md:mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-semibold text-white">
               Why EO-1
             </h2>
           </motion.div>
 
-          {/* Two-column hero: Text left, Robot right */}
+          {/* Hero text block - shifted left with reduced width */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5 }}
-            className="mb-16"
+            className="mb-8"
           >
-            <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-              {/* Text column */}
-              <div className="flex-1 lg:pr-4">
-                <p className="text-[#BABABA] text-base md:text-lg leading-relaxed">
-                  {whyEO1Narrative}
-                </p>
-              </div>
-
-              {/* Robot image column */}
-              <div className="flex-shrink-0 w-full lg:w-auto flex justify-center lg:justify-end">
-                <div className="relative w-[280px] h-[280px] md:w-[320px] md:h-[320px]">
-                  <Image
-                    src="/robot.png"
-                    alt="Humanoid robot for bimanual assembly"
-                    fill
-                    className="object-contain"
-                    priority
-                  />
-                </div>
-              </div>
+            <div className="max-w-xl lg:max-w-lg">
+              <p className="text-[#BABABA] text-base md:text-lg leading-relaxed">
+                {whyEO1Narrative}
+              </p>
             </div>
           </motion.div>
 
-          {/* Key Features Carousel */}
-          <div className="mb-16">
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.4 }}
-              className="text-xl font-semibold text-white mb-8 text-center"
-            >
-              Key Features
-            </motion.h3>
+          {/* Feature Carousel - no heading, pulled up closer */}
+          <div className="mb-16 relative z-10">
             <FeatureCarousel features={keyFeatures} />
           </div>
 
           {/* Performance Tables */}
-          <div>
+          <div className="relative z-10">
             <motion.h3
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
