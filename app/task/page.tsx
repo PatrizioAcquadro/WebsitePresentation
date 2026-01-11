@@ -133,32 +133,40 @@ export default function TaskPage() {
         subtitle="The objective is to develop a Vision-Language-Action system capable of performing bimanual LEGO assembly tasks using a robotic torso with two arms. The system will handle 5-10 LEGO blocks per assembly across multiple distinct configurations, targeting the Unitree H1 humanoid robot through a simulation-first approach with subsequent sim-to-real transfer."
       >
         {/* Input Modalities */}
-        <div className="mb-12">
-          <h3 className="text-lg md:text-xl font-semibold text-white mb-4 text-center">Input Modalities</h3>
-          <p className="text-[#BABABA] text-center mb-6 max-w-2xl mx-auto">
-            The VLA system receives three primary input streams to understand and interact with the environment.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {inputModalities.map((modality) => (
-              <ExpandableCard
-                key={modality.id}
-                icon={inputModalityIcons[modality.id]}
-                title={modality.title}
-                summary={modality.description}
-                defaultExpanded={true}
-              >
-                <ul className="space-y-2">
-                  {modality.details.map((detail, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-[#BABABA]">
-                      <span className="text-[#FF6D29] leading-5 shrink-0">•</span>
-                      <span>{detail}</span>
-                    </li>
-                  ))}
-                </ul>
-              </ExpandableCard>
-            ))}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5 }}
+          className="mb-12"
+        >
+          <div className="p-6 md:p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
+            <h3 className="text-lg md:text-xl font-semibold text-white mb-3 text-center">Input Modalities</h3>
+            <p className="text-[#BABABA] text-center mb-6 max-w-2xl mx-auto">
+              The VLA system receives three primary input streams to understand and interact with the environment.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {inputModalities.map((modality) => (
+                <ExpandableCard
+                  key={modality.id}
+                  icon={inputModalityIcons[modality.id]}
+                  title={modality.title}
+                  summary={modality.description}
+                  defaultExpanded={true}
+                >
+                  <ul className="space-y-2">
+                    {modality.details.map((detail, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-[#BABABA]">
+                        <span className="text-[#FF6D29] leading-5 shrink-0">•</span>
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </ExpandableCard>
+              ))}
+            </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Output Space */}
         <motion.div
