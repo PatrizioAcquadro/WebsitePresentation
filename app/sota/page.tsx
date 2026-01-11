@@ -2,8 +2,9 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import SectionWrapper from '@/components/task/SectionWrapper'
-import KeyFeatureCard from '@/components/sota/KeyFeatureCard'
+import FeatureCarousel from '@/components/sota/FeatureCarousel'
 import PerformanceTable from '@/components/sota/PerformanceTable'
 import AnalysisSubsection from '@/components/sota/AnalysisSubsection'
 import {
@@ -60,60 +61,87 @@ export default function SotaPage() {
       </div>
 
       {/* ==================== SECTION 1: Why EO-1 ==================== */}
-      <SectionWrapper
-        id="why-eo1"
-        title="Why EO-1"
-        subtitle="Selection rationale and performance evidence for choosing EO-1 as the baseline model for bimanual LEGO assembly."
-        variant="default"
-      >
-        {/* Narrative introduction */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
-          className="mb-12"
-        >
-          <p className="text-[#BABABA] text-base md:text-lg leading-relaxed max-w-4xl">
-            {whyEO1Narrative}
-          </p>
-        </motion.div>
+      <section id="why-eo1" className="relative py-20 md:py-24 px-4 bg-[#161316] overflow-hidden">
+        {/* Gradient divider at top */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
 
-        {/* Key Features Grid */}
-        <div className="mb-12">
-          <motion.h3
+        <div className="max-w-6xl mx-auto">
+          {/* Section title - centered, no subtitle */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="text-center mb-12 md:mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold text-white">
+              Why EO-1
+            </h2>
+          </motion.div>
+
+          {/* Two-column hero: Text left, Robot right */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.4 }}
-            className="text-xl font-semibold text-white mb-6"
+            transition={{ duration: 0.5 }}
+            className="mb-16"
           >
-            Key Features
-          </motion.h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {keyFeatures.map((feature, index) => (
-              <KeyFeatureCard key={feature.id} feature={feature} index={index} />
-            ))}
-          </div>
-        </div>
+            <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+              {/* Text column */}
+              <div className="flex-1 lg:pr-4">
+                <p className="text-[#BABABA] text-base md:text-lg leading-relaxed">
+                  {whyEO1Narrative}
+                </p>
+              </div>
 
-        {/* Performance Tables */}
-        <div>
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.4 }}
-            className="text-xl font-semibold text-white mb-6"
-          >
-            Performance Evidence
-          </motion.h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <PerformanceTable benchmark={liberoBenchmark} index={0} />
-            <PerformanceTable benchmark={realWorldBenchmark} index={1} />
+              {/* Robot image column */}
+              <div className="flex-shrink-0 w-full lg:w-auto flex justify-center lg:justify-end">
+                <div className="relative w-[280px] h-[280px] md:w-[320px] md:h-[320px]">
+                  <Image
+                    src="/robot.png"
+                    alt="Humanoid robot for bimanual assembly"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Key Features Carousel */}
+          <div className="mb-16">
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.4 }}
+              className="text-xl font-semibold text-white mb-8 text-center"
+            >
+              Key Features
+            </motion.h3>
+            <FeatureCarousel features={keyFeatures} />
+          </div>
+
+          {/* Performance Tables */}
+          <div>
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.4 }}
+              className="text-xl font-semibold text-white mb-6"
+            >
+              Performance Evidence
+            </motion.h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <PerformanceTable benchmark={liberoBenchmark} index={0} />
+              <PerformanceTable benchmark={realWorldBenchmark} index={1} />
+            </div>
           </div>
         </div>
-      </SectionWrapper>
+      </section>
 
       {/* ==================== SECTION 2: Detailed Analysis ==================== */}
       <SectionWrapper
