@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import SectionWrapper from '@/components/task/SectionWrapper'
 import ChallengeCategory from '@/components/task/ChallengeCategory'
 import MetricTable from '@/components/task/MetricTable'
-import CoordinationModeCard from '@/components/task/CoordinationModeCard'
 import {
   inputModalities,
   outputSpace,
@@ -209,7 +208,7 @@ export default function TaskPage() {
       <SectionWrapper
         id="decomposition"
         title="Task Decomposition"
-        subtitle="Atomic skills required and bimanual coordination modes"
+        subtitle="Breaking down the complex assembly task into fundamental building blocks: the atomic skills the robot must master and how both arms work together to achieve precise manipulation."
         variant="darker"
       >
         {/* Atomic Skills Table */}
@@ -218,9 +217,9 @@ export default function TaskPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.5 }}
-          className="mb-12"
+          className="mb-16"
         >
-          <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Atomic Skills Required</h3>
+          <h3 className="text-lg md:text-xl font-semibold text-white mb-4 text-center">Atomic Skills Required</h3>
           <div className="bg-gradient-to-br from-[#161316] to-[#1d1a1d] border border-[#453027] rounded-2xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -245,15 +244,11 @@ export default function TaskPage() {
                       </td>
                       <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA]">{skill.skills}</td>
                       <td className="px-4 md:px-6 py-4">
-                        <span
-                          className={`inline-flex items-center px-2 md:px-3 py-1 rounded-full text-xs font-medium ${
-                            skill.bimanualRequirement === 'Dual'
-                              ? 'bg-[#FF6D29]/20 text-[#FF6D29] border border-[#FF6D29]/30'
-                              : skill.bimanualRequirement === 'Often Dual'
-                              ? 'bg-[#FF6D29]/10 text-[#FF6D29] border border-[#FF6D29]/20'
-                              : 'bg-[#453027]/30 text-[#BABABA] border border-[#453027]'
-                          }`}
-                        >
+                        <span className={`text-xs md:text-sm ${
+                          skill.bimanualRequirement === 'Dual' || skill.bimanualRequirement === 'Often Dual'
+                            ? 'text-[#FF6D29]'
+                            : 'text-[#BABABA]'
+                        }`}>
                           {skill.bimanualRequirement}
                         </span>
                       </td>
@@ -267,10 +262,32 @@ export default function TaskPage() {
 
         {/* Coordination Modes */}
         <div>
-          <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Bimanual Coordination Modes</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h3 className="text-lg md:text-xl font-semibold text-white mb-6 text-center">Bimanual Coordination Modes</h3>
+          <div className="space-y-4">
             {coordinationModes.map((mode, index) => (
-              <CoordinationModeCard key={mode.id} mode={mode} index={index} />
+              <motion.div
+                key={mode.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="relative bg-gradient-to-r from-[#FF6D29]/10 via-[#FF6D29]/5 to-transparent border border-[#FF6D29]/20 rounded-2xl overflow-hidden hover:border-[#FF6D29]/40 transition-colors"
+              >
+                {/* Large background number */}
+                <span className="absolute -left-4 md:left-4 top-1/2 -translate-y-1/2 text-[120px] md:text-[180px] font-bold text-[#FF6D29]/10 select-none leading-none">
+                  {mode.id}
+                </span>
+
+                {/* Content */}
+                <div className="relative z-10 p-6 md:p-8 md:pl-32 lg:pl-40">
+                  <h4 className="text-lg md:text-xl font-semibold text-white mb-2">{mode.name}</h4>
+                  <p className="text-[#BABABA] mb-3">{mode.description}</p>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[#FF6D29] text-sm font-medium shrink-0">Example:</span>
+                    <p className="text-sm text-[#BABABA]">{mode.example}</p>
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
