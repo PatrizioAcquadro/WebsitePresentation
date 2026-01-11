@@ -17,8 +17,28 @@ export interface BenchmarkRow {
 
 export interface BenchmarkTable {
   title: string
+  subtitle?: string
   columns: string[]
   rows: BenchmarkRow[]
+  legoNote?: string
+}
+
+export interface BarChartGroup {
+  label: string
+  taskCount?: string
+  values: {
+    model: string
+    value: number | null // null for N/A
+  }[]
+}
+
+export interface GroupedBarChart {
+  title: string
+  subtitle?: string
+  yAxisLabel: string
+  groups: BarChartGroup[]
+  models: string[]
+  legoNote?: string
 }
 
 export interface AnalysisSection {
@@ -100,48 +120,202 @@ export const keyFeatures: KeyFeature[] = [
   },
 ]
 
+// ============ Performance Evidence Data ============
+
+// Full LIBERO Table 3 with ± intervals
 export const liberoBenchmark: BenchmarkTable = {
   title: 'LIBERO Benchmark Results',
+  subtitle: 'Success rates across four LIBERO task suites with confidence intervals',
   columns: ['Model', 'Spatial', 'Object', 'Goal', 'Long', 'Overall'],
   rows: [
     {
-      model: 'OpenVLA',
-      values: { Spatial: '84.7%', Object: '88.4%', Goal: '79.2%', Long: '53.7%', Overall: '76.5%' },
+      model: 'Octo',
+      values: {
+        Spatial: '78.9 ± 1.0%',
+        Object: '85.7 ± 0.9%',
+        Goal: '84.6 ± 0.9%',
+        Long: '51.1 ± 1.3%',
+        Overall: '75.1 ± 0.6%'
+      },
     },
     {
       model: 'π0',
-      values: { Spatial: '96.8%', Object: '98.8%', Goal: '95.8%', Long: '85.2%', Overall: '94.2%' },
+      values: {
+        Spatial: '96.8 ± 0.8%',
+        Object: '98.8 ± 0.9%',
+        Goal: '95.8 ± 1.1%',
+        Long: '85.2 ± 1.2%',
+        Overall: '94.2 ± 0.9%'
+      },
+    },
+    {
+      model: 'GR00T N1',
+      values: {
+        Spatial: '94.4 ± 0.9%',
+        Object: '97.6 ± 1.0%',
+        Goal: '93.0 ± 1.2%',
+        Long: '90.6 ± 1.0%',
+        Overall: '93.9 ± 1.1%'
+      },
     },
     {
       model: 'OpenVLA-OFT',
-      values: { Spatial: '97.6%', Object: '98.4%', Goal: '97.9%', Long: '94.5%', Overall: '97.1%' },
+      values: {
+        Spatial: '97.6 ± 0.9%',
+        Object: '98.4 ± 0.8%',
+        Goal: '97.9 ± 1.0%',
+        Long: '94.5 ± 1.3%',
+        Overall: '97.1 ± 0.6%'
+      },
     },
     {
       model: 'EO-1',
       isHighlighted: true,
-      values: { Spatial: '99.7%', Object: '99.8%', Goal: '99.2%', Long: '94.8%', Overall: '98.2%' },
+      values: {
+        Spatial: '99.7 ± 0.2%',
+        Object: '99.8 ± 0.1%',
+        Goal: '99.2 ± 0.3%',
+        Long: '94.8 ± 0.6%',
+        Overall: '98.2 ± 0.3%'
+      },
     },
   ],
+  legoNote: 'LIBERO-Long tests multi-step sequential tasks similar to LEGO assembly sequences. EO-1\'s top performance indicates strong capability for maintaining goal coherence across extended manipulation chains.',
 }
 
-export const realWorldBenchmark: BenchmarkTable = {
-  title: 'Real-World Generalization',
-  columns: ['Model', 'Visual', 'Language', 'Action', 'Overall'],
-  rows: [
+// Performance on Diverse Embodiments - Grouped Bar Chart
+export const embodimentsChart: GroupedBarChart = {
+  title: 'Performance on Diverse Embodiments',
+  subtitle: 'Completion scores across different robot platforms and task families',
+  yAxisLabel: 'Completion Score',
+  models: ['π0-Fast', 'π0', 'GR00T-N1.5', 'EO-1'],
+  groups: [
     {
-      model: 'π0',
-      values: { Visual: '54%', Language: '52%', Action: '46%', Overall: '51%' },
+      label: 'Franka Pick-and-Place',
+      taskCount: '7 tasks',
+      values: [
+        { model: 'π0-Fast', value: 0.61 },
+        { model: 'π0', value: 0.83 },
+        { model: 'GR00T-N1.5', value: 0.86 },
+        { model: 'EO-1', value: 0.94 },
+      ],
     },
     {
-      model: 'GR00T-N1.5',
-      values: { Visual: '63%', Language: '67%', Action: '51%', Overall: '60%' },
+      label: 'WidowX Out-of-Box',
+      taskCount: '13 tasks',
+      values: [
+        { model: 'π0-Fast', value: 0.23 },
+        { model: 'π0', value: 0.69 },
+        { model: 'GR00T-N1.5', value: 0.70 },
+        { model: 'EO-1', value: 0.85 },
+      ],
     },
     {
-      model: 'EO-1',
-      isHighlighted: true,
-      values: { Visual: '72%', Language: '79%', Action: '67%', Overall: '73%' },
+      label: 'AgiBot Long-horizon',
+      taskCount: '4 tasks',
+      values: [
+        { model: 'π0-Fast', value: 0.45 },
+        { model: 'π0', value: 0.67 },
+        { model: 'GR00T-N1.5', value: 0.68 },
+        { model: 'EO-1', value: 0.81 },
+      ],
+    },
+    {
+      label: 'Reasoning Control',
+      taskCount: '4 tasks',
+      values: [
+        { model: 'π0-Fast', value: null }, // N/A
+        { model: 'π0', value: 0.53 },
+        { model: 'GR00T-N1.5', value: 0.62 },
+        { model: 'EO-1', value: 0.83 },
+      ],
+    },
+    {
+      label: 'Overall',
+      taskCount: '28 tasks',
+      values: [
+        { model: 'π0-Fast', value: 0.43 },
+        { model: 'π0', value: 0.68 },
+        { model: 'GR00T-N1.5', value: 0.71 },
+        { model: 'EO-1', value: 0.86 },
+      ],
     },
   ],
+  legoNote: 'Cross-embodiment generalization is critical for sim-to-real transfer. EO-1\'s consistent lead across diverse platforms suggests robust policy learning that should transfer well to the Unitree H1.',
+}
+
+// Generalization Performance Breakdown Table
+export const generalizationTable: BenchmarkTable = {
+  title: 'Generalization Performance Breakdown',
+  subtitle: 'Completion scores (0–1) measuring robustness to distribution shifts',
+  columns: ['Metric', 'π0-Fast', 'π0', 'GR00T-N1.5', 'EO-1'],
+  rows: [
+    {
+      model: 'Visual Generalization',
+      values: { 'π0-Fast': '0.20', 'π0': '0.54', 'GR00T-N1.5': '0.63', 'EO-1': '0.72' },
+    },
+    {
+      model: 'Language Generalization',
+      values: { 'π0-Fast': '0.21', 'π0': '0.52', 'GR00T-N1.5': '0.67', 'EO-1': '0.79' },
+    },
+    {
+      model: 'Action Generalization',
+      values: { 'π0-Fast': '0.15', 'π0': '0.46', 'GR00T-N1.5': '0.51', 'EO-1': '0.67' },
+    },
+    {
+      model: 'Overall (18 tasks)',
+      isHighlighted: true,
+      values: { 'π0-Fast': '0.19', 'π0': '0.51', 'GR00T-N1.5': '0.60', 'EO-1': '0.73' },
+    },
+  ],
+  legoNote: 'Language generalization (0.79) is particularly relevant for following varied assembly instructions. Visual generalization (0.72) supports handling lighting and viewpoint changes in real deployment.',
+}
+
+// Long-horizon Dexterity Performance - Grouped Bar Chart
+export const dexterityChart: GroupedBarChart = {
+  title: 'Long-horizon Dexterity Performance',
+  subtitle: 'Task-level completion scores for complex multi-step manipulation',
+  yAxisLabel: 'Completion Score',
+  models: ['π0-Fast', 'π0', 'GR00T-N1.5', 'EO-1'],
+  groups: [
+    {
+      label: 'Fold Household Clothes',
+      values: [
+        { model: 'π0-Fast', value: 0.60 },
+        { model: 'π0', value: 0.87 },
+        { model: 'GR00T-N1.5', value: 0.73 },
+        { model: 'EO-1', value: 0.87 },
+      ],
+    },
+    {
+      label: 'Make Breakfast Sandwich',
+      values: [
+        { model: 'π0-Fast', value: 0.33 },
+        { model: 'π0', value: 0.73 },
+        { model: 'GR00T-N1.5', value: 0.72 },
+        { model: 'EO-1', value: 0.85 },
+      ],
+    },
+    {
+      label: 'Roast Beef Steak',
+      values: [
+        { model: 'π0-Fast', value: 0.33 },
+        { model: 'π0', value: 0.46 },
+        { model: 'GR00T-N1.5', value: 0.47 },
+        { model: 'EO-1', value: 0.56 },
+      ],
+    },
+    {
+      label: 'Sort Grocery Items',
+      values: [
+        { model: 'π0-Fast', value: 0.53 },
+        { model: 'π0', value: 0.62 },
+        { model: 'GR00T-N1.5', value: 0.80 },
+        { model: 'EO-1', value: 0.95 },
+      ],
+    },
+  ],
+  legoNote: 'These bimanual tasks mirror LEGO assembly complexity. EO-1\'s 95% on sorting and 85% on sandwich assembly demonstrate the coordination and sequencing capabilities needed for multi-block structures.',
 }
 
 // ============ Section 2: Detailed Analysis ============

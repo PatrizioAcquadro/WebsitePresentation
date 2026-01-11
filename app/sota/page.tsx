@@ -6,13 +6,16 @@ import Image from 'next/image'
 import SectionWrapper from '@/components/task/SectionWrapper'
 import FeatureCarousel from '@/components/sota/FeatureCarousel'
 import PerformanceTable from '@/components/sota/PerformanceTable'
+import GroupedBarChart from '@/components/sota/GroupedBarChart'
 import AnalysisSubsection from '@/components/sota/AnalysisSubsection'
 import {
   heroData,
   whyEO1Narrative,
   keyFeatures,
   liberoBenchmark,
-  realWorldBenchmark,
+  embodimentsChart,
+  generalizationTable,
+  dexterityChart,
   analysisSections,
 } from '@/content/sota-data'
 
@@ -20,7 +23,7 @@ export default function SotaPage() {
   return (
     <div className="pt-16">
       {/* ==================== HERO ==================== */}
-      <div className="bg-gradient-to-b from-[#1d1a1d] to-[#161316] py-16 md:py-20 px-4">
+      <div className="relative bg-gradient-to-b from-[#1d1a1d] to-[#161316] py-16 md:py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <Link
             href="/"
@@ -60,9 +63,9 @@ export default function SotaPage() {
         </div>
       </div>
 
-      {/* ==================== SECTION 1: Why EO-1 ==================== */}
+      {/* ==================== SECTION 1: The Optimal Foundation ==================== */}
       <section id="why-eo1" className="relative py-16 md:py-20 px-4 bg-[#161316] overflow-hidden">
-        {/* Gradient divider at top */}
+        {/* Gradient divider at top - matching other section dividers */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
 
         {/* Soft orange haze/bloom background effect */}
@@ -75,9 +78,9 @@ export default function SotaPage() {
           <div className="absolute bottom-[20%] right-[20%] w-[300px] h-[300px] bg-[#FF6D29]/[0.015] rounded-full blur-[80px]" />
         </div>
 
-        {/* Robot background image - constrained to hero + carousel area only */}
-        <div className="absolute right-0 top-0 h-[65%] w-[60%] md:w-[50%] pointer-events-none overflow-hidden">
-          {/* Robot image - further reduced to not overwhelm */}
+        {/* Robot background image - positioned higher in section */}
+        <div className="absolute right-0 top-[-5%] h-[55%] w-[60%] md:w-[50%] pointer-events-none overflow-hidden">
+          {/* Robot image */}
           <div className="absolute right-[-5%] top-[0%] w-[480px] md:w-[540px] lg:w-[600px] h-[100%]">
             <Image
               src="/robot.png"
@@ -122,26 +125,24 @@ export default function SotaPage() {
             </div>
           </motion.div>
 
-          {/* Feature Carousel - no heading, pulled up closer */}
+          {/* Feature Carousel */}
           <div className="mb-16 relative z-10">
             <FeatureCarousel features={keyFeatures} />
           </div>
 
-          {/* Performance Tables */}
-          <div className="relative z-10">
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.4 }}
-              className="text-xl font-semibold text-white mb-6"
-            >
-              Performance Evidence
-            </motion.h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <PerformanceTable benchmark={liberoBenchmark} index={0} />
-              <PerformanceTable benchmark={realWorldBenchmark} index={1} />
-            </div>
+          {/* Performance Evidence - Vertical Stack, Full Width */}
+          <div className="relative z-10 space-y-6">
+            {/* LIBERO Benchmark Table */}
+            <PerformanceTable benchmark={liberoBenchmark} index={0} />
+
+            {/* Performance on Diverse Embodiments Chart */}
+            <GroupedBarChart chart={embodimentsChart} index={1} />
+
+            {/* Generalization Performance Table */}
+            <PerformanceTable benchmark={generalizationTable} index={2} />
+
+            {/* Long-horizon Dexterity Chart */}
+            <GroupedBarChart chart={dexterityChart} index={3} />
           </div>
         </div>
       </section>
