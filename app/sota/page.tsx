@@ -79,7 +79,7 @@ export default function SotaPage() {
         </div>
 
         {/* Robot background image - positioned slightly above section top */}
-        <div className="absolute right-[-5%] top-[-2%] w-[500px] md:w-[560px] lg:w-[620px] h-[650px] md:h-[750px] pointer-events-none">
+        <div className="absolute right-[4%] top-[-2%] w-[500px] md:w-[560px] lg:w-[620px] h-[650px] md:h-[750px] pointer-events-none">
           {/* Robot image */}
           <Image
             src="/robot.png"
