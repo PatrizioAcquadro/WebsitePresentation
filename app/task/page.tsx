@@ -211,82 +211,81 @@ export default function TaskPage() {
         subtitle="Breaking down the complex assembly task into fundamental building blocks: the atomic skills the robot must master and how both arms work together to achieve precise manipulation."
         variant="darker"
       >
-        {/* Atomic Skills Table */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.5 }}
-          className="mb-16"
         >
-          <h3 className="text-lg md:text-xl font-semibold text-white mb-4 text-center">Atomic Skills Required</h3>
-          <div className="bg-gradient-to-br from-[#161316] to-[#1d1a1d] border border-[#453027] rounded-2xl overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-[#161316]">
-                  <tr>
-                    <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider">
-                      Category
-                    </th>
-                    <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider">
-                      Skills
-                    </th>
-                    <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider">
-                      Bimanual Req.
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#453027]/50">
-                  {atomicSkills.map((skill) => (
-                    <tr key={skill.category} className="hover:bg-[#453027]/20 transition-colors">
-                      <td className="px-4 md:px-6 py-4">
-                        <span className="font-medium text-white text-sm md:text-base">{skill.category}</span>
-                      </td>
-                      <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA]">{skill.skills}</td>
-                      <td className="px-4 md:px-6 py-4">
-                        <span className="text-xs md:text-sm text-[#BABABA]">
-                          {skill.bimanualRequirement}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {/* Unified container with gradient from lighter top to darker bottom */}
+          <div className="bg-gradient-to-b from-[#1d1a1d] via-[#1a171a] to-[#141214] border border-[#453027] rounded-2xl overflow-hidden">
+            {/* Atomic Skills - Two column layout */}
+            <div className="p-6 md:p-10">
+              <div className="space-y-4 md:space-y-5">
+                {atomicSkills.map((skill, index) => (
+                  <motion.div
+                    key={skill.category}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex flex-col md:flex-row md:items-start gap-2 md:gap-8 py-3 border-b border-[#453027]/30 last:border-b-0"
+                  >
+                    {/* Left: Category + Bimanual Requirement */}
+                    <div className="md:w-1/3 lg:w-1/4 shrink-0">
+                      <span className="text-base md:text-lg font-semibold text-white">
+                        {skill.category}
+                      </span>
+                      <span className="text-sm md:text-base text-[#BABABA] ml-2">
+                        ({skill.bimanualRequirement})
+                      </span>
+                    </div>
+                    {/* Right: Skills */}
+                    <div className="md:flex-1">
+                      <p className="text-sm md:text-base text-[#BABABA] leading-relaxed">
+                        {skill.skills}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="h-px bg-gradient-to-r from-transparent via-[#453027] to-transparent" />
+
+            {/* Coordination Modes */}
+            <div className="p-6 md:p-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {coordinationModes.map((mode, index) => (
+                  <motion.div
+                    key={mode.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="relative bg-gradient-to-b from-[#1d1a1d] to-[#161316] border border-[#453027]/50 rounded-xl overflow-hidden hover:border-[#FF6D29]/30 transition-colors"
+                  >
+                    {/* Large background number */}
+                    <span className="absolute right-2 top-0 text-[120px] md:text-[140px] font-bold text-[#453027]/30 select-none leading-none">
+                      {mode.id}
+                    </span>
+
+                    {/* Content */}
+                    <div className="relative z-10 p-5 md:p-6 min-h-[280px] flex flex-col">
+                      <h4 className="text-base md:text-lg font-semibold text-white mb-2">{mode.name}</h4>
+                      <p className="text-sm text-[#BABABA] mb-4 flex-grow">{mode.description}</p>
+                      <div className="border-t border-[#453027]/50 pt-4">
+                        <span className="text-[#FF6D29] text-xs font-medium uppercase tracking-wider">Example</span>
+                        <p className="text-sm text-[#BABABA] mt-1">{mode.example}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </motion.div>
-
-        {/* Coordination Modes */}
-        <div>
-          <h3 className="text-lg md:text-xl font-semibold text-white mb-6 text-center">Bimanual Coordination Modes</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {coordinationModes.map((mode, index) => (
-              <motion.div
-                key={mode.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="relative bg-gradient-to-b from-[#FF6D29]/15 via-[#FF6D29]/5 to-[#161316] border border-[#FF6D29]/20 rounded-2xl overflow-hidden hover:border-[#FF6D29]/40 hover:from-[#FF6D29]/20 transition-all duration-300"
-              >
-                {/* Large background number */}
-                <span className="absolute right-3 top-3 text-[80px] md:text-[100px] font-bold text-[#FF6D29]/10 select-none leading-none">
-                  {mode.id}
-                </span>
-
-                {/* Content */}
-                <div className="relative z-10 p-5 md:p-6 min-h-[280px] flex flex-col">
-                  <h4 className="text-base md:text-lg font-semibold text-white mb-2">{mode.name}</h4>
-                  <p className="text-sm text-[#BABABA] mb-4 flex-grow">{mode.description}</p>
-                  <div className="border-t border-[#FF6D29]/20 pt-4">
-                    <span className="text-[#FF6D29] text-xs font-medium uppercase tracking-wider">Example</span>
-                    <p className="text-sm text-[#BABABA] mt-1">{mode.example}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
       </SectionWrapper>
 
       {/* SECTION 3: Key Challenges */}
