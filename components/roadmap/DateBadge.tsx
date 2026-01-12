@@ -20,7 +20,7 @@ export default function DateBadge({ date, position }: DateBadgeProps) {
     >
       <div
         className={`
-          relative px-6 py-3 rounded-xl
+          relative px-6 py-3 rounded-xl text-center
           bg-gradient-to-br from-[#1d1a1d] to-[#161316]
           border-2 ${isStart ? 'border-[#FF6D29]/40' : 'border-green-500/40'}
           shadow-lg ${isStart ? 'shadow-[#FF6D29]/10' : 'shadow-green-500/10'}

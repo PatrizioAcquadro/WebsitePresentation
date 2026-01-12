@@ -29,12 +29,12 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
               <div className="p-4 md:p-5 border-b border-[#453027]/50">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
-                    <span className="text-[#BABABA] text-xs font-medium">{subphase.id}</span>
-                    <h4 className="text-white font-semibold text-sm md:text-base mt-1">
+                    <span className="text-[#BABABA] text-sm font-medium">{subphase.id}</span>
+                    <h4 className="text-white font-semibold text-base md:text-lg mt-1">
                       {subphase.title}
                     </h4>
                   </div>
-                  <span className="text-[#FF6D29] font-semibold text-sm whitespace-nowrap">
+                  <span className="text-[#FF6D29] font-semibold text-base whitespace-nowrap">
                     {subphase.estimatedDays} days
                   </span>
                 </div>
@@ -44,8 +44,8 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
                   <div key={i} className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D29] mt-2 shrink-0" />
                     <div>
-                      <span className="text-white text-sm">{task.title}</span>
-                      <span className="text-[#BABABA] text-xs block mt-0.5">{task.deliverable}</span>
+                      <span className="text-white text-base">{task.title}</span>
+                      <span className="text-[#BABABA] text-sm block mt-0.5">{task.deliverable}</span>
                     </div>
                   </div>
                 ))}
@@ -73,12 +73,12 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
               <div className="p-4 md:p-5 border-b border-[#453027]/50">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
-                    <span className="text-[#BABABA] text-xs font-medium">{subphase.id}</span>
-                    <h4 className="text-white font-semibold text-sm md:text-base mt-1">
+                    <span className="text-[#BABABA] text-sm font-medium">{subphase.id}</span>
+                    <h4 className="text-white font-semibold text-base md:text-lg mt-1">
                       {subphase.title}
                     </h4>
                   </div>
-                  <span className="text-[#FF6D29] font-semibold text-sm whitespace-nowrap">
+                  <span className="text-[#FF6D29] font-semibold text-base whitespace-nowrap">
                     {subphase.estimatedDays} days
                   </span>
                 </div>
@@ -88,8 +88,8 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
                   <div key={i} className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D29] mt-2 shrink-0" />
                     <div>
-                      <span className="text-white text-sm">{task.title}</span>
-                      <span className="text-[#BABABA] text-xs block mt-0.5">{task.deliverable}</span>
+                      <span className="text-white text-base">{task.title}</span>
+                      <span className="text-[#BABABA] text-sm block mt-0.5">{task.deliverable}</span>
                     </div>
                   </div>
                 ))}
@@ -110,10 +110,10 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
           <div className="p-4 border-b border-[#453027]/50">
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1">
-                <span className="text-[#BABABA] text-xs font-medium">{subphase.id}</span>
-                <h4 className="text-white font-semibold text-sm mt-1">{subphase.title}</h4>
+                <span className="text-[#BABABA] text-sm font-medium">{subphase.id}</span>
+                <h4 className="text-white font-semibold text-base mt-1">{subphase.title}</h4>
               </div>
-              <span className="text-[#FF6D29] font-semibold text-sm whitespace-nowrap">
+              <span className="text-[#FF6D29] font-semibold text-base whitespace-nowrap">
                 {subphase.estimatedDays} days
               </span>
             </div>
@@ -123,8 +123,8 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
               <div key={i} className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D29] mt-2 shrink-0" />
                 <div>
-                  <span className="text-white text-sm">{task.title}</span>
-                  <span className="text-[#BABABA] text-xs block mt-0.5">{task.deliverable}</span>
+                  <span className="text-white text-base">{task.title}</span>
+                  <span className="text-[#BABABA] text-sm block mt-0.5">{task.deliverable}</span>
                 </div>
               </div>
             ))}
