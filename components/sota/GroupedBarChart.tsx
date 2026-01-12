@@ -17,12 +17,12 @@ const modelColors: { [key: string]: { bg: string; hex: string } } = {
   'EO-1': { bg: 'bg-[#FF6D29]', hex: '#FF6D29' },
 }
 
-// Y-axis grid values
-const yAxisTicks = [0, 0.25, 0.5, 0.75, 1.0]
+// Y-axis grid values (excluding 0, which will be the baseline)
+const yAxisTicks = [0.25, 0.5, 0.75, 1.0]
 
 export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) {
   const maxValue = 1.0
-  const chartHeight = 200 // px
+  const chartHeight = 220 // px
   const [hoveredBar, setHoveredBar] = useState<string | null>(null)
 
   return (
@@ -47,28 +47,26 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
           {/* Y-axis */}
           <div className="flex flex-col justify-between pr-3 text-right" style={{ height: chartHeight }}>
             {yAxisTicks.slice().reverse().map((tick) => (
-              <span key={tick} className="text-[10px] text-[#6a6568] leading-none">
+              <span key={tick} className="text-[11px] text-[#6a6568] leading-none">
                 {tick.toFixed(2)}
               </span>
             ))}
+            {/* 0 value at bottom */}
+            <span className="text-[11px] text-[#6a6568] leading-none">0.00</span>
           </div>
 
           {/* Chart body */}
           <div className="flex-1 relative">
-            {/* Y-axis label */}
-            <div className="absolute -left-12 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] text-[#9a9598] whitespace-nowrap">
-              {chart.yAxisLabel}
-            </div>
-
             {/* Grid lines */}
             <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
               {yAxisTicks.map((tick) => (
                 <div
                   key={tick}
-                  className="w-full border-t border-[#353035]"
-                  style={{ opacity: tick === 0 ? 1 : 0.5 }}
+                  className="w-full border-t border-[#353035]/50"
                 />
               ))}
+              {/* Baseline at 0 - stronger line */}
+              <div className="w-full border-t border-[#4a4548]" />
             </div>
 
             {/* Bars container */}
@@ -83,7 +81,7 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                 return (
                   <div
                     key={group.label}
-                    className="flex items-end justify-center gap-[3px]"
+                    className="flex items-end justify-center gap-[4px]"
                     style={{ flex: 1, maxWidth: `${100 / chart.groups.length}%`, height: chartHeight }}
                   >
                     {validBars.map((item, barIndex) => {
@@ -109,7 +107,7 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                         >
                           {/* Value label */}
                           <motion.span
-                            className={`mb-1 text-[9px] font-medium whitespace-nowrap ${
+                            className={`mb-1 text-[11px] font-medium whitespace-nowrap ${
                               isEO1 ? 'text-[#FF6D29]' : 'text-[#9a9598]'
                             }`}
                             animate={{
@@ -144,7 +142,7 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                               isEO1 ? 'shadow-[0_0_10px_rgba(255,109,41,0.35)]' : ''
                             }`}
                             style={{
-                              width: 14,
+                              width: 18,
                               backgroundColor: colors.hex,
                               transformOrigin: 'bottom center',
                             }}
@@ -158,18 +156,18 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
             </div>
 
             {/* X-axis labels (below bars) */}
-            <div className="flex justify-around mt-3">
+            <div className="flex justify-around mt-4">
               {chart.groups.map((group) => (
                 <div
                   key={group.label}
                   className="text-center px-1"
                   style={{ flex: 1, maxWidth: `${100 / chart.groups.length}%` }}
                 >
-                  <div className="text-[11px] font-medium text-white leading-tight">
+                  <div className="text-[12px] font-medium text-white leading-tight">
                     {group.label}
                   </div>
                   {group.taskCount && (
-                    <div className="text-[9px] text-[#6a6568] mt-0.5">
+                    <div className="text-[12px] text-[#6a6568] mt-0.5">
                       ({group.taskCount})
                     </div>
                   )}
@@ -180,19 +178,19 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap justify-center gap-4 mt-6 pt-4 border-t border-[#453027]/50">
+        <div className="flex flex-wrap justify-center gap-5 mt-6 pt-4 border-t border-[#453027]/50">
           {chart.models.map((model) => {
             const colors = modelColors[model]
             const isEO1 = model === 'EO-1'
             return (
               <div key={model} className="flex items-center gap-2">
                 <div
-                  className={`w-3 h-3 rounded-sm ${
+                  className={`w-3.5 h-3.5 rounded-sm ${
                     isEO1 ? 'shadow-[0_0_6px_rgba(255,109,41,0.4)]' : ''
                   }`}
                   style={{ backgroundColor: colors.hex }}
                 />
-                <span className={`text-xs ${isEO1 ? 'text-[#FF6D29] font-medium' : 'text-[#9a9598]'}`}>
+                <span className={`text-[13px] ${isEO1 ? 'text-[#FF6D29] font-medium' : 'text-[#9a9598]'}`}>
                   {model}
                 </span>
               </div>
