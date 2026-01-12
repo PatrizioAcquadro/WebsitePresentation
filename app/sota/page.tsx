@@ -151,7 +151,6 @@ export default function SotaPage() {
       <SectionWrapper
         id="detailed-analysis"
         title="Detailed Analysis"
-        subtitle="Technical deep-dive into EO-1's architecture, training methodology, and data pipeline with implications for LEGO assembly."
         variant="darker"
       >
         <div className="space-y-4">

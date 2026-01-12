@@ -74,10 +74,12 @@ export default function PerformanceTable({ benchmark, index }: PerformanceTableP
         <table className="w-full">
           <thead className="bg-[#161316]">
             <tr>
-              {benchmark.columns.map((col) => (
+              {benchmark.columns.map((col, colIndex) => (
                 <th
                   key={col}
-                  className="px-3 md:px-4 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider whitespace-nowrap"
+                  className={`px-3 md:px-4 py-3 text-xs font-semibold text-[#BABABA] uppercase tracking-wider whitespace-nowrap ${
+                    colIndex === 0 ? 'text-left' : 'text-center'
+                  }`}
                 >
                   {col}
                 </th>
@@ -94,7 +96,7 @@ export default function PerformanceTable({ benchmark, index }: PerformanceTableP
                     : 'hover:bg-[#453027]/20'
                 }`}
               >
-                <td className="px-3 md:px-4 py-3">
+                <td className="px-3 md:px-4 py-3 text-left">
                   <span
                     className={`font-medium text-sm ${
                       row.isHighlighted ? 'text-[#FF6D29] font-bold' : 'text-white'
@@ -111,7 +113,7 @@ export default function PerformanceTable({ benchmark, index }: PerformanceTableP
                     : value === bestValuesPerColumn[col]
 
                   return (
-                    <td key={col} className="px-3 md:px-4 py-3">
+                    <td key={col} className="px-3 md:px-4 py-3 text-center">
                       <span
                         className={`text-sm whitespace-nowrap ${
                           isBest
