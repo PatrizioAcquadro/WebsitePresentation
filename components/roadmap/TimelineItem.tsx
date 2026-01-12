@@ -61,7 +61,7 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
       </div>
 
       {/* Right side */}
-      <div className={`hidden md:flex flex-1 items-center ${isLeft ? 'justify-start' : 'justify-end'}`}>
+      <div className={`hidden md:flex flex-1 items-center ${isLeft ? 'justify-end' : 'justify-start'}`}>
         {!isLeft ? (
           <>
             {/* Horizontal line from center to card */}
