@@ -9,28 +9,49 @@ interface PerformanceTableProps {
 }
 
 export default function PerformanceTable({ benchmark, index }: PerformanceTableProps) {
-  // Find the best value for each column (excluding 'Model' and 'Metric')
-  const bestValues: { [key: string]: string } = {}
+  // Check if first column is 'Metric' (for generalization table - find best per row)
+  const isMetricTable = benchmark.columns[0] === 'Metric'
   const valueColumns = benchmark.columns.filter(col => col !== 'Model' && col !== 'Metric')
 
-  valueColumns.forEach(col => {
-    let best = 0
-    benchmark.rows.forEach(row => {
-      const val = row.values[col]
-      if (typeof val === 'string') {
-        // Handle both percentage and decimal formats
-        const cleanVal = val.replace('%', '').replace('±', '').split(' ')[0]
-        const numVal = parseFloat(cleanVal)
-        if (numVal > best) {
-          best = numVal
-          bestValues[col] = val
-        }
-      }
-    })
-  })
+  // Find the best value for each row (for metric tables) or each column (for model tables)
+  const bestValuesPerRow: { [rowModel: string]: string } = {}
+  const bestValuesPerColumn: { [col: string]: string } = {}
 
-  // Check if first column is 'Metric' (for generalization table)
-  const isMetricTable = benchmark.columns[0] === 'Metric'
+  if (isMetricTable) {
+    // For metric tables: find best value in each row
+    benchmark.rows.forEach(row => {
+      let best = -Infinity
+      let bestVal = ''
+      valueColumns.forEach(col => {
+        const val = row.values[col]
+        if (typeof val === 'string') {
+          const cleanVal = val.replace('%', '').replace('±', '').split(' ')[0]
+          const numVal = parseFloat(cleanVal)
+          if (numVal > best) {
+            best = numVal
+            bestVal = val
+          }
+        }
+      })
+      bestValuesPerRow[row.model] = bestVal
+    })
+  } else {
+    // For model tables: find best value in each column
+    valueColumns.forEach(col => {
+      let best = -Infinity
+      benchmark.rows.forEach(row => {
+        const val = row.values[col]
+        if (typeof val === 'string') {
+          const cleanVal = val.replace('%', '').replace('±', '').split(' ')[0]
+          const numVal = parseFloat(cleanVal)
+          if (numVal > best) {
+            best = numVal
+            bestValuesPerColumn[col] = val
+          }
+        }
+      })
+    })
+  }
 
   return (
     <motion.div
@@ -84,15 +105,17 @@ export default function PerformanceTable({ benchmark, index }: PerformanceTableP
                 </td>
                 {valueColumns.map((col) => {
                   const value = row.values[col]
-                  const isBest = value === bestValues[col]
+                  // Determine if this is the best value
+                  const isBest = isMetricTable
+                    ? value === bestValuesPerRow[row.model]
+                    : value === bestValuesPerColumn[col]
+
                   return (
                     <td key={col} className="px-3 md:px-4 py-3">
                       <span
                         className={`text-sm whitespace-nowrap ${
-                          isBest && row.isHighlighted
+                          isBest
                             ? 'font-bold text-[#FF6D29]'
-                            : isBest
-                            ? 'font-semibold text-white'
                             : 'text-[#BABABA]'
                         }`}
                       >
