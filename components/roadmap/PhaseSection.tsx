@@ -50,19 +50,19 @@ export default function PhaseSection({ phase }: PhaseSectionProps) {
         </div>
       </motion.div>
 
-      {/* Start Date */}
-      <DateBadge date={phase.startDate} position="start" />
-
-      {/* Timeline Container */}
-      <div className="relative mt-8 mb-8">
-        {/* Central vertical line - visible on md+ */}
-        <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#FF6D29]/50 via-[#453027] to-[#FF6D29]/50 -translate-x-1/2" />
+      {/* Timeline Container with integrated date badges */}
+      <div className="relative">
+        {/* Central vertical line - visible on md+, connects from start to end date */}
+        <div className="hidden md:block absolute left-1/2 top-[28px] bottom-[28px] w-0.5 bg-gradient-to-b from-[#FF6D29]/70 via-[#FF6D29]/50 to-[#FF6D29]/70 -translate-x-1/2" />
 
         {/* Mobile left line */}
-        <div className="md:hidden absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#FF6D29]/50 via-[#453027] to-[#FF6D29]/50" />
+        <div className="md:hidden absolute left-4 top-[28px] bottom-[28px] w-0.5 bg-gradient-to-b from-[#FF6D29]/70 via-[#FF6D29]/50 to-[#FF6D29]/70" />
+
+        {/* Start Date */}
+        <DateBadge date={phase.startDate} position="start" />
 
         {/* Timeline items */}
-        <div className="relative space-y-8 md:space-y-6">
+        <div className="relative space-y-8 md:space-y-6 py-8">
           {phase.subphases.map((subphase, i) => (
             <TimelineItem
               key={subphase.id}
@@ -72,10 +72,10 @@ export default function PhaseSection({ phase }: PhaseSectionProps) {
             />
           ))}
         </div>
-      </div>
 
-      {/* End Date */}
-      <DateBadge date={phase.endDate} position="end" />
+        {/* End Date */}
+        <DateBadge date={phase.endDate} position="end" />
+      </div>
 
       {/* Milestone (if exists) */}
       {phase.milestone && (
@@ -102,7 +102,7 @@ export default function PhaseSection({ phase }: PhaseSectionProps) {
                 />
               </svg>
               <span className="text-[#FF6D29] font-semibold text-sm">
-                Week {phase.milestone.week} Milestone
+                Phase {phase.id} Milestone
               </span>
             </div>
             <h4 className="text-white font-medium">{phase.milestone.title}</h4>

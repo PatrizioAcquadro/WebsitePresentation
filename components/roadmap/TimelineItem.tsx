@@ -3,25 +3,6 @@
 import { motion } from 'framer-motion'
 import { Subphase } from '@/content/roadmap-data'
 
-// Classification colors mapping
-const classificationStyles = {
-  'HUMAN-CRITICAL': {
-    bg: 'bg-red-500/10',
-    border: 'border-red-500/30',
-    text: 'text-red-400',
-  },
-  'AGENT-ASSISTED': {
-    bg: 'bg-[#FF6D29]/10',
-    border: 'border-[#FF6D29]/30',
-    text: 'text-[#FF6D29]',
-  },
-  'AGENT-DELEGABLE': {
-    bg: 'bg-green-500/10',
-    border: 'border-green-500/30',
-    text: 'text-green-400',
-  },
-}
-
 interface TimelineItemProps {
   subphase: Subphase
   index: number
@@ -29,8 +10,6 @@ interface TimelineItemProps {
 }
 
 export default function TimelineItem({ subphase, index, isLeft }: TimelineItemProps) {
-  const styles = classificationStyles[subphase.classification]
-
   return (
     <motion.div
       initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
@@ -38,7 +17,7 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className={`
-        relative flex items-start gap-4
+        relative flex items-center gap-0
         ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}
         flex-row
       `}
@@ -66,15 +45,6 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
               {subphase.estimatedDays} days
             </span>
           </div>
-          {/* Classification badge */}
-          <span
-            className={`
-              inline-block mt-2 px-2 py-0.5 text-xs font-medium rounded-full border
-              ${styles.bg} ${styles.border} ${styles.text}
-            `}
-          >
-            {subphase.classification}
-          </span>
         </div>
 
         {/* Tasks list */}
@@ -93,10 +63,8 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
         </div>
       </div>
 
-      {/* Timeline connector dot - visible on md+ */}
-      <div className="hidden md:flex relative flex-shrink-0 items-center justify-center">
-        <div className="w-4 h-4 rounded-full bg-[#FF6D29] border-4 border-[#161316] z-10" />
-      </div>
+      {/* Horizontal connector line - visible on md+ */}
+      <div className="hidden md:block w-8 h-0.5 bg-[#FF6D29]/70 flex-shrink-0" />
 
       {/* Spacer for opposite side - visible on md+ */}
       <div className="hidden md:block flex-1 max-w-md" />
