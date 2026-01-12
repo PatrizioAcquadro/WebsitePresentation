@@ -57,7 +57,7 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
 
           {/* Chart body */}
           <div className="flex-1 relative">
-            {/* Grid lines */}
+            {/* Grid lines (behind bars) */}
             <div className="absolute inset-0 pointer-events-none" style={{ height: chartHeight }}>
               {yAxisTicks.map((tick) => (
                 <div
@@ -66,8 +66,6 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                   style={{ top: `${(1 - tick / maxValue) * 100}%` }}
                 />
               ))}
-              {/* Baseline at 0 - solid line */}
-              <div className="absolute bottom-0 w-full border-t-2 border-[#6a6568]" />
             </div>
 
             {/* Bars container */}
@@ -93,18 +91,11 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                       const isHovered = hoveredBar === barKey
 
                       return (
-                        <motion.div
+                        <div
                           key={item.model}
                           className="relative flex flex-col items-center justify-end h-full"
                           onMouseEnter={() => setHoveredBar(barKey)}
                           onMouseLeave={() => setHoveredBar(null)}
-                          animate={{
-                            y: isHovered ? -4 : 0,
-                          }}
-                          transition={{
-                            duration: 0.2,
-                            ease: 'easeOut',
-                          }}
                         >
                           {/* Value label */}
                           <motion.span
@@ -148,7 +139,7 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                               transformOrigin: 'bottom center',
                             }}
                           />
-                        </motion.div>
+                        </div>
                       )
                     })}
                   </div>
@@ -156,11 +147,13 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
               })}
             </div>
 
+            {/* Baseline at 0 - above bars */}
+            <div className="absolute bottom-0 left-0 right-0 border-t-2 border-[#6a6568] z-10 pointer-events-none" />
           </div>
         </div>
 
-        {/* X-axis labels (below bars) - centered across full width */}
-        <div className="flex justify-around mt-4">
+        {/* X-axis labels (below bars) - aligned with bar groups */}
+        <div className="flex justify-around mt-4 pl-10">
           {chart.groups.map((group) => (
             <div
               key={group.label}
