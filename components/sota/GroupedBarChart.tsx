@@ -58,15 +58,16 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
           {/* Chart body */}
           <div className="flex-1 relative">
             {/* Grid lines */}
-            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
+            <div className="absolute inset-0 pointer-events-none" style={{ height: chartHeight }}>
               {yAxisTicks.map((tick) => (
                 <div
                   key={tick}
-                  className="w-full border-t border-[#353035]/50"
+                  className="absolute w-full border-t border-[#353035]/50"
+                  style={{ top: `${(1 - tick / maxValue) * 100}%` }}
                 />
               ))}
               {/* Baseline at 0 - stronger line */}
-              <div className="w-full border-t border-[#4a4548]" />
+              <div className="absolute bottom-0 w-full border-t-2 border-[#5a5558]" />
             </div>
 
             {/* Bars container */}
@@ -81,7 +82,7 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                 return (
                   <div
                     key={group.label}
-                    className="flex items-end justify-center gap-[4px]"
+                    className="flex items-end justify-center gap-[5px]"
                     style={{ flex: 1, maxWidth: `${100 / chart.groups.length}%`, height: chartHeight }}
                   >
                     {validBars.map((item, barIndex) => {
@@ -142,7 +143,7 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                               isEO1 ? 'shadow-[0_0_10px_rgba(255,109,41,0.35)]' : ''
                             }`}
                             style={{
-                              width: 18,
+                              width: 22,
                               backgroundColor: colors.hex,
                               transformOrigin: 'bottom center',
                             }}
