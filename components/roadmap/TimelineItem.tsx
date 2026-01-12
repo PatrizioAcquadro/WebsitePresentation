@@ -16,58 +16,121 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`
-        relative flex items-center gap-0
-        ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}
-        flex-row
-      `}
+      className="relative flex items-center"
     >
-      {/* Content Card */}
-      <div
-        className={`
-          flex-1 md:max-w-md
-          bg-gradient-to-br from-[#1d1a1d] to-[#161316]
-          border border-[#453027] rounded-2xl
-          hover:border-[#FF6D29]/30 transition-colors
-          overflow-hidden
-        `}
-      >
-        {/* Header with title and time estimate */}
-        <div className="p-4 md:p-5 border-b border-[#453027]/50">
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex-1">
-              <span className="text-[#BABABA] text-xs font-medium">{subphase.id}</span>
-              <h4 className="text-white font-semibold text-sm md:text-base mt-1">
-                {subphase.title}
-              </h4>
-            </div>
-            <span className="text-[#FF6D29] font-semibold text-sm whitespace-nowrap">
-              {subphase.estimatedDays} days
-            </span>
-          </div>
-        </div>
-
-        {/* Tasks list */}
-        <div className="p-4 md:p-5 space-y-3">
-          {subphase.tasks.map((task, i) => (
-            <div key={i} className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D29] mt-2 shrink-0" />
-              <div>
-                <span className="text-white text-sm">{task.title}</span>
-                <span className="text-[#BABABA] text-xs block mt-0.5">
-                  {task.deliverable}
-                </span>
+      {/* Left side */}
+      <div className={`hidden md:flex flex-1 items-center ${isLeft ? 'justify-end' : 'justify-start'}`}>
+        {isLeft ? (
+          <>
+            {/* Content Card on left */}
+            <div
+              className="max-w-md w-full bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl hover:border-[#FF6D29]/30 transition-colors overflow-hidden"
+            >
+              <div className="p-4 md:p-5 border-b border-[#453027]/50">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <span className="text-[#BABABA] text-xs font-medium">{subphase.id}</span>
+                    <h4 className="text-white font-semibold text-sm md:text-base mt-1">
+                      {subphase.title}
+                    </h4>
+                  </div>
+                  <span className="text-[#FF6D29] font-semibold text-sm whitespace-nowrap">
+                    {subphase.estimatedDays} days
+                  </span>
+                </div>
+              </div>
+              <div className="p-4 md:p-5 space-y-3">
+                {subphase.tasks.map((task, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D29] mt-2 shrink-0" />
+                    <div>
+                      <span className="text-white text-sm">{task.title}</span>
+                      <span className="text-[#BABABA] text-xs block mt-0.5">{task.deliverable}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
+            {/* Horizontal line from card to center */}
+            <div className="w-8 h-0.5 bg-[#FF6D29]/70 flex-shrink-0" />
+          </>
+        ) : (
+          /* Empty spacer when card is on right */
+          <div className="max-w-md w-full" />
+        )}
       </div>
 
-      {/* Horizontal connector line - visible on md+ */}
-      <div className="hidden md:block w-8 h-0.5 bg-[#FF6D29]/70 flex-shrink-0" />
+      {/* Right side */}
+      <div className={`hidden md:flex flex-1 items-center ${isLeft ? 'justify-start' : 'justify-end'}`}>
+        {!isLeft ? (
+          <>
+            {/* Horizontal line from center to card */}
+            <div className="w-8 h-0.5 bg-[#FF6D29]/70 flex-shrink-0" />
+            {/* Content Card on right */}
+            <div
+              className="max-w-md w-full bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl hover:border-[#FF6D29]/30 transition-colors overflow-hidden"
+            >
+              <div className="p-4 md:p-5 border-b border-[#453027]/50">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <span className="text-[#BABABA] text-xs font-medium">{subphase.id}</span>
+                    <h4 className="text-white font-semibold text-sm md:text-base mt-1">
+                      {subphase.title}
+                    </h4>
+                  </div>
+                  <span className="text-[#FF6D29] font-semibold text-sm whitespace-nowrap">
+                    {subphase.estimatedDays} days
+                  </span>
+                </div>
+              </div>
+              <div className="p-4 md:p-5 space-y-3">
+                {subphase.tasks.map((task, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D29] mt-2 shrink-0" />
+                    <div>
+                      <span className="text-white text-sm">{task.title}</span>
+                      <span className="text-[#BABABA] text-xs block mt-0.5">{task.deliverable}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          /* Empty spacer when card is on left */
+          <div className="max-w-md w-full" />
+        )}
+      </div>
 
-      {/* Spacer for opposite side - visible on md+ */}
-      <div className="hidden md:block flex-1 max-w-md" />
+      {/* Mobile layout - card only, no timeline */}
+      <div className="md:hidden flex-1">
+        <div
+          className="bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl hover:border-[#FF6D29]/30 transition-colors overflow-hidden"
+        >
+          <div className="p-4 border-b border-[#453027]/50">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1">
+                <span className="text-[#BABABA] text-xs font-medium">{subphase.id}</span>
+                <h4 className="text-white font-semibold text-sm mt-1">{subphase.title}</h4>
+              </div>
+              <span className="text-[#FF6D29] font-semibold text-sm whitespace-nowrap">
+                {subphase.estimatedDays} days
+              </span>
+            </div>
+          </div>
+          <div className="p-4 space-y-3">
+            {subphase.tasks.map((task, i) => (
+              <div key={i} className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF6D29] mt-2 shrink-0" />
+                <div>
+                  <span className="text-white text-sm">{task.title}</span>
+                  <span className="text-[#BABABA] text-xs block mt-0.5">{task.deliverable}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </motion.div>
   )
 }
