@@ -57,7 +57,7 @@ export interface RoadmapData {
 
 export const roadmapData: RoadmapData = {
   projectMeta: {
-    startDate: 'Jan 10, 2026',
+    startDate: 'Jan 16, 2026',
     endDate: 'Apr 4, 2026',
     duration: '13 weeks',
   },
@@ -67,9 +67,9 @@ export const roadmapData: RoadmapData = {
     {
       id: 0,
       title: 'Foundation & Setup',
-      duration: 'Week 1-2',
-      startDate: 'Jan 10',
-      endDate: 'Jan 24',
+      duration: 'Week 1',
+      startDate: 'Jan 16',
+      endDate: 'Jan 22',
       goal: 'Environment setup, literature deep-dive, detailed technical planning',
       resources: {
         gpuHours: '~500',
