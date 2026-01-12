@@ -66,8 +66,8 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                   style={{ top: `${(1 - tick / maxValue) * 100}%` }}
                 />
               ))}
-              {/* Baseline at 0 - stronger line */}
-              <div className="absolute bottom-0 w-full border-t-2 border-[#5a5558]" />
+              {/* Baseline at 0 - solid line */}
+              <div className="absolute bottom-0 w-full border-t-2 border-[#6a6568]" />
             </div>
 
             {/* Bars container */}
@@ -143,7 +143,7 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
                               isEO1 ? 'shadow-[0_0_10px_rgba(255,109,41,0.35)]' : ''
                             }`}
                             style={{
-                              width: 22,
+                              width: 30,
                               backgroundColor: colors.hex,
                               transformOrigin: 'bottom center',
                             }}
@@ -156,30 +156,33 @@ export default function GroupedBarChart({ chart, index }: GroupedBarChartProps) 
               })}
             </div>
 
-            {/* X-axis labels (below bars) */}
-            <div className="flex justify-around mt-4">
-              {chart.groups.map((group) => (
-                <div
-                  key={group.label}
-                  className="text-center px-1"
-                  style={{ flex: 1, maxWidth: `${100 / chart.groups.length}%` }}
-                >
-                  <div className="text-[12px] font-medium text-white leading-tight">
-                    {group.label}
-                  </div>
-                  {group.taskCount && (
-                    <div className="text-[12px] text-[#6a6568] mt-0.5">
-                      ({group.taskCount})
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 
-        {/* Legend */}
-        <div className="flex flex-wrap justify-center gap-5 mt-6 pt-4 border-t border-[#453027]/50">
+        {/* X-axis labels (below bars) - centered across full width */}
+        <div className="flex justify-around mt-4">
+          {chart.groups.map((group) => (
+            <div
+              key={group.label}
+              className="text-center px-1"
+              style={{ flex: 1, maxWidth: `${100 / chart.groups.length}%` }}
+            >
+              <div className="text-[12px] font-medium text-white leading-tight">
+                {group.label}
+              </div>
+              {group.taskCount && (
+                <div className="text-[12px] text-[#6a6568] mt-0.5">
+                  ({group.taskCount})
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Legend - outside padded area for full-width separator */}
+      <div className="px-5 md:px-6 py-4 border-t border-[#453027]/50">
+        <div className="flex flex-wrap justify-center gap-5">
           {chart.models.map((model) => {
             const colors = modelColors[model]
             const isEO1 = model === 'EO-1'
