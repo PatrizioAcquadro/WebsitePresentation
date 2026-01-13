@@ -8,16 +8,7 @@ import {
   acknowledgedLimitations,
   architecturalLimitations,
   taskProblemCategories,
-  Severity,
 } from '@/content/limitations-data'
-
-// Severity text styling (inline, not badges)
-const severityTextStyles: Record<Severity, string> = {
-  High: 'text-red-400',
-  Medium: 'text-[#FF6D29]',
-  Low: 'text-yellow-400',
-  'N/A': 'text-gray-400',
-}
 
 // Icons for architectural limitations
 const LatencyIcon = () => (
@@ -101,7 +92,7 @@ export default function LimitationsPage() {
         <div className="absolute top-0 left-0 right-0 h-px z-20 bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
 
         {/* LEGO background image - positioned on right */}
-        <div className="absolute right-[4%] top-[-2%] w-[500px] md:w-[560px] lg:w-[620px] h-[650px] md:h-[750px] pointer-events-none">
+        <div className="absolute right-[4%] top-[-2%] w-[400px] md:w-[448px] lg:w-[496px] h-[520px] md:h-[600px] pointer-events-none">
           <Image
             src="/lego.png"
             alt=""
@@ -109,8 +100,8 @@ export default function LimitationsPage() {
             className="object-cover object-top opacity-[0.30]"
             priority
           />
-          {/* Top fade */}
-          <div className="absolute top-0 left-0 right-0 h-[100px] bg-gradient-to-b from-[#161316] to-transparent" />
+          {/* Top fade (stronger) */}
+          <div className="absolute top-0 left-0 right-0 h-[180px] bg-gradient-to-b from-[#161316] via-[#161316]/80 to-transparent" />
           {/* Bottom fade */}
           <div className="absolute bottom-0 left-0 right-0 h-[250px] bg-gradient-to-t from-[#161316] via-[#161316]/90 to-transparent" />
           {/* Left fade (stronger for content blend) */}
@@ -131,7 +122,8 @@ export default function LimitationsPage() {
               EO-1-Specific Limitations
             </h2>
             <p className="text-[#BABABA] max-w-2xl">
-              Understanding the constraints of EO-1&apos;s architecture when applied to precision LEGO assembly tasks.
+              Understanding the constraints of EO-1&apos;s architecture is essential for adapting it to precision LEGO assembly.
+              Recognizing these limitations early guides our research focus and informs design decisions for the bimanual manipulation pipeline.
             </p>
           </motion.div>
 
@@ -150,22 +142,22 @@ export default function LimitationsPage() {
               Known limitations from the EO-1 paper and their impact on LEGO assembly.
             </p>
 
-            <div className="space-y-4 max-w-3xl">
+            <div className="space-y-5 max-w-3xl">
               {acknowledgedLimitations.map((limitation, index) => (
-                <motion.p
+                <motion.div
                   key={limitation.id}
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="text-base md:text-lg text-[#BABABA] leading-relaxed"
                 >
-                  <span className="text-white font-medium">{limitation.title}</span>
-                  <span className={`${severityTextStyles[limitation.severity]} font-medium`}>
-                    {' '}[{limitation.severity}]
-                  </span>
-                  <span className="text-[#BABABA]"> — {limitation.impact}</span>
-                </motion.p>
+                  <p className="text-base md:text-lg text-white font-medium mb-1">
+                    {limitation.title} <span className="text-[#BABABA]">[{limitation.severity}]</span>
+                  </p>
+                  <p className="text-sm md:text-base text-[#BABABA] leading-relaxed">
+                    {limitation.impact}
+                  </p>
+                </motion.div>
               ))}
             </div>
           </motion.div>

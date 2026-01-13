@@ -35,7 +35,7 @@ export interface TaskProblemCategory {
 export const acknowledgedLimitations: AcknowledgedLimitation[] = [
   {
     id: 'ood-generalization',
-    title: 'Out-of-Action-Domain generalization struggles with limited data',
+    title: 'Out-of-Action-Domain generalization with limited data',
     severity: 'High',
     impact: 'New LEGO configurations may fail without extensive simulation data',
   },
@@ -67,7 +67,7 @@ export const architecturalLimitations: ArchitecturalLimitation[] = [
     solutions: [
       'Dual-system extension (fast reactive + slow deliberative)',
       'Increase action chunk frequency with reduced denoising steps',
-      'Add low-level force controller outside VLA loop',
+      'Add low-level force controller',
     ],
   },
   {
@@ -83,7 +83,7 @@ export const architecturalLimitations: ArchitecturalLimitation[] = [
     solutions: [
       'Variable chunk size based on task phase detection',
       'Hierarchical action generation (coarse -> fine)',
-      'Phase-aware training with different chunk sizes',
+      'Phase training with different chunk sizes',
     ],
   },
   {
