@@ -176,7 +176,61 @@ export default function TaskPage() {
         </motion.div>
       </SectionWrapper>
 
-      {/* SECTION 2: Task Decomposition */}
+      {/* SECTION 2: Task Motivation */}
+      <SectionWrapper
+        id="motivation"
+        title="Task Motivation"
+        subtitle="Understanding why bimanual LEGO assembly represents a critical benchmark for advancing robotic manipulation"
+        variant="darker"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+          {/* Current Landscape Limitations */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5 }}
+            className="bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl p-6 md:p-8"
+          >
+            <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Current Landscape Limitations</h3>
+            <div className="space-y-4 text-[#BABABA] text-sm md:text-base leading-relaxed">
+              <p>
+                Despite remarkable progress in robotic manipulation, today&apos;s Vision-Language-Action models remain largely confined to single-arm tasks. Bimanual coordination—where two arms must dynamically share roles, stabilize objects, and execute synchronized movements—remains a frontier challenge with limited benchmarks and insufficient research attention.
+              </p>
+              <p>
+                Current evaluation tasks also fall short in precision demands. Standard benchmarks like pick-and-place or drawer manipulation tolerate centimeter-level errors, leaving models untested on the sub-millimeter accuracy required for real-world assembly operations. This gap conceals fundamental limitations in fine motor control and visual servoing.
+              </p>
+              <p>
+                Furthermore, most benchmarks feature shallow task horizons of just a few steps, rarely testing a model&apos;s ability to maintain coherent plans across extended sequences, detect errors mid-execution, or recover gracefully from failures—capabilities essential for practical deployment.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Why LEGO Assembly */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl p-6 md:p-8"
+          >
+            <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Why LEGO Assembly?</h3>
+            <div className="space-y-4 text-[#BABABA] text-sm md:text-base leading-relaxed">
+              <p>
+                LEGO assembly emerges as an ideal benchmark precisely because it addresses these gaps naturally rather than artificially. Unlike contrived bimanual tasks, connecting LEGO blocks genuinely requires two hands: one to stabilize the partial structure while the other aligns and inserts new pieces. This makes it an ecologically valid testbed for coordination research.
+              </p>
+              <p>
+                The task imposes objective precision requirements that are both measurable and unforgiving. With studs spaced 4.8mm apart and connection tolerances around 0.1mm, LEGO assembly exposes any deficiency in a model&apos;s fine manipulation capabilities. Success is binary and verifiable—blocks are either properly connected or they aren&apos;t.
+              </p>
+              <p>
+                Multi-block assemblies naturally create long-horizon planning challenges, requiring models to track assembly state, reason about valid placement sequences, and recover from errors across extended episodes. This positions LEGO assembly as a comprehensive stress test for next-generation VLA systems targeting humanoid platforms like the Unitree H1.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </SectionWrapper>
+
+      {/* SECTION 3: Task Decomposition */}
       <SectionWrapper
         id="decomposition"
         title="Task Decomposition"
@@ -253,7 +307,7 @@ export default function TaskPage() {
         </motion.div>
       </SectionWrapper>
 
-      {/* SECTION 3: Success Metrics */}
+      {/* SECTION 4: Success Metrics */}
       <SectionWrapper
         id="metrics"
         title="Success Metrics"
