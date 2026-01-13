@@ -69,7 +69,7 @@ export interface PipelineStep {
 
 export const heroData = {
   title: 'SOTA Model Selection',
-  subtitle: 'Analysis and selection of the state-of-the-art Vision-Language-Action model for bimanual LEGO assembly',
+  subtitle: 'Analysis of the state-of-the-art Vision-Language-Action model for bimanual LEGO assembly',
   badges: [
     { label: 'EO-1', value: 'Selected Model' },
     { label: 'LIBERO', value: '98.2%' },
