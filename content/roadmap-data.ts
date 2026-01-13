@@ -72,7 +72,7 @@ export const roadmapData: RoadmapData = {
       endDate: 'Jan 22',
       goal: 'Environment setup, literature deep-dive, detailed technical planning',
       resources: {
-        gpuHours: '~500',
+        gpuHours: '~4-15',
         purpose: 'Development, testing',
       },
       subphases: [
@@ -120,7 +120,7 @@ export const roadmapData: RoadmapData = {
       endDate: 'Feb 7',
       goal: 'Complete LEGO assembly simulation environment with bimanual robot',
       resources: {
-        gpuHours: '~500',
+        gpuHours: 'TBD',
         purpose: 'Development, testing',
       },
       subphases: [
@@ -161,7 +161,7 @@ export const roadmapData: RoadmapData = {
       endDate: 'Feb 14',
       goal: 'Generate training data including interleaved vision-text-action sequences',
       resources: {
-        gpuHours: '~500',
+        gpuHours: 'TBD',
         purpose: 'Development, testing',
       },
       subphases: [
@@ -219,7 +219,7 @@ export const roadmapData: RoadmapData = {
       endDate: 'Feb 21',
       goal: 'Implement EO-1 architecture with modifications for LEGO task',
       resources: {
-        gpuHours: '~500',
+        gpuHours: 'TBD',
         purpose: 'Development, testing',
       },
       subphases: [
@@ -265,7 +265,7 @@ export const roadmapData: RoadmapData = {
       endDate: 'Feb 28',
       goal: 'Complete, correct training pipeline (even if not run to completion)',
       resources: {
-        gpuHours: '~200',
+        gpuHours: 'TBD',
         purpose: 'Training infrastructure verification',
       },
       subphases: [
@@ -311,7 +311,7 @@ export const roadmapData: RoadmapData = {
       endDate: 'Mar 21',
       goal: 'Execute training at scale, monitor and adjust',
       resources: {
-        gpuHours: '~3000-4000',
+        gpuHours: 'TBD',
         purpose: 'Main training (~2-3 weeks on 8xA100)',
       },
       subphases: [
@@ -357,7 +357,7 @@ export const roadmapData: RoadmapData = {
       endDate: 'Mar 28',
       goal: 'Comprehensive evaluation on LEGO tasks and standard benchmarks',
       resources: {
-        gpuHours: '~800',
+        gpuHours: 'TBD',
         purpose: 'Evaluation, ablations, fine-tuning',
       },
       subphases: [
@@ -414,7 +414,7 @@ export const roadmapData: RoadmapData = {
       endDate: 'Apr 4',
       goal: 'Understand fine-tuning dynamics and task adaptation',
       resources: {
-        gpuHours: '~800',
+        gpuHours: 'TBD',
         purpose: 'Evaluation, ablations, fine-tuning',
       },
       subphases: [
@@ -453,7 +453,7 @@ export const roadmapData: RoadmapData = {
       endDate: 'Apr 4',
       goal: 'Prepare for future real-robot deployment on Unitree H1',
       resources: {
-        gpuHours: '~200',
+        gpuHours: 'TBD',
         purpose: 'Documentation, packaging',
       },
       subphases: [
