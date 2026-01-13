@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Subphase } from '@/content/roadmap-data'
 
@@ -50,6 +51,24 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
                   </div>
                 ))}
               </div>
+              {subphase.detailsLink && (
+                <div className="px-4 md:px-5 pb-4 md:pb-5">
+                  <Link
+                    href={subphase.detailsLink}
+                    className="inline-flex items-center gap-2 text-[#FF6D29] hover:text-[#FF8F5A] transition-colors text-sm font-medium group"
+                  >
+                    <span>See the details</span>
+                    <svg
+                      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              )}
             </div>
             {/* Horizontal line from card to center */}
             <div className="w-8 h-0.5 bg-[#FF6D29]/70 flex-shrink-0" />
@@ -94,6 +113,24 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
                   </div>
                 ))}
               </div>
+              {subphase.detailsLink && (
+                <div className="px-4 md:px-5 pb-4 md:pb-5">
+                  <Link
+                    href={subphase.detailsLink}
+                    className="inline-flex items-center gap-2 text-[#FF6D29] hover:text-[#FF8F5A] transition-colors text-sm font-medium group"
+                  >
+                    <span>See the details</span>
+                    <svg
+                      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              )}
             </div>
           </>
         ) : (
@@ -129,6 +166,24 @@ export default function TimelineItem({ subphase, index, isLeft }: TimelineItemPr
               </div>
             ))}
           </div>
+          {subphase.detailsLink && (
+            <div className="px-4 pb-4">
+              <Link
+                href={subphase.detailsLink}
+                className="inline-flex items-center gap-2 text-[#FF6D29] hover:text-[#FF8F5A] transition-colors text-sm font-medium group"
+              >
+                <span>See the details</span>
+                <svg
+                  className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

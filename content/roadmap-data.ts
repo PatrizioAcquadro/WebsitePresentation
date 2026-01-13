@@ -11,6 +11,7 @@ export interface Subphase {
   classification: 'HUMAN-CRITICAL' | 'AGENT-ASSISTED' | 'AGENT-DELEGABLE'
   estimatedDays: number
   tasks: Task[]
+  detailsLink?: string
 }
 
 export interface Milestone {
@@ -88,6 +89,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Set up experiment tracking (W&B/MLflow)', deliverable: 'Experiment logging working' },
             { title: 'Configure version control and project structure', deliverable: 'Git repo with CI/CD' },
           ],
+          detailsLink: '/roadmap/phase-0-1',
         },
         {
           id: '0.2',
