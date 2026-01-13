@@ -51,12 +51,6 @@ export const acknowledgedLimitations: AcknowledgedLimitation[] = [
     severity: 'Low',
     impact: 'Collaborative assembly scenarios not possible',
   },
-  {
-    id: 'navigation',
-    title: 'Navigation not covered',
-    severity: 'N/A',
-    impact: 'Not applicable to tabletop LEGO task',
-  },
 ]
 
 // Architectural Limitations Data

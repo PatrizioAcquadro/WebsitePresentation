@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import SectionWrapper from '@/components/task/SectionWrapper'
 import {
@@ -10,12 +11,12 @@ import {
   Severity,
 } from '@/content/limitations-data'
 
-// Severity badge styling
-const severityStyles: Record<Severity, string> = {
-  High: 'bg-red-500/20 text-red-400 border-red-500/30',
-  Medium: 'bg-[#FF6D29]/20 text-[#FF6D29] border-[#FF6D29]/30',
-  Low: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  'N/A': 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+// Severity text styling (inline, not badges)
+const severityTextStyles: Record<Severity, string> = {
+  High: 'text-red-400',
+  Medium: 'text-[#FF6D29]',
+  Low: 'text-yellow-400',
+  'N/A': 'text-gray-400',
 }
 
 // Icons for architectural limitations
@@ -95,131 +96,158 @@ export default function LimitationsPage() {
       </div>
 
       {/* Section 1: EO-1 Limitations */}
-      <SectionWrapper
-        id="eo1-limitations"
-        title="EO-1-Specific Limitations"
-        subtitle="Understanding the constraints of EO-1's architecture when applied to precision LEGO assembly tasks."
-      >
-        {/* Acknowledged Limitations */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
-          className="mb-12"
-        >
-          <div className="p-6 md:p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
-            <h3 className="text-lg md:text-xl font-semibold text-white mb-3 text-center">
+      <section id="eo1-limitations" className="relative py-16 md:py-20 px-4 bg-[#161316]">
+        {/* Gradient divider at top */}
+        <div className="absolute top-0 left-0 right-0 h-px z-20 bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
+
+        {/* LEGO background image - positioned on right */}
+        <div className="absolute right-[4%] top-[-2%] w-[500px] md:w-[560px] lg:w-[620px] h-[650px] md:h-[750px] pointer-events-none">
+          <Image
+            src="/lego.png"
+            alt=""
+            fill
+            className="object-cover object-top opacity-[0.30]"
+            priority
+          />
+          {/* Top fade */}
+          <div className="absolute top-0 left-0 right-0 h-[100px] bg-gradient-to-b from-[#161316] to-transparent" />
+          {/* Bottom fade */}
+          <div className="absolute bottom-0 left-0 right-0 h-[250px] bg-gradient-to-t from-[#161316] via-[#161316]/90 to-transparent" />
+          {/* Left fade (stronger for content blend) */}
+          <div className="absolute top-0 bottom-0 left-0 w-[50%] bg-gradient-to-r from-[#161316] via-[#161316]/80 to-transparent" />
+          {/* Right fade */}
+          <div className="absolute top-0 bottom-0 right-0 w-[25%] bg-gradient-to-l from-[#161316] to-transparent" />
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          {/* Section Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
+              EO-1-Specific Limitations
+            </h2>
+            <p className="text-[#BABABA] max-w-2xl">
+              Understanding the constraints of EO-1&apos;s architecture when applied to precision LEGO assembly tasks.
+            </p>
+          </motion.div>
+
+          {/* Acknowledged Limitations - Plain text format */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5 }}
+            className="mb-12"
+          >
+            <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">
               Acknowledged Limitations
             </h3>
-            <p className="text-[#BABABA] text-center mb-6 max-w-2xl mx-auto">
+            <p className="text-[#BABABA] mb-6 max-w-2xl">
               Known limitations from the EO-1 paper and their impact on LEGO assembly.
             </p>
 
-            <div className="space-y-4">
+            <div className="space-y-4 max-w-3xl">
               {acknowledgedLimitations.map((limitation, index) => (
-                <motion.div
+                <motion.p
                   key={limitation.id}
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="p-4 md:p-5 bg-gradient-to-br from-[#161316] to-[#1d1a1d] border border-[#453027]/50 rounded-xl"
+                  className="text-base md:text-lg text-[#BABABA] leading-relaxed"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
-                    <h4 className="text-base md:text-lg font-medium text-white flex-1">
-                      {limitation.title}
-                    </h4>
-                    <span
-                      className={`inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-md border shrink-0 ${severityStyles[limitation.severity]}`}
-                    >
-                      {limitation.severity}
-                    </span>
-                  </div>
-                  <p className="text-sm md:text-base text-[#BABABA]">{limitation.impact}</p>
-                </motion.div>
+                  <span className="text-white font-medium">{limitation.title}</span>
+                  <span className={`${severityTextStyles[limitation.severity]} font-medium`}>
+                    {' '}[{limitation.severity}]
+                  </span>
+                  <span className="text-[#BABABA]"> — {limitation.impact}</span>
+                </motion.p>
               ))}
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Architectural Limitations */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="p-6 md:p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
-            <h3 className="text-lg md:text-xl font-semibold text-white mb-3 text-center">
-              Architectural Limitations
-            </h3>
-            <p className="text-[#BABABA] text-center mb-6 max-w-2xl mx-auto">
-              Fundamental design constraints in EO-1 that affect LEGO assembly performance.
-            </p>
+          {/* Architectural Limitations */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="p-6 md:p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
+              <h3 className="text-lg md:text-xl font-semibold text-white mb-3 text-center">
+                Architectural Limitations
+              </h3>
+              <p className="text-[#BABABA] text-center mb-6 max-w-2xl mx-auto">
+                Fundamental design constraints in EO-1 that affect LEGO assembly performance.
+              </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {architecturalLimitations.map((limitation, index) => (
-                <motion.div
-                  key={limitation.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-gradient-to-br from-[#161316] to-[#1d1a1d] border border-[#453027]/50 rounded-xl overflow-hidden hover:border-[#FF6D29]/30 transition-colors flex flex-col"
-                >
-                  <div className="p-5 md:p-6 flex flex-col flex-1">
-                    {/* Header with icon */}
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-[#FF6D29]/10 border border-[#FF6D29]/20 flex items-center justify-center text-[#FF6D29] shrink-0">
-                        {architecturalIcons[limitation.id]}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {architecturalLimitations.map((limitation, index) => (
+                  <motion.div
+                    key={limitation.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-gradient-to-br from-[#161316] to-[#1d1a1d] border border-[#453027]/50 rounded-xl overflow-hidden hover:border-[#FF6D29]/30 transition-colors flex flex-col"
+                  >
+                    <div className="p-5 md:p-6 flex flex-col flex-1">
+                      {/* Header with icon */}
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-[#FF6D29]/10 border border-[#FF6D29]/20 flex items-center justify-center text-[#FF6D29] shrink-0">
+                          {architecturalIcons[limitation.id]}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-base md:text-lg font-semibold text-white">
+                            {limitation.title}
+                          </h4>
+                        </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-base md:text-lg font-semibold text-white">
-                          {limitation.title}
-                        </h4>
+
+                      {/* Problem */}
+                      <p className="text-sm text-[#BABABA] mb-4 leading-relaxed">{limitation.problem}</p>
+
+                      {/* Impact */}
+                      <div className="mb-4 flex-1">
+                        <h5 className="text-sm font-semibold text-white uppercase tracking-wider mb-2">
+                          Impact on LEGO
+                        </h5>
+                        <ul className="space-y-1.5">
+                          {limitation.impact.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-[#BABABA]">
+                              <span className="text-[#FF6D29] leading-5 shrink-0">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Solutions */}
+                      <div className="border-t border-[#453027]/50 pt-4 mt-auto">
+                        <h5 className="text-sm font-semibold text-[#FF6D29] uppercase tracking-wider mb-2">
+                          Potential Solutions
+                        </h5>
+                        <ul className="space-y-1.5">
+                          {limitation.solutions.map((solution, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-[#BABABA]">
+                              <span className="text-[#FF6D29] leading-5 shrink-0">{idx + 1}.</span>
+                              <span>{solution}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
-
-                    {/* Problem */}
-                    <p className="text-sm text-[#BABABA] mb-4 leading-relaxed">{limitation.problem}</p>
-
-                    {/* Impact */}
-                    <div className="mb-4 flex-1">
-                      <h5 className="text-xs font-semibold text-white uppercase tracking-wider mb-2">
-                        Impact on LEGO
-                      </h5>
-                      <ul className="space-y-1.5">
-                        {limitation.impact.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-xs text-[#BABABA]">
-                            <span className="text-[#FF6D29] leading-4 shrink-0">•</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Solutions */}
-                    <div className="border-t border-[#453027]/50 pt-4 mt-auto">
-                      <h5 className="text-xs font-semibold text-[#FF6D29] uppercase tracking-wider mb-2">
-                        Potential Solutions
-                      </h5>
-                      <ul className="space-y-1.5">
-                        {limitation.solutions.map((solution, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-xs text-[#BABABA]">
-                            <span className="text-[#FF6D29] leading-4 shrink-0">{idx + 1}.</span>
-                            <span>{solution}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </div>
             </div>
-          </div>
-        </motion.div>
-      </SectionWrapper>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Section 2: Task-Specific Problems */}
       <SectionWrapper
