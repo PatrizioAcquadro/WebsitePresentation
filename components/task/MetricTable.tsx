@@ -33,14 +33,14 @@ export default function MetricTable({ title, description, metrics, index }: Metr
         <table className="w-full">
           <thead className="bg-[#161316]">
             <tr>
-              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider">
+              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider w-[180px] md:w-[220px]">
                 Metric
               </th>
-              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider">
+              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider w-[280px] md:w-[340px]">
                 Definition
               </th>
               {hasTarget && (
-                <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider">
+                <th className="px-4 md:px-6 py-3 text-center text-xs font-semibold text-[#BABABA] uppercase tracking-wider w-[100px] md:w-[120px]">
                   Target
                 </th>
               )}
@@ -54,14 +54,14 @@ export default function MetricTable({ title, description, metrics, index }: Metr
           <tbody className="divide-y divide-[#453027]/50">
             {metrics.map((metric) => (
               <tr key={metric.name} className="hover:bg-[#453027]/20 transition-colors">
-                <td className="px-4 md:px-6 py-4">
+                <td className="px-4 md:px-6 py-4 w-[180px] md:w-[220px]">
                   <span className="font-medium text-white text-sm md:text-base">{metric.name}</span>
                 </td>
-                <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA]">
+                <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA] w-[280px] md:w-[340px]">
                   {metric.definition}
                 </td>
                 {hasTarget && (
-                  <td className="px-4 md:px-6 py-4">
+                  <td className="px-4 md:px-6 py-4 text-center w-[100px] md:w-[120px]">
                     {metric.target && (
                       <span className="inline-flex items-center px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium bg-[#FF6D29]/10 text-[#FF6D29] border border-[#FF6D29]/30">
                         {metric.target}
