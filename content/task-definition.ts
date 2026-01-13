@@ -40,9 +40,62 @@ Following the EO-1 paradigm, actions are represented as:
 
 ---
 
-## 2. Task Decomposition
+## 2. Task Motivation
 
-### 2.1 Atomic Skills Required
+### 2.1 Current Landscape Limitations
+
+Despite significant advances in robotic manipulation, several critical gaps persist in the current state-of-the-art:
+
+**Limited Bimanual Capabilities**
+- Most VLA models focus on single-arm manipulation tasks
+- Bimanual coordination remains underexplored, particularly in scenarios requiring dynamic role allocation
+- Existing benchmarks (LIBERO, RT-X) predominantly feature unimanual tasks
+
+**Insufficient Precision Requirements**
+- Common manipulation tasks (pick-and-place, pushing, drawer opening) tolerate centimeter-level accuracy
+- Fine-grained assembly requiring sub-millimeter precision is rarely evaluated
+- Contact-rich dynamics with tight tolerances remain challenging for learned policies
+
+**Shallow Reasoning Demands**
+- Many benchmark tasks are single-step or short-horizon (< 5 steps)
+- Assembly tasks requiring long-horizon planning (10+ steps) with sequential dependencies are scarce
+- Error detection and recovery capabilities are not systematically evaluated
+
+**Sim-to-Real Transfer Challenges**
+- High-fidelity simulation of contact-rich assembly (LEGO connections) is difficult
+- Reality gap for precise manipulation tasks remains a critical bottleneck
+- Limited validation on physical humanoid platforms
+
+### 2.2 Why LEGO Assembly?
+
+The bimanual LEGO assembly task addresses these gaps by providing:
+
+1. **Bimanual Necessity**: Unlike artificial bimanual tasks, LEGO assembly naturally requires two hands for stabilization during insertion, making it an ecologically valid benchmark
+
+2. **Precision Benchmark**: LEGO studs (4.8mm spacing, ~0.1mm tolerance) provide objective, measurable precision requirements that expose model limitations
+
+3. **Long-Horizon Complexity**: Multi-block assemblies require sequential planning, state tracking, and error recovery across extended episodes
+
+4. **Verifiable Success**: Binary connection states (connected/loose) enable unambiguous success evaluation, unlike subjective task completion criteria
+
+5. **Humanoid Relevance**: LEGO assembly is a quintessential human bimanual task, making it ideal for evaluating humanoid robot capabilities (e.g., Unitree H1)
+
+6. **Sim-to-Real Testbed**: Standardized LEGO geometry enables systematic study of sim-to-real transfer for contact-rich manipulation
+
+### 2.3 Research Opportunities
+
+This task creates opportunities to advance:
+- **Bimanual coordination policies** with dynamic role allocation
+- **Precision manipulation** through vision-based fine alignment
+- **Long-horizon reasoning** in VLA architectures
+- **Contact-rich simulation** fidelity for assembly tasks
+- **Robust sim-to-real transfer** methodologies
+
+---
+
+## 3. Task Decomposition
+
+### 3.1 Atomic Skills Required
 
 | Skill Category | Specific Skills | Bimanual Requirement |
 |----------------|-----------------|----------------------|
@@ -52,7 +105,7 @@ Following the EO-1 paradigm, actions are represented as:
 | **Coordination** | Handover, simultaneous stabilization, sequential operations | Dual |
 | **Verification** | Connection verification, error detection | Single/Dual |
 
-### 2.2 Bimanual Coordination Modes
+### 3.2 Bimanual Coordination Modes
 
 1. **Asymmetric Bimanual**
    - One arm stabilizes (anchor), other manipulates
@@ -72,9 +125,9 @@ Following the EO-1 paradigm, actions are represented as:
 
 ---
 
-## 3. Key Challenges
+## 4. Key Challenges
 
-### 3.1 Perception Challenges
+### 4.1 Perception Challenges
 
 | Challenge | Description | Severity |
 |-----------|-------------|----------|
@@ -84,7 +137,7 @@ Following the EO-1 paradigm, actions are represented as:
 | **Partial assembly state** | Recognizing assembly progress from visual observation | Medium |
 | **Sim-to-real visual gap** | Simulated textures/lighting vs. real-world appearance | High |
 
-### 3.2 Manipulation Challenges
+### 4.2 Manipulation Challenges
 
 | Challenge | Description | Severity |
 |-----------|-------------|----------|
@@ -94,7 +147,7 @@ Following the EO-1 paradigm, actions are represented as:
 | **Contact-rich dynamics** | Complex multi-body contact during insertion | High |
 | **Sim-to-real dynamics gap** | Simulated contact/friction vs. real-world behavior | Critical |
 
-### 3.3 Coordination Challenges
+### 4.3 Coordination Challenges
 
 | Challenge | Description | Severity |
 |-----------|-------------|----------|
@@ -103,7 +156,7 @@ Following the EO-1 paradigm, actions are represented as:
 | **Workspace sharing** | Both arms operate in overlapping workspace | High |
 | **Collision avoidance** | Self-collision and arm-arm collision | High |
 
-### 3.4 Reasoning Challenges
+### 4.4 Reasoning Challenges
 
 | Challenge | Description | Severity |
 |-----------|-------------|----------|
@@ -115,9 +168,9 @@ Following the EO-1 paradigm, actions are represented as:
 
 ---
 
-## 4. Success Metrics and Evaluation Criteria
+## 5. Success Metrics and Evaluation Criteria
 
-### 4.1 Primary Metrics
+### 5.1 Primary Metrics
 
 | Metric | Definition | Target |
 |--------|------------|--------|
@@ -125,7 +178,7 @@ Following the EO-1 paradigm, actions are represented as:
 | **Block Placement Accuracy** | % of blocks placed in correct position/orientation | >95% |
 | **Connection Quality** | % of blocks properly seated (not loose) | >98% |
 
-### 4.2 Efficiency Metrics
+### 5.2 Efficiency Metrics
 
 | Metric | Definition | Target |
 |--------|------------|--------|
@@ -133,7 +186,7 @@ Following the EO-1 paradigm, actions are represented as:
 | **Attempt Efficiency** | Successful placements / total attempts | >90% |
 | **Recovery Rate** | % of errors successfully corrected | >70% |
 
-### 4.3 Generalization Metrics
+### 5.3 Generalization Metrics
 
 | Metric | Definition | Evaluation Method |
 |--------|------------|-------------------|
@@ -144,7 +197,7 @@ Following the EO-1 paradigm, actions are represented as:
 
 ---
 
-## 5. Summary
+## 6. Summary
 
 The bimanual LEGO assembly task represents a challenging benchmark for VLA systems, requiring:
 - **Precision perception**: Sub-millimeter accuracy for stud alignment
