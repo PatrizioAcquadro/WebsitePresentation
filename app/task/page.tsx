@@ -260,7 +260,7 @@ export default function TaskPage() {
               <div className="flex gap-4">
                 <span className="text-[#FF6D29]">→</span>
                 <p className="text-[#BABABA] text-sm md:text-base leading-relaxed">
-                  Unlike artificial bimanual tasks, LEGO assembly genuinely requires two hands—one to stabilize while the other manipulates—making it an ecologically valid testbed for advancing coordination research on humanoid platforms.
+                  Unlike artificial bimanual tasks, LEGO assembly genuinely requires one hand to stabilize while the other manipulates, making it an ecologically valid testbed for advancing coordination research on humanoid platforms.
                 </p>
               </div>
             </div>
