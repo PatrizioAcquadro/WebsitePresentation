@@ -180,7 +180,7 @@ export const liberoBenchmark: BenchmarkTable = {
       },
     },
   ],
-  legoNote: 'LIBERO-Long tests multi-step sequential tasks similar to LEGO assembly sequences. EO-1\'s top performance indicates strong capability for maintaining goal coherence across extended manipulation chains.',
+  legoNote: 'While LIBERO is near saturation (~98%), EO-1\'s dominance across all suites—spatial, object, goal, and long-horizon—validates core capabilities essential for precision LEGO assembly.',
 }
 
 // Performance on Diverse Embodiments - Grouped Bar Chart
