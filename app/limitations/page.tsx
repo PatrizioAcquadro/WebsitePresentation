@@ -55,7 +55,7 @@ export default function LimitationsPage() {
     <div className="pt-16">
       {/* Header */}
       <div className="bg-gradient-to-b from-[#1d1a1d] to-[#161316] py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <Link
             href="/"
             className="inline-flex items-center text-[#BABABA] hover:text-[#FF6D29] mb-6 transition-colors"
@@ -92,7 +92,7 @@ export default function LimitationsPage() {
         <div className="absolute top-0 left-0 right-0 h-px z-20 bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
 
         {/* LEGO background image - positioned on right */}
-        <div className="absolute right-[4%] top-[-2%] w-[400px] md:w-[448px] lg:w-[496px] h-[520px] md:h-[600px] pointer-events-none">
+        <div className="absolute right-[4%] top-[-2%] w-[440px] md:w-[493px] lg:w-[546px] h-[572px] md:h-[660px] pointer-events-none">
           <Image
             src="/lego.png"
             alt=""
@@ -142,7 +142,7 @@ export default function LimitationsPage() {
               Known limitations from the EO-1 paper and their impact on LEGO assembly.
             </p>
 
-            <div className="space-y-5 max-w-3xl">
+            <div className="space-y-3.5 max-w-3xl">
               {acknowledgedLimitations.map((limitation, index) => (
                 <motion.div
                   key={limitation.id}
@@ -152,7 +152,7 @@ export default function LimitationsPage() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <p className="text-base md:text-lg text-white font-medium mb-1">
-                    {limitation.title} <span className="text-[#BABABA]">[{limitation.severity}]</span>
+                    {limitation.title} <span className="text-[#BABABA]">({limitation.severity})</span>
                   </p>
                   <p className="text-sm md:text-base text-[#BABABA] leading-relaxed">
                     {limitation.impact}
