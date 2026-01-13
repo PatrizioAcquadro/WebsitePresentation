@@ -33,10 +33,10 @@ export default function MetricTable({ title, description, metrics, index }: Metr
         <table className="w-full table-fixed">
           <thead className="bg-[#161316]">
             <tr>
-              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider" style={{ width: '28%' }}>
+              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider" style={{ width: '32%' }}>
                 Metric
               </th>
-              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider" style={{ width: '50%' }}>
+              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider" style={{ width: '46%' }}>
                 Definition
               </th>
               {hasTarget && (
@@ -54,10 +54,10 @@ export default function MetricTable({ title, description, metrics, index }: Metr
           <tbody className="divide-y divide-[#453027]/50">
             {metrics.map((metric) => (
               <tr key={metric.name} className="hover:bg-[#453027]/20 transition-colors">
-                <td className="px-4 md:px-6 py-4" style={{ width: '28%' }}>
+                <td className="px-4 md:px-6 py-4" style={{ width: '32%' }}>
                   <span className="font-medium text-white text-sm md:text-base">{metric.name}</span>
                 </td>
-                <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA]" style={{ width: '50%' }}>
+                <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA]" style={{ width: '46%' }}>
                   {metric.definition}
                 </td>
                 {hasTarget && (
