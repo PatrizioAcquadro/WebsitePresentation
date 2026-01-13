@@ -9,6 +9,70 @@ import {
   architecturalLimitations,
   taskProblemCategories,
 } from '@/content/limitations-data'
+import {
+  getChallengesByCategory,
+  Challenge,
+} from '@/content/task-definition-data'
+
+// Severity order and colors for challenges
+const severityOrder = { Critical: 0, High: 1, Medium: 2 }
+const severityColors = {
+  Critical: 'bg-red-500',
+  High: 'bg-[#FF6D29]',
+  Medium: 'bg-yellow-500',
+}
+
+// Challenge Item component (always shows description)
+function ChallengeItem({ challenge }: { challenge: Challenge }) {
+  return (
+    <div className="mb-4 last:mb-0">
+      <div className="flex items-start gap-2">
+        <span className={`w-2 h-2 rounded-full ${severityColors[challenge.severity]} mt-2 shrink-0`} />
+        <div>
+          <span className="text-sm md:text-base text-white font-medium">
+            {challenge.name}
+          </span>
+          <p className="text-xs md:text-sm text-[#BABABA] mt-1 leading-relaxed">
+            {challenge.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Icons for challenge categories
+const ManipulationIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+  </svg>
+)
+
+const PerceptionIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+  </svg>
+)
+
+const CoordinationIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+  </svg>
+)
+
+const ReasoningIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+  </svg>
+)
+
+const challengeCategoryIcons: Record<string, React.ReactNode> = {
+  manipulation: <ManipulationIcon />,
+  perception: <PerceptionIcon />,
+  coordination: <CoordinationIcon />,
+  reasoning: <ReasoningIcon />,
+}
 
 // Icons for architectural limitations
 const LatencyIcon = () => (
@@ -315,6 +379,73 @@ export default function LimitationsPage() {
               </div>
             </motion.div>
           ))}
+
+          {/* Key Challenges - 4 column grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="p-6 md:p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
+              <h3 className="text-lg md:text-xl font-semibold text-white mb-2 text-center">
+                Key Challenges
+              </h3>
+              <p className="text-[#BABABA] text-center mb-6 max-w-3xl mx-auto">
+                Bimanual LEGO assembly presents unique difficulties across four fundamental dimensions: the physical precision required for manipulation, the visual understanding needed for perception, the synchronization demands of coordination, and the planning complexity of reasoning.
+              </p>
+
+              {/* 4-column grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  { id: 'manipulation' as const, title: 'Manipulation' },
+                  { id: 'perception' as const, title: 'Perception' },
+                  { id: 'coordination' as const, title: 'Coordination' },
+                  { id: 'reasoning' as const, title: 'Reasoning' },
+                ].map((category, index) => {
+                  const challenges = [...getChallengesByCategory(category.id)].sort(
+                    (a, b) => severityOrder[a.severity] - severityOrder[b.severity]
+                  )
+                  return (
+                    <motion.div
+                      key={category.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="bg-gradient-to-b from-[#161316] to-[#1d1a1d] border border-[#453027]/50 rounded-2xl p-5 md:p-6"
+                    >
+                      <h4 className="flex items-center gap-2 text-base md:text-lg font-semibold text-white mb-4 pb-3 border-b border-[#453027]/50">
+                        <span className="text-[#FF6D29]">{challengeCategoryIcons[category.id]}</span>
+                        {category.title}
+                      </h4>
+                      <div>
+                        {challenges.map(challenge => (
+                          <ChallengeItem key={challenge.name} challenge={challenge} />
+                        ))}
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </div>
+
+              {/* Legend */}
+              <div className="flex justify-center gap-6 mt-8">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-red-500" />
+                  <span className="text-xs text-[#BABABA]">Critical</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#FF6D29]" />
+                  <span className="text-xs text-[#BABABA]">High</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-yellow-500" />
+                  <span className="text-xs text-[#BABABA]">Medium</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </SectionWrapper>
     </div>
