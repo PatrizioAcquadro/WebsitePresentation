@@ -133,7 +133,7 @@ export default function LimitationsPage() {
             Limitations & Future Directions
           </h1>
           <p className="text-lg text-[#BABABA]">
-            Known limitations, unsolved problems, and research opportunities
+            Known limitations and unsolved problems about the model and the task
           </p>
 
           {/* Key areas */}
