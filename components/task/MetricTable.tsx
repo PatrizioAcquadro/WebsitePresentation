@@ -45,7 +45,7 @@ export default function MetricTable({ title, description, metrics, index }: Metr
                 </th>
               )}
               {hasEvalMethod && (
-                <th className="px-4 md:px-6 py-3 text-right text-xs font-semibold text-[#BABABA] uppercase tracking-wider hidden md:table-cell" style={{ width: '22%' }}>
+                <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider hidden md:table-cell" style={{ width: '22%' }}>
                   Evaluation
                 </th>
               )}
@@ -70,7 +70,7 @@ export default function MetricTable({ title, description, metrics, index }: Metr
                   </td>
                 )}
                 {hasEvalMethod && (
-                  <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA] text-right hidden md:table-cell" style={{ width: '22%' }}>
+                  <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA] hidden md:table-cell" style={{ width: '22%' }}>
                     {metric.evaluationMethod}
                   </td>
                 )}
