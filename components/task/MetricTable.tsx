@@ -30,22 +30,22 @@ export default function MetricTable({ title, description, metrics, index }: Metr
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="w-full table-fixed">
           <thead className="bg-[#161316]">
             <tr>
-              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider w-[180px] md:w-[220px]">
+              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider" style={{ width: '28%' }}>
                 Metric
               </th>
-              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider w-[280px] md:w-[340px]">
+              <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider" style={{ width: '50%' }}>
                 Definition
               </th>
               {hasTarget && (
-                <th className="px-4 md:px-6 py-3 text-center text-xs font-semibold text-[#BABABA] uppercase tracking-wider w-[100px] md:w-[120px]">
+                <th className="px-4 md:px-6 py-3 text-center text-xs font-semibold text-[#BABABA] uppercase tracking-wider" style={{ width: '22%' }}>
                   Target
                 </th>
               )}
               {hasEvalMethod && (
-                <th className="px-4 md:px-6 py-3 text-left text-xs font-semibold text-[#BABABA] uppercase tracking-wider hidden md:table-cell">
+                <th className="px-4 md:px-6 py-3 text-right text-xs font-semibold text-[#BABABA] uppercase tracking-wider hidden md:table-cell" style={{ width: '22%' }}>
                   Evaluation
                 </th>
               )}
@@ -54,14 +54,14 @@ export default function MetricTable({ title, description, metrics, index }: Metr
           <tbody className="divide-y divide-[#453027]/50">
             {metrics.map((metric) => (
               <tr key={metric.name} className="hover:bg-[#453027]/20 transition-colors">
-                <td className="px-4 md:px-6 py-4 w-[180px] md:w-[220px]">
+                <td className="px-4 md:px-6 py-4" style={{ width: '28%' }}>
                   <span className="font-medium text-white text-sm md:text-base">{metric.name}</span>
                 </td>
-                <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA] w-[280px] md:w-[340px]">
+                <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA]" style={{ width: '50%' }}>
                   {metric.definition}
                 </td>
                 {hasTarget && (
-                  <td className="px-4 md:px-6 py-4 text-center w-[100px] md:w-[120px]">
+                  <td className="px-4 md:px-6 py-4 text-center" style={{ width: '22%' }}>
                     {metric.target && (
                       <span className="inline-flex items-center px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium bg-[#FF6D29]/10 text-[#FF6D29] border border-[#FF6D29]/30">
                         {metric.target}
@@ -70,7 +70,7 @@ export default function MetricTable({ title, description, metrics, index }: Metr
                   </td>
                 )}
                 {hasEvalMethod && (
-                  <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA] hidden md:table-cell">
+                  <td className="px-4 md:px-6 py-4 text-xs md:text-sm text-[#BABABA] text-right hidden md:table-cell" style={{ width: '22%' }}>
                     {metric.evaluationMethod}
                   </td>
                 )}
