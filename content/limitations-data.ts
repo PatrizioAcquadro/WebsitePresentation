@@ -43,7 +43,7 @@ export const acknowledgedLimitations: AcknowledgedLimitation[] = [
     id: 'complex-scenarios',
     title: 'Complex scenarios not fully addressed',
     severity: 'Medium',
-    impact: 'Failure recovery, obstacle avoidance mid-assembly',
+    impact: 'Limited handling of mid-assembly failures and obstacle avoidance',
   },
   {
     id: 'hri-unexplored',
