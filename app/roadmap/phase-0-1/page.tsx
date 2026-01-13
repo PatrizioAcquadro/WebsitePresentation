@@ -289,10 +289,6 @@ export default function Phase01Page() {
                   <span className="text-[#BABABA] text-sm">Estimated Duration</span>
                   <p className="text-white font-semibold">2 days</p>
                 </div>
-                <div>
-                  <span className="text-[#BABABA] text-sm">Classification</span>
-                  <p className="text-green-400 font-semibold">AGENT-DELEGABLE</p>
-                </div>
                 <Link
                   href="/roadmap#phase-0"
                   className="px-6 py-3 bg-[#FF6D29] hover:bg-[#FF8F5A] text-white font-medium rounded-xl transition-colors"
