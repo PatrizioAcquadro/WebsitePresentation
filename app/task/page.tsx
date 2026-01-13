@@ -180,7 +180,7 @@ export default function TaskPage() {
       <SectionWrapper
         id="motivation"
         title="Task Motivation"
-        subtitle="Understanding why bimanual LEGO assembly represents a critical benchmark for advancing robotic manipulation"
+        subtitle="Understanding the gaps in current robotic manipulation and how our approach addresses them"
         variant="darker"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
@@ -190,41 +190,79 @@ export default function TaskPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5 }}
-            className="bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl p-6 md:p-8"
+            className="bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl overflow-hidden"
           >
-            <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Current Landscape Limitations</h3>
-            <div className="space-y-4 text-[#BABABA] text-sm md:text-base leading-relaxed">
-              <p>
-                Despite remarkable progress in robotic manipulation, today&apos;s Vision-Language-Action models remain largely confined to single-arm tasks. Bimanual coordination—where two arms must dynamically share roles, stabilize objects, and execute synchronized movements—remains a frontier challenge with limited benchmarks and insufficient research attention.
-              </p>
-              <p>
-                Current evaluation tasks also fall short in precision demands. Standard benchmarks like pick-and-place or drawer manipulation tolerate centimeter-level errors, leaving models untested on the sub-millimeter accuracy required for real-world assembly operations. This gap conceals fundamental limitations in fine motor control and visual servoing.
-              </p>
-              <p>
-                Furthermore, most benchmarks feature shallow task horizons of just a few steps, rarely testing a model&apos;s ability to maintain coherent plans across extended sequences, detect errors mid-execution, or recover gracefully from failures—capabilities essential for practical deployment.
-              </p>
+            {/* Header */}
+            <div className="p-5 md:p-6 flex items-center gap-4 border-b border-[#453027]/50">
+              <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-[#453027]/30 border border-[#453027] flex items-center justify-center shrink-0">
+                <svg className="w-5 h-5 md:w-6 md:h-6 text-[#BABABA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+              </div>
+              <h3 className="text-lg md:text-xl font-semibold text-white">Current Landscape Limitations</h3>
+            </div>
+
+            {/* Content */}
+            <div className="p-5 md:p-6 space-y-5">
+              <div className="flex gap-4">
+                <span className="text-[#FF6D29] font-semibold text-lg">1</span>
+                <p className="text-[#BABABA] text-sm md:text-base leading-relaxed">
+                  Standard manipulation benchmarks tolerate centimeter-level errors in tasks like pick-and-place or drawer opening. This leaves VLA models untested on sub-millimeter precision required for real-world assembly, concealing fundamental limitations in fine motor control.
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-[#FF6D29] font-semibold text-lg">2</span>
+                <p className="text-[#BABABA] text-sm md:text-base leading-relaxed">
+                  Most VLA architectures struggle with long-horizon tasks requiring sequential reasoning, error detection, and recovery. Recent advances like EO-1 address these gaps through interleaved vision-language-action reasoning, but remain largely unevaluated on precision assembly tasks.
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-[#FF6D29] font-semibold text-lg">3</span>
+                <p className="text-[#BABABA] text-sm md:text-base leading-relaxed">
+                  Today&apos;s VLA research remains largely confined to single-arm manipulation, leaving bimanual coordination—a frontier challenge requiring dynamic role allocation and synchronized movements—underexplored with limited benchmarks.
+                </p>
+              </div>
             </div>
           </motion.div>
 
-          {/* Why LEGO Assembly */}
+          {/* Our Approach */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl p-6 md:p-8"
+            className="bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl overflow-hidden"
           >
-            <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Why LEGO Assembly?</h3>
-            <div className="space-y-4 text-[#BABABA] text-sm md:text-base leading-relaxed">
-              <p>
-                LEGO assembly emerges as an ideal benchmark precisely because it addresses these gaps naturally rather than artificially. Unlike contrived bimanual tasks, connecting LEGO blocks genuinely requires two hands: one to stabilize the partial structure while the other aligns and inserts new pieces. This makes it an ecologically valid testbed for coordination research.
-              </p>
-              <p>
-                The task imposes objective precision requirements that are both measurable and unforgiving. With studs spaced 4.8mm apart and connection tolerances around 0.1mm, LEGO assembly exposes any deficiency in a model&apos;s fine manipulation capabilities. Success is binary and verifiable—blocks are either properly connected or they aren&apos;t.
-              </p>
-              <p>
-                Multi-block assemblies naturally create long-horizon planning challenges, requiring models to track assembly state, reason about valid placement sequences, and recover from errors across extended episodes. This positions LEGO assembly as a comprehensive stress test for next-generation VLA systems targeting humanoid platforms like the Unitree H1.
-              </p>
+            {/* Header */}
+            <div className="p-5 md:p-6 flex items-center gap-4 border-b border-[#453027]/50">
+              <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-[#FF6D29]/10 border border-[#FF6D29]/20 flex items-center justify-center shrink-0">
+                <svg className="w-5 h-5 md:w-6 md:h-6 text-[#FF6D29]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+                </svg>
+              </div>
+              <h3 className="text-lg md:text-xl font-semibold text-white">Our Approach</h3>
+            </div>
+
+            {/* Content */}
+            <div className="p-5 md:p-6 space-y-5">
+              <div className="flex gap-4">
+                <span className="text-[#FF6D29]">→</span>
+                <p className="text-[#BABABA] text-sm md:text-base leading-relaxed">
+                  LEGO assembly provides objective, measurable precision requirements: studs spaced 4.8mm apart with ~0.1mm connection tolerances create an unforgiving benchmark that exposes any deficiency in fine manipulation capabilities.
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-[#FF6D29]">→</span>
+                <p className="text-[#BABABA] text-sm md:text-base leading-relaxed">
+                  We leverage EO-1&apos;s state-of-the-art architecture to explore its capabilities within this demanding task, testing its interleaved reasoning on a novel embodiment (Unitree H1) and precision-critical setting not covered in original evaluations.
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-[#FF6D29]">→</span>
+                <p className="text-[#BABABA] text-sm md:text-base leading-relaxed">
+                  Unlike artificial bimanual tasks, LEGO assembly genuinely requires two hands—one to stabilize while the other manipulates—making it an ecologically valid testbed for advancing coordination research on humanoid platforms.
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
