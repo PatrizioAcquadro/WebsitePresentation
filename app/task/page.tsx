@@ -219,7 +219,7 @@ export default function TaskPage() {
               <div className="flex gap-4">
                 <span className="text-[#FF6D29] font-semibold text-lg">3</span>
                 <p className="text-[#BABABA] text-sm md:text-base leading-relaxed">
-                  Today&apos;s VLA research remains largely confined to single-arm manipulation, leaving bimanual coordination—a frontier challenge requiring dynamic role allocation and synchronized movements—underexplored with limited benchmarks.
+                  Today&apos;s VLA research remains largely confined to single-arm manipulation, leaving bimanual coordination, which is a frontier challenge requiring dynamic role allocation and synchronized movements, underexplored with limited benchmarks.
                 </p>
               </div>
             </div>
