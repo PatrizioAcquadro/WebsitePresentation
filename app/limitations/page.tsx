@@ -352,13 +352,13 @@ export default function LimitationsPage() {
 
                         {/* SOTA Gaps */}
                         <div className="mb-4">
-                          <h5 className="text-xs font-semibold text-white uppercase tracking-wider mb-2">
+                          <h5 className="text-sm font-semibold text-white uppercase tracking-wider mb-2">
                             Current SOTA Gap
                           </h5>
                           <ul className="space-y-1.5">
                             {problem.sotaGaps.map((gap, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-xs text-[#BABABA]">
-                                <span className="text-[#BABABA] leading-4 shrink-0">•</span>
+                              <li key={idx} className="flex items-start gap-2 text-sm text-[#BABABA]">
+                                <span className="text-[#BABABA] leading-5 shrink-0">•</span>
                                 <span>{gap}</span>
                               </li>
                             ))}
@@ -380,74 +380,81 @@ export default function LimitationsPage() {
             </motion.div>
           ))}
 
-          {/* Key Challenges - 4 column grid */}
+        </div>
+      </SectionWrapper>
+
+      {/* Section 3: Summary of Challenges */}
+      <section id="challenges-summary" className="relative py-16 md:py-20 px-4 bg-[#161316]">
+        {/* Gradient divider at top */}
+        <div className="absolute top-0 left-0 right-0 h-px z-20 bg-gradient-to-r from-transparent via-[#FF6D29]/20 to-transparent" />
+
+        <div className="max-w-6xl mx-auto">
+          {/* Section Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="mb-12"
           >
-            <div className="p-6 md:p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
-              <h3 className="text-lg md:text-xl font-semibold text-white mb-2 text-center">
-                Key Challenges
-              </h3>
-              <p className="text-[#BABABA] text-center mb-6 max-w-3xl mx-auto">
-                Bimanual LEGO assembly presents unique difficulties across four fundamental dimensions: the physical precision required for manipulation, the visual understanding needed for perception, the synchronization demands of coordination, and the planning complexity of reasoning.
-              </p>
-
-              {/* 4-column grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[
-                  { id: 'manipulation' as const, title: 'Manipulation' },
-                  { id: 'perception' as const, title: 'Perception' },
-                  { id: 'coordination' as const, title: 'Coordination' },
-                  { id: 'reasoning' as const, title: 'Reasoning' },
-                ].map((category, index) => {
-                  const challenges = [...getChallengesByCategory(category.id)].sort(
-                    (a, b) => severityOrder[a.severity] - severityOrder[b.severity]
-                  )
-                  return (
-                    <motion.div
-                      key={category.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      className="bg-gradient-to-b from-[#161316] to-[#1d1a1d] border border-[#453027]/50 rounded-2xl p-5 md:p-6"
-                    >
-                      <h4 className="flex items-center gap-2 text-base md:text-lg font-semibold text-white mb-4 pb-3 border-b border-[#453027]/50">
-                        <span className="text-[#FF6D29]">{challengeCategoryIcons[category.id]}</span>
-                        {category.title}
-                      </h4>
-                      <div>
-                        {challenges.map(challenge => (
-                          <ChallengeItem key={challenge.name} challenge={challenge} />
-                        ))}
-                      </div>
-                    </motion.div>
-                  )
-                })}
-              </div>
-
-              {/* Legend */}
-              <div className="flex justify-center gap-6 mt-8">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-red-500" />
-                  <span className="text-xs text-[#BABABA]">Critical</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#FF6D29]" />
-                  <span className="text-xs text-[#BABABA]">High</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-yellow-500" />
-                  <span className="text-xs text-[#BABABA]">Medium</span>
-                </div>
-              </div>
-            </div>
+            <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
+              Summary of Challenges
+            </h2>
+            <p className="text-[#BABABA] max-w-3xl">
+              Bimanual LEGO assembly presents unique difficulties across four fundamental dimensions: the physical precision required for manipulation, the visual understanding needed for perception, the synchronization demands of coordination, and the planning complexity of reasoning.
+            </p>
           </motion.div>
+
+          {/* 4-column grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { id: 'manipulation' as const, title: 'Manipulation' },
+              { id: 'perception' as const, title: 'Perception' },
+              { id: 'coordination' as const, title: 'Coordination' },
+              { id: 'reasoning' as const, title: 'Reasoning' },
+            ].map((category, index) => {
+              const challenges = [...getChallengesByCategory(category.id)].sort(
+                (a, b) => severityOrder[a.severity] - severityOrder[b.severity]
+              )
+              return (
+                <motion.div
+                  key={category.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-gradient-to-b from-[#1d1a1d] to-[#161316] border border-[#453027]/50 rounded-2xl p-5 md:p-6"
+                >
+                  <h4 className="flex items-center gap-2 text-base md:text-lg font-semibold text-white mb-4 pb-3 border-b border-[#453027]/50">
+                    <span className="text-[#FF6D29]">{challengeCategoryIcons[category.id]}</span>
+                    {category.title}
+                  </h4>
+                  <div>
+                    {challenges.map(challenge => (
+                      <ChallengeItem key={challenge.name} challenge={challenge} />
+                    ))}
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+
+          {/* Legend */}
+          <div className="flex justify-center gap-6 mt-8">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-red-500" />
+              <span className="text-xs text-[#BABABA]">Critical</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#FF6D29]" />
+              <span className="text-xs text-[#BABABA]">High</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-yellow-500" />
+              <span className="text-xs text-[#BABABA]">Medium</span>
+            </div>
+          </div>
         </div>
-      </SectionWrapper>
+      </section>
     </div>
   )
 }
