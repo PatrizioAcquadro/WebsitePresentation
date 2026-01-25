@@ -93,6 +93,21 @@ export const roadmapData: RoadmapData = {
         },
         {
           id: '0.2',
+          title: 'MuJoCo Sim Stack + Visualization Workflow',
+          classification: 'AGENT-DELEGABLE',
+          estimatedDays: 3,
+          tasks: [
+            { title: 'MuJoCo Runtime Installation', deliverable: 'Stable MuJoCo environment on lab PC' },
+            { title: 'Interactive Viewer Workflow', deliverable: 'Debug-mode viewer for visual inspection' },
+            { title: 'Headless Offscreen Rendering', deliverable: 'Batch rendering pipeline (RGB, depth)' },
+            { title: 'Sim Smoke Tests Suite', deliverable: 'Push-button test suite with CI integration' },
+            { title: 'Asset Pathing & Loader Contract', deliverable: 'Strict asset directory layout and linter' },
+            { title: 'Cluster Compatibility Smoke', deliverable: 'Verified headless sim on cluster' },
+          ],
+          detailsLink: '/roadmap/phase-0-2',
+        },
+        {
+          id: '0.3',
           title: 'Literature Deep Dive',
           classification: 'HUMAN-CRITICAL',
           estimatedDays: 5,
