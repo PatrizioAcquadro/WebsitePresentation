@@ -137,6 +137,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Set up gripper models (parallel jaw or similar)', deliverable: 'Functional grippers' },
             { title: 'Verify kinematics match target (H1-compatible)', deliverable: 'Kinematics validation report' },
           ],
+          detailsLink: '/roadmap/phase-1-1',
         },
         {
           id: '1.2',
