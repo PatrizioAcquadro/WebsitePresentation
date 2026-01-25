@@ -141,7 +141,7 @@ export default function Phase02Page() {
                 Phase 0.2
               </span>
               <span className="px-3 py-1 bg-[#453027]/30 border border-[#453027] rounded-lg text-[#BABABA] text-sm">
-                Week 1 &middot; Jan 16-22
+                Week 1 &middot; Jan 16-25
               </span>
             </div>
 

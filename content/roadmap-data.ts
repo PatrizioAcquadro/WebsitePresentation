@@ -70,7 +70,7 @@ export const roadmapData: RoadmapData = {
       title: 'Foundation & Setup',
       duration: 'Week 1',
       startDate: 'Jan 16',
-      endDate: 'Jan 22',
+      endDate: 'Jan 25',
       goal: 'Environment setup, literature deep-dive, detailed technical planning',
       resources: {
         gpuHours: '~4-15',
