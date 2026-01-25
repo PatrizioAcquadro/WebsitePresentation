@@ -151,6 +151,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Add multiple camera viewpoints', deliverable: 'Multi-view rendering' },
             { title: 'Implement block spawning and reset', deliverable: 'Episode management' },
           ],
+          detailsLink: '/roadmap/phase-1-2',
         },
       ],
     },
