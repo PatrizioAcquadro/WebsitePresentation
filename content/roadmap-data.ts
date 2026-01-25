@@ -118,11 +118,11 @@ export const roadmapData: RoadmapData = {
       id: 1,
       title: 'Simulation Environment',
       duration: 'Week 2-4',
-      startDate: 'Jan 17',
-      endDate: 'Feb 7',
+      startDate: 'Jan 26',
+      endDate: 'Feb 18',
       goal: 'Complete LEGO assembly simulation environment with bimanual robot',
       resources: {
-        gpuHours: 'TBD',
+        gpuHours: '65–155',
         purpose: 'Development, testing',
       },
       subphases: [
@@ -130,7 +130,7 @@ export const roadmapData: RoadmapData = {
           id: '1.1',
           title: 'Robot Model Integration',
           classification: 'AGENT-ASSISTED',
-          estimatedDays: 4,
+          estimatedDays: 6,
           tasks: [
             { title: 'Import/create bimanual robot URDF/MJCF', deliverable: 'Working robot model in sim' },
             { title: 'Configure joint limits, dynamics parameters', deliverable: 'Physically accurate robot' },
@@ -143,7 +143,7 @@ export const roadmapData: RoadmapData = {
           id: '1.2',
           title: 'LEGO Environment Creation',
           classification: 'AGENT-ASSISTED',
-          estimatedDays: 5,
+          estimatedDays: 12,
           tasks: [
             { title: 'Create LEGO block models (2x2, 2x4, 2x6 bricks)', deliverable: 'Accurate LEGO meshes with studs' },
             { title: 'Configure stud/tube contact physics', deliverable: 'Blocks that connect realistically' },

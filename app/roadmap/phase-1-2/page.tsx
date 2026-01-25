@@ -181,7 +181,7 @@ export default function Phase12Page() {
                 Phase 1.2
               </span>
               <span className="px-3 py-1 bg-[#453027]/30 border border-[#453027] rounded-lg text-[#BABABA] text-sm">
-                Week 2-4 &middot; 5 days
+                Week 2-4 &middot; 12 days
               </span>
             </div>
 
@@ -468,7 +468,7 @@ export default function Phase12Page() {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                   <span className="text-[#BABABA] text-sm">Estimated Duration</span>
-                  <p className="text-white font-semibold">5 days</p>
+                  <p className="text-white font-semibold">12 days</p>
                 </div>
                 <Link
                   href="/roadmap#phase-1"
