@@ -82,7 +82,7 @@ const environmentTasks = [
     id: 4,
     title: 'Multi-View Rendering & Data Logging',
     description: 'Implement camera and data logging setup that maximizes learning signal, debugging capability, and dataset utility for future methods.',
-    why: 'Startups care about data and measurement. Capturing richer modalities early enables faster iteration, stronger results, and cleaner evaluation.',
+    why: 'Capturing richer modalities early enables faster iteration, stronger results, and cleaner evaluation.',
     checklist: [
       'Implement 4 camera mounts (overhead, wrist-L, wrist-R, third-person) with correct tracking',
       'Capture RGB + depth + segmentation per camera',
@@ -101,7 +101,7 @@ const environmentTasks = [
     id: 5,
     title: 'Block Spawning & Reset',
     description: 'Implement a high-reliability episode manager: deterministic spawns, collision-free initialization, settle phase, curriculum hooks, and full reproducibility.',
-    why: 'This is one of the strongest engineering signals for startups: the ability to create scalable, reproducible, automated data generation pipelines.',
+    why: 'Scalable, reproducible, automated data generation pipelines are essential for training robust policies.',
     checklist: [
       'Implement deterministic reset (seed-based, versioned config)',
       'Add constraint-based spawn sampling (min-distance, orientation, no intersections)',
@@ -120,7 +120,7 @@ const environmentTasks = [
     id: 6,
     title: 'MVP-3 Task (Multi-Step Assembly)',
     description: 'Implement an MVP demonstrating true assembly: multi-step stacking of multiple bricks with real soft press-fit connections.',
-    why: 'MVP-3 is the strongest showcase: perception, precision, bimanual control, and contact-rich manipulation—exactly the profile that resonates with robotics startups.',
+    why: 'MVP-3 is the strongest showcase: perception, precision, bimanual control, and contact-rich manipulation in a single integrated demonstration.',
     checklist: [
       'Define brick set (2×2, 2×4, 2×6) and assembly goal (2-4 brick structure)',
       'Implement objective specification (per-step subgoals, success detection via connector engagement)',
@@ -192,7 +192,7 @@ export default function Phase12Page() {
             <p className="text-lg text-[#BABABA] max-w-3xl mb-8">
               Build a MuJoCo LEGO assembly environment that is real-world-relevant for Unitree H1,
               supports contact-rich press-fit behavior, is stable enough for large-scale dataset generation,
-              and is engineered to startup-grade standards.
+              and is engineered to production-grade standards.
             </p>
 
             {/* Goal highlight */}
@@ -391,9 +391,9 @@ export default function Phase12Page() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h2 className="text-xl font-semibold text-white">Startup-Grade Outputs</h2>
+              <h2 className="text-xl font-semibold text-white">Key Deliverables</h2>
             </div>
-            <p className="text-[#BABABA] mb-4">Deliverables you should explicitly claim by end of Phase 1.2:</p>
+            <p className="text-[#BABABA] mb-4">Expected outputs by end of Phase 1.2:</p>
             <ul className="space-y-3">
               {deliverables.map((item, i) => (
                 <li key={i} className="flex items-start gap-3 text-[#BABABA]">
