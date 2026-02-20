@@ -14,7 +14,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "VLA for Bimanual LEGO Assembly - Thesis Portfolio",
-  description: "Research thesis on Vision-Language-Action systems for robotic bimanual LEGO assembly using EO-1 methodology on Unitree H1",
+  description: "Research thesis on Vision-Language-Action systems for robotic bimanual LEGO assembly using EO-1 methodology on IHMC Alex",
 };
 
 export default function RootLayout({

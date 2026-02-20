@@ -9,7 +9,7 @@ export const roadmapContent = `# Comprehensive Project Roadmap: EO-1 Replication
 | **Total Duration** | ~12-13 weeks |
 | **Primary Goal** | Replicate EO-1 SOTA for bimanual LEGO assembly in simulation with sim-to-real readiness |
 | **Compute Resources** | 8x NVIDIA A100 GPUs |
-| **Future Hardware** | Unitree H1 humanoid, Franka Panda (teleoperation) |
+| **Future Hardware** | IHMC Alex humanoid, Franka Panda (teleoperation) |
 
 ---
 
@@ -81,7 +81,7 @@ export const roadmapContent = `# Comprehensive Project Roadmap: EO-1 Replication
 | Import/create bimanual robot URDF/MJCF | Working robot model in sim |
 | Configure joint limits, dynamics parameters | Physically accurate robot |
 | Set up gripper models (parallel jaw or similar) | Functional grippers |
-| Verify kinematics match target (H1-compatible) | Kinematics validation report |
+| Verify kinematics match target (Alex-compatible) | Kinematics validation report |
 
 #### 1.2 LEGO Environment Creation
 **[AGENT-ASSISTED]** - 5 days
@@ -272,7 +272,7 @@ export const roadmapContent = `# Comprehensive Project Roadmap: EO-1 Replication
 
 ## Phase 8: Sim-to-Real Preparation
 **Duration:** Week 11-13 (Mar 21 - Apr 4)
-**Goal:** Prepare for future real-robot deployment on Unitree H1
+**Goal:** Prepare for future real-robot deployment on IHMC Alex
 
 #### 8.1 Sim-to-Real Gap Analysis
 **[HUMAN-CRITICAL]** - 3 days
@@ -284,15 +284,15 @@ export const roadmapContent = `# Comprehensive Project Roadmap: EO-1 Replication
 | Plan domain randomization extensions | DR improvement plan |
 | Estimate real-world performance | Transfer prediction |
 
-#### 8.2 H1 Action Space Mapping
+#### 8.2 Alex Action Space Mapping
 **[HUMAN-CRITICAL]** - 3 days
 
 | Task | Deliverable |
 |------|-------------|
-| Document H1 kinematic structure | H1 specification document |
-| Design action space mapping (sim -> H1) | Mapping specification |
+| Document Alex kinematic structure | Alex specification document |
+| Design action space mapping (sim -> Alex) | Mapping specification |
 | Identify embodiment differences | Embodiment gap analysis |
-| Plan adaptation strategy | H1 adaptation plan |
+| Plan adaptation strategy | Alex adaptation plan |
 
 #### 8.3 Project Documentation and Handoff
 **[AGENT-DELEGABLE]** - 3 days
@@ -376,7 +376,7 @@ export const roadmapContent = `# Comprehensive Project Roadmap: EO-1 Replication
 - >85% LEGO task success
 - Match or exceed EO-1 LIBERO numbers
 - Preliminary dual-system extension implemented
-- Real-robot demonstration (if H1/Franka available early)
+- Real-robot demonstration (if Alex/Franka available early)
 
 ---
 
@@ -395,7 +395,7 @@ export const roadmapContent = `# Comprehensive Project Roadmap: EO-1 Replication
 | 9 | Mar 7-14 | Training + Eval begins | LEGO evaluation, generalization testing |
 | 10 | Mar 14-21 | Evaluation + Fine-tuning | Ablations, fine-tuning experiments |
 | 11 | Mar 21-28 | Fine-tuning + Sim2Real | Few-shot experiments, gap analysis |
-| 12 | Mar 28-Apr 4 | Wrap-up | H1 planning, documentation |
+| 12 | Mar 28-Apr 4 | Wrap-up | Alex planning, documentation |
 | 13 | Apr 4-11 | Buffer | Overflow, final documentation |
 
 ---

@@ -159,8 +159,8 @@ This document analyzes limitations and research opportunities specifically at th
 
 | Training Setting | Deployment Setting | Transfer Challenge |
 |------------------|--------------------|--------------------|
-| Simulated dual 7-DoF arms | Unitree H1 arms | Different kinematics |
-| Generic parallel grippers | H1 end-effectors | Different grasping |
+| Simulated dual 7-DoF arms | IHMC Alex arms | Different kinematics |
+| Generic parallel grippers | Alex end-effectors | Different grasping |
 | Simulated proprioception | Real sensor noise | Observation space |
 | Any sim robot | Franka Panda (teleoperation) | Action space mapping |
 
@@ -168,7 +168,7 @@ This document analyzes limitations and research opportunities specifically at th
 
 | Gap | Description | Impact |
 |-----|-------------|--------|
-| **No zero-shot cross-embodiment** | All methods need some target data | H1 deployment requires real demos |
+| **No zero-shot cross-embodiment** | All methods need some target data | Alex deployment requires real demos |
 | **Action space abstraction unclear** | No consensus on universal action representation | Sim-to-real may not generalize |
 | **Precision not preserved** | Transfer methods trade accuracy for generality | LEGO insertion accuracy may degrade |
 | **Bimanual coordination transfer** | Single-arm transfer studied more than bimanual | Coordination patterns may not transfer |
@@ -178,12 +178,12 @@ This document analyzes limitations and research opportunities specifically at th
 #### 3.4.1 Task-Space Action Representation
 **Hypothesis:** Representing actions in task space (end-effector pose, contact forces) rather than joint space enables better transfer.
 
-**Relevance to LEGO:** If we train with task-space actions (gripper pose relative to block), may transfer better to H1.
+**Relevance to LEGO:** If we train with task-space actions (gripper pose relative to block), may transfer better to Alex.
 
 #### 3.4.2 Morphology-Aware Encoders
 **Hypothesis:** Encoding robot morphology explicitly enables better generalization.
 
-**Relevance to LEGO:** Could enable training on multiple sim robots and zero-shot H1 transfer.
+**Relevance to LEGO:** Could enable training on multiple sim robots and zero-shot Alex transfer.
 
 #### 3.4.3 Skill-Level Transfer
 **Hypothesis:** High-level skills (grasp, insert, release) transfer better than low-level actions.
@@ -246,7 +246,7 @@ This document analyzes limitations and research opportunities specifically at th
 | Direction | Relevance | Notes |
 |-----------|-----------|-------|
 | **Tactile integration in VLA** | Could transform insertion precision | Requires hardware |
-| **Zero-shot cross-embodiment** | H1 deployment without demos | Fundamental research |
+| **Zero-shot cross-embodiment** | Alex deployment without demos | Fundamental research |
 | **Symbolic planning + VLA** | Complex assembly reasoning | Hybrid architecture |
 
 ---

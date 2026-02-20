@@ -10,7 +10,7 @@ export const taskDefinitionContent = `# Task Definition & Analysis: Bimanual LEG
 | **Block Count** | 5-10 LEGO blocks per assembly |
 | **Kit Variety** | Multiple distinct assembly configurations |
 | **Embodiment** | Robotic torso + 2 arms (bimanual) |
-| **Target Hardware** | Unitree H1 humanoid (future deployment) |
+| **Target Hardware** | IHMC Alex humanoid (future deployment) |
 | **Development Approach** | Simulation-first, then sim-to-real transfer |
 
 ### 1.2 Input Modalities
@@ -78,7 +78,7 @@ The bimanual LEGO assembly task addresses these gaps by providing:
 
 4. **Verifiable Success**: Binary connection states (connected/loose) enable unambiguous success evaluation, unlike subjective task completion criteria
 
-5. **Humanoid Relevance**: LEGO assembly is a quintessential human bimanual task, making it ideal for evaluating humanoid robot capabilities (e.g., Unitree H1)
+5. **Humanoid Relevance**: LEGO assembly is a quintessential human bimanual task, making it ideal for evaluating humanoid robot capabilities (e.g., IHMC Alex)
 
 6. **Sim-to-Real Testbed**: Standardized LEGO geometry enables systematic study of sim-to-real transfer for contact-rich manipulation
 

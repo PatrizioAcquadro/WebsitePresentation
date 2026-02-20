@@ -241,7 +241,7 @@ export const embodimentsChart: GroupedBarChart = {
       ],
     },
   ],
-  legoNote: 'Cross-embodiment generalization is critical for sim-to-real transfer. EO-1\'s consistent lead across diverse platforms suggests robust policy learning that should transfer well to the Unitree H1.',
+  legoNote: 'Cross-embodiment generalization is critical for sim-to-real transfer. EO-1\'s consistent lead across diverse platforms suggests robust policy learning that should transfer well to the IHMC Alex.',
 }
 
 // Generalization Performance Breakdown Table

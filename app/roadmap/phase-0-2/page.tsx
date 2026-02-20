@@ -26,7 +26,7 @@ const mujocoTasks = [
   {
     id: 2,
     title: 'Interactive Viewer Workflow',
-    description: 'Enable an interactive viewer workflow on the lab PC to debug robot asset loading (H1 MJCF/meshes), coordinate frames, contacts, and camera placement.',
+    description: 'Enable an interactive viewer workflow on the lab PC to debug robot asset loading (Alex MJCF/meshes), coordinate frames, contacts, and camera placement.',
     why: 'For contact-rich manipulation, visual debugging is the fastest path to correctness (frames, penetration, collisions, camera alignment). This is your "speed loop".',
     checklist: [
       'Validate windowed rendering works (viewer opens reliably)',
@@ -81,13 +81,13 @@ const mujocoTasks = [
   {
     id: 5,
     title: 'Asset Pathing & Loader Contract',
-    description: 'Lock a strict contract for how assets (MJCF + meshes + textures) are stored and referenced, so loading the H1 model is predictable.',
+    description: 'Lock a strict contract for how assets (MJCF + meshes + textures) are stored and referenced, so loading the Alex model is predictable.',
     why: 'The most common failure mode in robotics sim work is "broken mesh paths / wrong scaling / inconsistent frames". A loader contract prevents repeated friction.',
     checklist: [
       'Define a canonical asset directory layout (and keep it stable)',
       'Enforce relative paths inside MJCF (no machine-specific absolutes)',
       'Add an "asset linter" that checks: missing files, invalid references, suspicious scaling factors',
-      'Create a minimal "asset load test" that loads: floor + light + one test body, then the H1 MJCF (in Phase 1.1)',
+      'Create a minimal "asset load test" that loads: floor + light + one test body, then the Alex MJCF (in Phase 1.1)',
     ],
     milestone: 'Assets are loadable via a single entrypoint with zero missing-path errors.',
     icon: (
@@ -355,7 +355,7 @@ export default function Phase02Page() {
                   <h3 className="text-white font-medium">Asset Contract</h3>
                 </div>
                 <p className="text-[#BABABA] text-sm">
-                  Asset paths and loader contract are defined (ready to load Unitree H1 in Phase 1.1).
+                  Asset paths and loader contract are defined (ready to load IHMC Alex in Phase 1.1).
                 </p>
               </div>
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">

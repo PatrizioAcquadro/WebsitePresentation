@@ -115,7 +115,7 @@ export default function ArchitectureDiagram() {
         {/* ========== ENVIRONMENT BLOCK ========== */}
         <rect x="700" y="123" width="155" height="56" rx="8" fill="#1d1a1d" stroke="#453027" strokeWidth="1" strokeDasharray="4,3" />
         <text x="777" y="148" textAnchor="middle" fill="#FFFFFF" fontSize="13" fontWeight="600">MuJoCo Simulation</text>
-        <text x="777" y="163" textAnchor="middle" fill="#BABABA" fontSize="11">Unitree H1 Humanoid</text>
+        <text x="777" y="163" textAnchor="middle" fill="#BABABA" fontSize="11">IHMC Alex Humanoid</text>
 
         {/* ========== FEEDBACK LOOP ========== */}
         {/* Main trunk: MuJoCo right → down → across bottom → up left side */}

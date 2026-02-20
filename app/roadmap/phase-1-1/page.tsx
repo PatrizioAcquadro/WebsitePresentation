@@ -7,10 +7,10 @@ const integrationTasks = [
   {
     id: 1,
     title: 'Import/Create Bimanual Robot URDF/MJCF',
-    description: 'Integrate the existing Unitree H1 asset into MuJoCo as an upper-body fixed-base bimanual robot.',
-    why: 'All downstream phases (multi-view data generation, action learning, sim-to-real) depend on a single "source of truth" robot model that is stable, versioned, and structurally consistent with H1.',
+    description: 'Integrate the existing IHMC Alex asset into MuJoCo as an upper-body fixed-base bimanual robot.',
+    why: 'All downstream phases (multi-view data generation, action learning, sim-to-real) depend on a single "source of truth" robot model that is stable, versioned, and structurally consistent with Alex.',
     checklist: [
-      'Identify and pin a single authoritative H1 model version (commit hash / release tag)',
+      'Identify and pin a single authoritative Alex model version (commit hash / release tag)',
       'Convert to MJCF if necessary (MJCF-first is the final truth)',
       'Remove or disable unused full-body components for 1.x (legs/locomotion)',
       'Define a fixed root/body for the torso (no floating base)',
@@ -64,11 +64,11 @@ const integrationTasks = [
   },
   {
     id: 4,
-    title: 'Verify Kinematics Match Target (H1-Compatible)',
-    description: 'Produce a Kinematics Validation Report demonstrating that the integrated model matches H1 kinematics (Level 2).',
+    title: 'Verify Kinematics Match Target (Alex-Compatible)',
+    description: 'Produce a Kinematics Validation Report demonstrating that the integrated model matches Alex kinematics (Level 2).',
     why: 'This is your proof that the sim robot is not a "proxy". It protects the project from hidden frame/joint mismatches that would break sim-to-real or invalidate evaluation.',
     checklist: [
-      'Use the pinned H1 model definition as reference',
+      'Use the pinned Alex model definition as reference',
       'Sample 50–200 random joint configs for FK consistency tests',
       'Compute EE position error (cm) and orientation error (degrees)',
       'Verify workspace overlap and check for mirrored-axis mistakes',
@@ -142,9 +142,9 @@ const integrationTasks = [
 
 const fixedDecisions = [
   { label: 'Sim Engine', value: 'MuJoCo (MJCF-first workflow)' },
-  { label: 'Robot Asset', value: 'Existing Unitree H1 model (no proxy)' },
+  { label: 'Robot Asset', value: 'Existing IHMC Alex model (no proxy)' },
   { label: 'Scope', value: 'Upper-body fixed-base (no locomotion in 1.x)' },
-  { label: 'H1 Compatibility', value: 'Level 2+ (full kinematic + realistic limits)' },
+  { label: 'Alex Compatibility', value: 'Level 2+ (full kinematic + realistic limits)' },
   { label: 'Action Space', value: 'Δq joint deltas for bimanual arms + gripper' },
   { label: 'Views', value: '4 cameras from day 1' },
 ]
@@ -184,7 +184,7 @@ export default function Phase11Page() {
             </h1>
 
             <p className="text-lg text-[#BABABA] max-w-3xl mb-8">
-              Deliver a stable, reproducible, and H1-compatible upper-body fixed-base robot model in MuJoCo,
+              Deliver a stable, reproducible, and Alex-compatible upper-body fixed-base robot model in MuJoCo,
               with functional bimanual grippers and a finalized action/state contract for VLA training.
             </p>
 
@@ -387,7 +387,7 @@ export default function Phase11Page() {
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
                 <h3 className="text-white font-medium mb-2">Robot Model</h3>
                 <p className="text-[#BABABA] text-sm">
-                  H1 upper-body fixed-base MJCF loads and simulates stably with Level 2+ constraints.
+                  Alex upper-body fixed-base MJCF loads and simulates stably with Level 2+ constraints.
                 </p>
               </div>
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
@@ -417,7 +417,7 @@ export default function Phase11Page() {
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
                 <h3 className="text-white font-medium mb-2">Validation</h3>
                 <p className="text-[#BABABA] text-sm">
-                  Kinematics Validation Report exists with FK-based evidence of H1 compatibility.
+                  Kinematics Validation Report exists with FK-based evidence of Alex compatibility.
                 </p>
               </div>
             </div>

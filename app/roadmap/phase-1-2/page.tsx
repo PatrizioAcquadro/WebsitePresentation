@@ -67,7 +67,7 @@ const environmentTasks = [
     why: 'The baseplate anchors the entire assembly task. It defines the reference frame for "correct placement" and enables scalable multi-step builds.',
     checklist: [
       'Implement baseplate with visually accurate surface and press-fit compatible studs',
-      'Define workspace layout relative to H1 torso (baseplate pose, spawn regions, safety margins)',
+      'Define workspace layout relative to Alex torso (baseplate pose, spawn regions, safety margins)',
       'Tune surface/contact parameters to prevent "ice skating"',
       'Create validation tests (resting stability, controlled insertion, retention/detach)',
     ],
@@ -139,7 +139,7 @@ const environmentTasks = [
 
 const fixedDecisions = [
   { label: 'Sim Engine', value: 'MuJoCo (MJCF-first, code-first workflow)' },
-  { label: 'Robot', value: 'Existing Unitree H1 model (upper-body fixed-base)' },
+  { label: 'Robot', value: 'Existing IHMC Alex model (upper-body fixed-base)' },
   { label: 'Action Space', value: '16-D Δq (bimanual 14) + gripper (2) @ 20 Hz' },
   { label: 'State', value: 'Core (q, q̇, gripper) + EE pose/velocity' },
   { label: 'Views', value: '4 cameras (overhead, wrist-L, wrist-R, third-person)' },
@@ -190,7 +190,7 @@ export default function Phase12Page() {
             </h1>
 
             <p className="text-lg text-[#BABABA] max-w-3xl mb-8">
-              Build a MuJoCo LEGO assembly environment that is real-world-relevant for Unitree H1,
+              Build a MuJoCo LEGO assembly environment that is real-world-relevant for IHMC Alex,
               supports contact-rich press-fit behavior, is stable enough for large-scale dataset generation,
               and is engineered to production-grade standards.
             </p>

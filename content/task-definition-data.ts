@@ -46,7 +46,7 @@ export const coreSpecs = [
   { label: 'Block Count', value: '5-10 LEGO blocks per assembly' },
   { label: 'Kit Variety', value: 'Multiple distinct assembly configurations' },
   { label: 'Embodiment', value: 'Robotic torso + 2 arms (bimanual)' },
-  { label: 'Target Hardware', value: 'Unitree H1 humanoid' },
+  { label: 'Target Hardware', value: 'IHMC Alex humanoid' },
   { label: 'Development', value: 'Simulation-first, then sim-to-real transfer' },
 ]
 

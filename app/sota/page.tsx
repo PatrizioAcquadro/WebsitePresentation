@@ -97,7 +97,7 @@ export default function SotaPage() {
       <SectionWrapper
         id="vla-models"
         title="VLA Models"
-        subtitle="The objective is to develop a Vision-Language-Action system capable of performing bimanual LEGO assembly tasks using a robotic torso with two arms. The system will handle 5-10 LEGO blocks per assembly across multiple distinct configurations, targeting the Unitree H1 humanoid robot through a simulation-first approach with subsequent sim-to-real transfer."
+        subtitle="The objective is to develop a Vision-Language-Action system capable of performing bimanual LEGO assembly tasks using a robotic torso with two arms. The system will handle 5-10 LEGO blocks per assembly across multiple distinct configurations, targeting the IHMC Alex humanoid robot through a simulation-first approach with subsequent sim-to-real transfer."
       >
         {/* Input Modalities */}
         <motion.div

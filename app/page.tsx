@@ -97,7 +97,7 @@ export default function HomePage() {
             {/* Description */}
             <p className="text-lg sm:text-xl text-[#BABABA] max-w-3xl mx-auto mb-10 leading-relaxed">
               Replicating and extending the <span className="text-white font-medium">EO-1 model</span> for
-              precision bimanual manipulation using the <span className="text-white font-medium">Unitree H1</span> humanoid robot
+              precision bimanual manipulation using the <span className="text-white font-medium">IHMC Alex</span> humanoid robot
             </p>
 
             {/* CTA Buttons */}

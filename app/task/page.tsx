@@ -71,7 +71,7 @@ export default function TaskPage() {
             </div>
             <div className="px-3 md:px-4 py-2 bg-[#453027]/30 border border-[#453027] rounded-lg">
               <span className="text-[#BABABA] text-xs md:text-sm">Target:</span>
-              <span className="text-white ml-2 text-sm md:text-base">Unitree H1</span>
+              <span className="text-white ml-2 text-sm md:text-base">IHMC Alex</span>
             </div>
           </motion.div>
         </div>

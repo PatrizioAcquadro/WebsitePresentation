@@ -3,7 +3,7 @@
 export const solutionHeadline = 'Our Approach'
 
 export const solutionNarrative = [
-  'We resolved the gaps identified above by combining EO-1, a SOTA VLA with interleaved reasoning and continuous action generation, with bimanual LEGO assembly as a precision-demanding benchmark, deployed on the Unitree H1 through a simulation-first pipeline.',
+  'We resolved the gaps identified above by combining EO-1, a SOTA VLA with interleaved reasoning and continuous action generation, with bimanual LEGO assembly as a precision-demanding benchmark, deployed on the IHMC Alex through a simulation-first pipeline.',
   'EO-1\'s unified architecture processes language instructions, visual observations, and proprioceptive state in a single forward pass, interleaving reasoning tokens with continuous flow-matched actions. This eliminates the plan-execute gap that cripples modular systems, while its 16-step action chunks generate bimanual trajectories at the control frequencies contact-rich assembly demands.',
   'LEGO assembly serves as the ideal evaluation substrate: it requires sub-millimeter precision, forces genuine bimanual coordination (one hand must always anchor), and produces objectively verifiable success metrics because every stud either connects or it does not.',
 ]
@@ -50,7 +50,7 @@ export const diagramBoxes: DiagramBox[] = [
   { id: 'right-arm', label: 'Right Arm', sublabel: '7-DoF + Gripper', x: 550, y: 195, width: 130, height: 52, type: 'output' },
 
   // Environment
-  { id: 'environment', label: 'MuJoCo Sim', sublabel: 'Unitree H1', x: 750, y: 100, width: 140, height: 100, type: 'environment' },
+  { id: 'environment', label: 'MuJoCo Sim', sublabel: 'IHMC Alex', x: 750, y: 100, width: 140, height: 100, type: 'environment' },
 ]
 
 export const diagramArrows: DiagramArrow[] = [

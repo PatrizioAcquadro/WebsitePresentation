@@ -135,7 +135,7 @@ After comprehensive analysis of current VLA models, **EO-1** emerges as the opti
 
 | Component | Decision | Rationale |
 |-----------|----------|-----------|
-| **Simulation** | Isaac Sim/Lab primary | GPU-accelerated, H1 compatible |
+| **Simulation** | Isaac Sim/Lab primary | GPU-accelerated, Alex compatible |
 | **Robot Data** | OXE subset + simulated LEGO | Balance diversity and task-specificity |
 | **Interleaved Data** | Generate LEGO-specific | Critical for embodied reasoning |
 | **Data Augmentation** | Domain randomization | Sim-to-real robustness |
