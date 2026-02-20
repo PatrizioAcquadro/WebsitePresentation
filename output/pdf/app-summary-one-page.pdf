@@ -1,0 +1,65 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 2933 >>
+stream
+BT /F2 16 Tf 1 0 0 1 54 756.00 Tm (App Summary - Repo Evidence) Tj ET
+BT /F2 12 Tf 1 0 0 1 54 738.00 Tm (What it is) Tj ET
+BT /F1 10 Tf 1 0 0 1 54 724.00 Tm (A Next.js 16 thesis portfolio web app that documents a Vision-Language-Action research project) Tj ET
+BT /F1 10 Tf 1 0 0 1 54 712.00 Tm (for bimanual LEGO assembly. It organizes the work into task definition, SOTA analysis,) Tj ET
+BT /F1 10 Tf 1 0 0 1 54 700.00 Tm (limitations, and roadmap sections.) Tj ET
+BT /F2 12 Tf 1 0 0 1 54 684.00 Tm (Who it is for) Tj ET
+BT /F1 10 Tf 1 0 0 1 54 670.00 Tm (Primary persona: thesis stakeholders and technical readers who need a concise, navigable view) Tj ET
+BT /F1 10 Tf 1 0 0 1 54 658.00 Tm (of the research plan and analysis.) Tj ET
+BT /F2 12 Tf 1 0 0 1 54 642.00 Tm (What it does) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 628.00 Tm (- Provides dedicated routes for Home, Task, SOTA, Limitations, and Roadmap views.) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 616.00 Tm (- Loads structured research content from typed local modules in content/*.ts.) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 604.00 Tm (- Presents analysis visuals with reusable tables, charts, cards, and carousels.) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 592.00 Tm (- Shows phased roadmap details, milestones, and phase-specific deep-dive pages.) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 580.00 Tm (- Uses framer-motion animations and responsive layouts for interactive navigation.) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 568.00 Tm (- Includes Vercel Analytics and Speed Insights instrumentation in the root layout.) Tj ET
+BT /F2 12 Tf 1 0 0 1 54 552.00 Tm (How it works \(architecture\)) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 538.00 Tm (- Shared shell: app/layout.tsx applies global styles, Navigation, Footer, Analytics, and) Tj ET
+BT /F1 10 Tf 1 0 0 1 74 526.00 Tm (SpeedInsights.) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 514.00 Tm (- Route layer: app/**/page.tsx files compose section views and import domain data from) Tj ET
+BT /F1 10 Tf 1 0 0 1 74 502.00 Tm (content/*.ts.) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 490.00 Tm (- UI layer: components/** provides reusable rendering blocks \(task, sota, roadmap, markdown\).) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 478.00 Tm (- Asset layer: public/ images are rendered through next/image for hero and section visuals.) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 466.00 Tm (- Execution model: most pages/components are client-rendered and animated via use client +) Tj ET
+BT /F1 10 Tf 1 0 0 1 74 454.00 Tm (framer-motion.) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 442.00 Tm (- Backend APIs / database services: Not found in repo.) Tj ET
+BT /F2 12 Tf 1 0 0 1 54 426.00 Tm (How to run \(minimal\)) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 412.00 Tm (- Install dependencies: npm install) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 400.00 Tm (- Start dev server: npm run dev) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 388.00 Tm (- Open http://localhost:3000) Tj ET
+BT /F1 10 Tf 1 0 0 1 64 376.00 Tm (- Required Node.js version pin \(.nvmrc / engines\): Not found in repo.) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000321 00000 n 
+0000000396 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+3381
+%%EOF

@@ -18,6 +18,36 @@ import {
   dexterityChart,
   analysisSections,
 } from '@/content/sota-data'
+import {
+  inputModalities,
+  outputSpace,
+} from '@/content/task-definition-data'
+
+// Icons for input modalities
+const TextIcon = () => (
+  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
+)
+
+const VisionIcon = () => (
+  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+  </svg>
+)
+
+const SensorIcon = () => (
+  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+  </svg>
+)
+
+const inputModalityIcons: Record<string, React.ReactNode> = {
+  text: <TextIcon />,
+  vision: <VisionIcon />,
+  proprioception: <SensorIcon />,
+}
 
 export default function SotaPage() {
   return (
@@ -62,6 +92,86 @@ export default function SotaPage() {
           </motion.div>
         </div>
       </div>
+
+      {/* ==================== SECTION 0: VLA Models ==================== */}
+      <SectionWrapper
+        id="vla-models"
+        title="VLA Models"
+        subtitle="The objective is to develop a Vision-Language-Action system capable of performing bimanual LEGO assembly tasks using a robotic torso with two arms. The system will handle 5-10 LEGO blocks per assembly across multiple distinct configurations, targeting the Unitree H1 humanoid robot through a simulation-first approach with subsequent sim-to-real transfer."
+      >
+        {/* Input Modalities */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5 }}
+          className="mb-12"
+        >
+          <div className="p-6 md:p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
+            <h3 className="text-lg md:text-xl font-semibold text-white mb-3 text-center">Input Modalities</h3>
+            <p className="text-[#BABABA] text-center mb-6 max-w-2xl mx-auto">
+              The VLA system receives three primary input streams to understand and interact with the environment.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {inputModalities.map((modality) => (
+                <div
+                  key={modality.id}
+                  className="bg-gradient-to-br from-[#161316] to-[#1d1a1d] border border-[#453027]/50 rounded-xl overflow-hidden hover:border-[#FF6D29]/30 transition-colors"
+                >
+                  <div className="p-5 md:p-6">
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-[#FF6D29]/10 border border-[#FF6D29]/20 flex items-center justify-center text-[#FF6D29] shrink-0">
+                        {inputModalityIcons[modality.id]}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-base md:text-lg font-semibold text-white mb-1">{modality.title}</h4>
+                        <p className="text-[#BABABA] text-sm">{modality.description}</p>
+                      </div>
+                    </div>
+                    <ul className="space-y-2 border-t border-[#453027]/50 pt-4">
+                      {modality.details.map((detail, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-[#BABABA]">
+                          <span className="text-[#FF6D29] leading-5 shrink-0">&bull;</span>
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Output Space */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="p-6 md:p-8 bg-gradient-to-br from-[#1d1a1d] to-[#161316] border border-[#453027] rounded-2xl">
+            <h3 className="text-lg md:text-xl font-semibold text-white mb-3 text-center">Output Space</h3>
+            <p className="text-[#BABABA] text-center mb-6 max-w-2xl mx-auto">
+              Following the EO-1 paradigm, our action representation bridges discrete reasoning with continuous motor control, enabling both high-level planning and precise manipulation.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center hover:border-[#FF6D29]/30 transition-colors">
+                <div className="text-[#FF6D29] text-sm font-medium mb-2">Action Chunks</div>
+                <div className="text-white text-sm">{outputSpace.actionChunks}</div>
+              </div>
+              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center hover:border-[#FF6D29]/30 transition-colors">
+                <div className="text-[#FF6D29] text-sm font-medium mb-2">Continuous Space</div>
+                <div className="text-white text-sm">{outputSpace.continuousSpace}</div>
+              </div>
+              <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50 text-center hover:border-[#FF6D29]/30 transition-colors">
+                <div className="text-[#FF6D29] text-sm font-medium mb-2">Control Frequency</div>
+                <div className="text-white text-sm">{outputSpace.controlFrequency}</div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </SectionWrapper>
 
       {/* ==================== SECTION 1: The Optimal Foundation ==================== */}
       <section id="why-eo1" className="relative py-16 md:py-20 px-4 bg-[#161316]">

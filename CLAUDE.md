@@ -69,14 +69,4 @@ website/
 
 `@/*` maps to the project root (e.g., `@/components/Navigation`).
 
-## Deployment
 
-After completing any new feature, always deploy to Vercel by committing and pushing to git:
-
-```bash
-git add <changed-files>
-git commit -m "Concise commit message"
-git push
-```
-
-Vercel automatically deploys on push to main, allowing immediate preview of changes on the live site.

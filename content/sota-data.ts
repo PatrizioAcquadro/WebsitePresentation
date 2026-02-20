@@ -68,8 +68,8 @@ export interface PipelineStep {
 // ============ Hero Data ============
 
 export const heroData = {
-  title: 'SOTA Model Selection',
-  subtitle: 'Analysis of the state-of-the-art VLA model for bimanual LEGO assembly',
+  title: 'VLA Model',
+  subtitle: 'VLA input/output specification, model landscape, and EO-1 selection rationale',
   badges: [
     { label: 'EO-1', value: 'Selected Model' },
     { label: 'LIBERO', value: '98.2%' },

@@ -9,6 +9,7 @@ interface SectionWrapperProps {
   subtitle?: string
   children: ReactNode
   variant?: 'default' | 'darker'
+  compactWithoutSubtitle?: boolean
 }
 
 export default function SectionWrapper({
@@ -17,8 +18,12 @@ export default function SectionWrapper({
   subtitle,
   children,
   variant = 'default',
+  compactWithoutSubtitle = false,
 }: SectionWrapperProps) {
   const bgColor = variant === 'darker' ? 'bg-[#1d1a1d]' : 'bg-[#161316]'
+  const isCompactHeader = compactWithoutSubtitle && !subtitle
+  const headerMarginClass = isCompactHeader ? 'mb-0' : 'mb-12 md:mb-16'
+  const titleMarginClass = subtitle || isCompactHeader ? 'mb-4' : ''
 
   return (
     <section id={id} className={`relative py-20 md:py-24 px-4 ${bgColor} overflow-hidden`}>
@@ -32,9 +37,9 @@ export default function SectionWrapper({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-center mb-12 md:mb-16"
+          className={`text-center ${headerMarginClass}`}
         >
-          <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4">
+          <h2 className={`text-3xl md:text-4xl font-semibold text-white ${titleMarginClass}`}>
             {title}
           </h2>
           {subtitle && (

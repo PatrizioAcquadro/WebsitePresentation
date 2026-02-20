@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { KeyFeature } from '@/content/sota-data'
 
@@ -179,7 +179,7 @@ export default function FeatureCarousel({ features }: FeatureCarouselProps) {
         trackRef.current.style.transition = 'none'
         setOffset(newOffset)
         // Force reflow
-        trackRef.current.offsetHeight
+        void trackRef.current.offsetHeight
         trackRef.current.style.transition = ''
       }
     }

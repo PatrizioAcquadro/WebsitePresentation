@@ -1,0 +1,181 @@
+'use client'
+
+import { motion } from 'framer-motion'
+
+export default function ArchitectureDiagram() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.6 }}
+      className="w-full max-w-5xl mx-auto"
+    >
+      <svg
+        viewBox="0 0 960 340"
+        className="w-full h-auto"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          {/* Arrowhead markers */}
+          <marker id="arrow-data" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6" fill="none" stroke="#BABABA" strokeWidth="1" />
+          </marker>
+          <marker id="arrow-action" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6" fill="none" stroke="#FF6D29" strokeWidth="1" />
+          </marker>
+          <marker id="arrow-feedback" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6" fill="none" stroke="#BABABA" strokeWidth="1" strokeDasharray="2,1" />
+          </marker>
+
+          {/* Subtle glow filter for EO-1 block */}
+          <filter id="eo1-glow" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feFlood floodColor="#FF6D29" floodOpacity="0.15" result="color" />
+            <feComposite in="color" in2="blur" operator="in" result="glow" />
+            <feMerge>
+              <feMergeNode in="glow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* ========== BACKGROUND ========== */}
+        <rect width="960" height="340" fill="transparent" />
+
+        {/* ========== COLUMN LABELS ========== */}
+        <text x="100" y="24" textAnchor="middle" fill="#BABABA" fontSize="11" fontWeight="600" letterSpacing="0.08em" opacity="0.6">
+          INPUTS
+        </text>
+        <text x="430" y="24" textAnchor="middle" fill="#FF6D29" fontSize="11" fontWeight="600" letterSpacing="0.08em" opacity="0.8">
+          MODEL
+        </text>
+        <text x="680" y="24" textAnchor="middle" fill="#BABABA" fontSize="11" fontWeight="600" letterSpacing="0.08em" opacity="0.6">
+          ACTIONS
+        </text>
+        <text x="870" y="24" textAnchor="middle" fill="#BABABA" fontSize="11" fontWeight="600" letterSpacing="0.08em" opacity="0.6">
+          ENVIRONMENT
+        </text>
+
+        {/* ========== INPUT BOXES ========== */}
+        {/* Text Instructions */}
+        <g>
+          <rect x="30" y="52" width="140" height="54" rx="8" fill="#1d1a1d" stroke="#453027" strokeWidth="1" />
+          <g transform="translate(48, 68)">
+            <path d="M0,0 h12 M0,5 h10 M0,10 h8" stroke="#BABABA" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.6" />
+          </g>
+          <text x="68" y="74" fill="#FFFFFF" fontSize="12" fontWeight="600">Language</text>
+          <text x="68" y="90" fill="#BABABA" fontSize="10">Instructions</text>
+        </g>
+
+        {/* Visual Observations */}
+        <g>
+          <rect x="30" y="122" width="140" height="54" rx="8" fill="#1d1a1d" stroke="#453027" strokeWidth="1" />
+          <g transform="translate(48, 140)">
+            <circle cx="6" cy="6" r="4" fill="none" stroke="#BABABA" strokeWidth="1.2" opacity="0.6" />
+            <circle cx="6" cy="6" r="1.5" fill="#BABABA" opacity="0.6" />
+          </g>
+          <text x="68" y="144" fill="#FFFFFF" fontSize="12" fontWeight="600">Visual</text>
+          <text x="68" y="160" fill="#BABABA" fontSize="10">Multi-view cameras</text>
+        </g>
+
+        {/* Proprioceptive State */}
+        <g>
+          <rect x="30" y="192" width="140" height="54" rx="8" fill="#1d1a1d" stroke="#453027" strokeWidth="1" />
+          <g transform="translate(48, 208)">
+            <rect x="0" y="0" width="12" height="12" rx="2" fill="none" stroke="#BABABA" strokeWidth="1.2" opacity="0.6" />
+            <rect x="4" y="4" width="4" height="4" rx="0.5" fill="#BABABA" opacity="0.6" />
+          </g>
+          <text x="68" y="214" fill="#FFFFFF" fontSize="12" fontWeight="600">Proprioceptive</text>
+          <text x="68" y="230" fill="#BABABA" fontSize="10">Joint states & poses</text>
+        </g>
+
+        {/* ========== EO-1 MODEL BLOCK ========== */}
+        <g filter="url(#eo1-glow)">
+          <rect x="240" y="40" width="380" height="222" rx="12" fill="#1d1a1d" stroke="#FF6D29" strokeWidth="1.5" opacity="0.95" />
+        </g>
+
+        {/* Model header */}
+        <text x="430" y="68" textAnchor="middle" fill="#FF6D29" fontSize="18" fontWeight="700">EO-1</text>
+        <text x="430" y="86" textAnchor="middle" fill="#BABABA" fontSize="11">Qwen 2.5 VL Backbone (3B params)</text>
+
+        {/* Unified Transformer block */}
+        <rect x="270" y="100" width="320" height="40" rx="6" fill="#FF6D29" fillOpacity="0.08" stroke="#FF6D29" strokeWidth="0.8" strokeOpacity="0.3" />
+        <text x="430" y="124" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="500">Unified Decoder-Only Transformer</text>
+
+        {/* Language Head */}
+        <rect x="270" y="158" width="150" height="48" rx="6" fill="#161316" stroke="#453027" strokeWidth="1" />
+        <text x="345" y="178" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="600">Language Head</text>
+        <text x="345" y="194" textAnchor="middle" fill="#BABABA" fontSize="9.5">Autoregressive reasoning</text>
+
+        {/* Flow Head */}
+        <rect x="440" y="158" width="150" height="48" rx="6" fill="#161316" stroke="#FF6D29" strokeWidth="1" strokeOpacity="0.5" />
+        <text x="515" y="178" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="600">Flow Head</text>
+        <text x="515" y="194" textAnchor="middle" fill="#BABABA" fontSize="9.5">Continuous action denoising</text>
+
+        {/* Interleaved label */}
+        <text x="430" y="232" textAnchor="middle" fill="#FF6D29" fontSize="9.5" fontWeight="500" opacity="0.7" fontStyle="italic">
+          Interleaved reasoning ↔ action generation
+        </text>
+
+        {/* ========== OUTPUT BOXES ========== */}
+        {/* Action Chunks */}
+        <g>
+          <rect x="690" y="52" width="140" height="54" rx="8" fill="#1d1a1d" stroke="#FF6D29" strokeWidth="1" strokeOpacity="0.4" />
+          <text x="760" y="74" textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="600">Action Chunks</text>
+          <text x="760" y="90" textAnchor="middle" fill="#FF6D29" fontSize="10" opacity="0.8">h = 16 steps</text>
+        </g>
+
+        {/* Left Arm */}
+        <g>
+          <rect x="690" y="122" width="140" height="54" rx="8" fill="#1d1a1d" stroke="#453027" strokeWidth="1" />
+          <text x="760" y="144" textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="600">Left Arm</text>
+          <text x="760" y="160" textAnchor="middle" fill="#BABABA" fontSize="10">7-DoF + gripper</text>
+        </g>
+
+        {/* Right Arm */}
+        <g>
+          <rect x="690" y="192" width="140" height="54" rx="8" fill="#1d1a1d" stroke="#453027" strokeWidth="1" />
+          <text x="760" y="214" textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="600">Right Arm</text>
+          <text x="760" y="230" textAnchor="middle" fill="#BABABA" fontSize="10">7-DoF + gripper</text>
+        </g>
+
+        {/* ========== ARROWS: Inputs → Model ========== */}
+        <line x1="170" y1="79" x2="236" y2="79" stroke="#BABABA" strokeWidth="1" markerEnd="url(#arrow-data)" opacity="0.5" />
+        <line x1="170" y1="149" x2="236" y2="149" stroke="#BABABA" strokeWidth="1" markerEnd="url(#arrow-data)" opacity="0.5" />
+        <line x1="170" y1="219" x2="236" y2="219" stroke="#BABABA" strokeWidth="1" markerEnd="url(#arrow-data)" opacity="0.5" />
+
+        {/* ========== ARROWS: Model → Outputs ========== */}
+        <line x1="620" y1="79" x2="686" y2="79" stroke="#FF6D29" strokeWidth="1.2" markerEnd="url(#arrow-action)" opacity="0.7" />
+        <line x1="620" y1="149" x2="686" y2="149" stroke="#FF6D29" strokeWidth="1.2" markerEnd="url(#arrow-action)" opacity="0.7" />
+        <line x1="620" y1="219" x2="686" y2="219" stroke="#FF6D29" strokeWidth="1.2" markerEnd="url(#arrow-action)" opacity="0.7" />
+
+        {/* ========== ENVIRONMENT BLOCK ========== */}
+        <rect x="690" y="276" width="230" height="52" rx="8" fill="#1d1a1d" stroke="#453027" strokeWidth="1" strokeDasharray="4,3" />
+        <text x="805" y="298" textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="600">MuJoCo Simulation</text>
+        <text x="805" y="314" textAnchor="middle" fill="#BABABA" fontSize="10">Unitree H1 Humanoid</text>
+
+        {/* ========== ARROWS: Outputs → Environment ========== */}
+        {/* Left arm down-right to environment */}
+        <path d="M 830 176 L 830 272" fill="none" stroke="#FF6D29" strokeWidth="1" markerEnd="url(#arrow-action)" opacity="0.5" />
+        {/* Right arm down to environment */}
+        <path d="M 760 246 L 760 272" fill="none" stroke="#FF6D29" strokeWidth="1" markerEnd="url(#arrow-action)" opacity="0.5" />
+
+        {/* ========== FEEDBACK LOOP ========== */}
+        {/* Environment → back to Inputs (curved path along bottom and left) */}
+        <path
+          d="M 690 302 L 18 302 L 18 149 L 26 149"
+          fill="none"
+          stroke="#BABABA"
+          strokeWidth="1"
+          strokeDasharray="5,3"
+          markerEnd="url(#arrow-feedback)"
+          opacity="0.4"
+        />
+        <text x="350" y="318" textAnchor="middle" fill="#BABABA" fontSize="9.5" opacity="0.5" fontStyle="italic">
+          Observation feedback loop
+        </text>
+      </svg>
+    </motion.div>
+  )
+}

@@ -6,7 +6,9 @@ import SectionWrapper from '@/components/task/SectionWrapper'
 import PhaseIndex from '@/components/roadmap/PhaseIndex'
 import PhaseSection from '@/components/roadmap/PhaseSection'
 import SuccessCriteriaCards from '@/components/roadmap/SuccessCriteriaCards'
+import MetricTable from '@/components/task/MetricTable'
 import { roadmapData } from '@/content/roadmap-data'
+import { metricCategories } from '@/content/task-definition-data'
 
 export default function RoadmapPage() {
   return (
@@ -97,6 +99,27 @@ export default function RoadmapPage() {
         variant="darker"
       >
         <SuccessCriteriaCards criteria={roadmapData.successCriteria} />
+
+        {/* Success Metrics (moved from Task page) */}
+        <div className="mt-16 pt-12 border-t border-[#453027]/30">
+          <div className="text-center mb-10">
+            <h3 className="text-2xl md:text-3xl font-semibold text-white mb-3">Success Metrics</h3>
+            <p className="text-[#BABABA] text-base md:text-lg max-w-2xl mx-auto">
+              Evaluation criteria for task completion, efficiency, and generalization
+            </p>
+          </div>
+          <div className="space-y-6 md:space-y-8">
+            {metricCategories.map((category, index) => (
+              <MetricTable
+                key={category.title}
+                title={category.title}
+                description={category.description}
+                metrics={category.metrics}
+                index={index}
+              />
+            ))}
+          </div>
+        </div>
       </SectionWrapper>
     </div>
   )

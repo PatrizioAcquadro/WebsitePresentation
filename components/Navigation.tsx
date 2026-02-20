@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/task', label: 'Task' },
-  { href: '/sota', label: 'SOTA' },
+  { href: '/sota', label: 'VLA Model' },
   { href: '/limitations', label: 'Limitations' },
   { href: '/roadmap', label: 'Roadmap' },
 ]
