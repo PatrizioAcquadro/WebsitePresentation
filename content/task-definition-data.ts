@@ -66,7 +66,7 @@ export const inputModalities: InputModality[] = [
     title: 'Visual Observations',
     description: 'Multi-view camera images of the workspace',
     details: [
-      'Multi-view cameras (workspace, gripper-mounted, third-person)',
+      'Multi-view cameras (robot camera, third-person)',
       'RGB images with potential depth information',
       'Real-time state of the assembly workspace',
     ],

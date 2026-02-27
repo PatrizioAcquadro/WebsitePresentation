@@ -80,7 +80,7 @@ export const roadmapContent = `# Comprehensive Project Roadmap: EO-1 Replication
 |------|-------------|
 | Import/create bimanual robot URDF/MJCF | Working robot model in sim |
 | Configure joint limits, dynamics parameters | Physically accurate robot |
-| Set up gripper models (parallel jaw or similar) | Functional grippers |
+| Set up end-effector models (SAKE EZGripper) | Functional end-effectors |
 | Verify kinematics match target (Alex-compatible) | Kinematics validation report |
 
 #### 1.2 LEGO Environment Creation

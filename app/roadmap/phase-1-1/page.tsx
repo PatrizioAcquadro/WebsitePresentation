@@ -7,14 +7,14 @@ const integrationTasks = [
   {
     id: 1,
     title: 'Import/Create Bimanual Robot URDF/MJCF',
-    description: 'Integrate the existing IHMC Alex asset into MuJoCo as an upper-body fixed-base bimanual robot.',
+    description: 'Start from the existing Alex V1 MJCF in ihmc-alex-sdk, strip lower body, fix head, and set up upper-body fixed-base bimanual configuration.',
     why: 'All downstream phases (multi-view data generation, action learning, sim-to-real) depend on a single "source of truth" robot model that is stable, versioned, and structurally consistent with Alex.',
     checklist: [
-      'Identify and pin a single authoritative Alex model version (commit hash / release tag)',
-      'Convert to MJCF if necessary (MJCF-first is the final truth)',
-      'Remove or disable unused full-body components for 1.x (legs/locomotion)',
+      'Pin Alex V1 model version from ihmc-alex-sdk (start from alex_v1_full_body_nub_forearms_mjx.xml)',
+      'Strip lower-body joints (12 joints: HIP_X/Z/Y, KNEE_Y, ANKLE_Y/X per leg)',
+      'Fix NECK_Z/NECK_Y at default head pose, keep SPINE_Z active',
       'Define a fixed root/body for the torso (no floating base)',
-      'Freeze canonical names for base/torso frame, arm joints, EE frames, camera mounts',
+      'Freeze canonical Alex joint names (SHOULDER_Y/X/Z, ELBOW_Y, WRIST_Z/X, GRIPPER_Z per arm)',
     ],
     milestone: 'Robot model loads reliably, runs 10 seconds without instability, has frozen joint ordering + named EE frames',
     icon: (
@@ -45,17 +45,17 @@ const integrationTasks = [
   },
   {
     id: 3,
-    title: 'Set Up Gripper Models (Parallel Jaw)',
-    description: 'Implement parallel-jaw grippers (1-DoF open/close) for both arms with stable contacts and a future-proof command interface.',
-    why: 'Without reliable grasping, you cannot generate meaningful LEGO datasets or demonstrate bimanual assembly. A simple, stable gripper beats a complex hand early on.',
+    title: 'Set Up End-Effector Models (SAKE EZGripper)',
+    description: 'Integrate SAKE EZGripper end-effectors for both arms from the Alex URDF adapters, with stable contacts and an abstraction layer for future PSYONIC Ability Hand swap.',
+    why: 'Without reliable grasping, you cannot generate meaningful LEGO datasets or demonstrate bimanual assembly. Using the real Alex end-effectors (EZGripper) from day one ensures sim-to-real alignment.',
     checklist: [
-      'Implement 1-DoF gripper width per arm (open/close)',
-      'Use collision primitives for fingertips (avoid mesh collisions)',
-      'Set friction/contact parameters for non-slipping grasps',
-      'Define gripper_cmd ∈ [0, 1] per arm: 0 = closed, 1 = open',
-      'Freeze tool_frame per gripper for EE pose logging',
+      'Convert EZGripper URDF adapters to MJCF and attach to nub forearm model',
+      'Use collision primitives for EZGripper finger pads (avoid mesh collisions)',
+      'Set friction/contact parameters accounting for underactuated compliance',
+      'Define gripper_cmd ∈ [0, 1] per arm mapping to EZGripper servo range (0–180°)',
+      'Design EndEffectorInterface abstraction for future Ability Hand integration',
     ],
-    milestone: 'Both grippers open/close stably and execute repeatable grasp+lift on simple object',
+    milestone: 'Both EZGrippers open/close stably and execute repeatable grasp+lift on simple object',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
@@ -87,7 +87,7 @@ const integrationTasks = [
     description: 'Freeze the action vector definition and low-level control strategy that converts model outputs into stable joint motion.',
     why: 'Your entire learning system (dataset, policy output head, chunking, evaluation) depends on an unambiguous action contract. If this changes later, you risk invalidating collected data and learned models.',
     checklist: [
-      'Define action = [Δq_left(7), Δq_right(7), gripper_left(1), gripper_right(1)] → 16-D',
+      'Define action = [Δq_spine(1), Δq_left(7), Δq_right(7), gripper_left(1), gripper_right(1)] → 17-D',
       'Normalize action to [-1, 1] and map to Δq via Δq_max per joint',
       'Policy/control rate: 20 Hz (one action per 50 ms)',
       'Physics substeps: 5–10 substeps per action',
@@ -121,17 +121,15 @@ const integrationTasks = [
   },
   {
     id: 7,
-    title: 'Multi-View Cameras (4 Views)',
-    description: 'Set up four synchronized camera streams in MuJoCo for data generation and policy inputs.',
-    why: 'Bimanual LEGO assembly requires both global context and local precision views. Multi-view inputs also strengthen generalization and make demos more compelling for industrial evaluation.',
+    title: 'Multi-View Cameras (2 Views)',
+    description: 'Set up two synchronized camera streams in MuJoCo for data generation and policy inputs.',
+    why: 'Bimanual LEGO assembly requires both an ego-centric robot perspective and an external observation view. Multi-view inputs strengthen generalization and make demos more compelling for industrial evaluation.',
     checklist: [
-      'Workspace Overhead — global layout of bricks and task context',
-      'Left Wrist Camera — precision grasp/alignment view',
-      'Right Wrist Camera — precision grasp/alignment view',
-      'Third-Person Camera — debugging + presentation + additional context',
-      'Ensure synchronization (all cameras correspond to same sim timestep)',
+      'Robot Camera — mounted on the robot, providing the robot\'s own perspective',
+      'Third-Person Camera — external camera looking directly at the robot',
+      'Ensure synchronization (both cameras correspond to same sim timestep)',
     ],
-    milestone: 'All 4 cameras render reliably (headless-capable), wrist cameras track EE correctly, config frozen for dataset logging',
+    milestone: 'Both cameras render reliably (headless-capable), robot camera tracks correctly, config frozen for dataset logging',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -146,7 +144,7 @@ const fixedDecisions = [
   { label: 'Scope', value: 'Upper-body fixed-base (no locomotion in 1.x)' },
   { label: 'Alex Compatibility', value: 'Level 2+ (full kinematic + realistic limits)' },
   { label: 'Action Space', value: 'Δq joint deltas for bimanual arms + gripper' },
-  { label: 'Views', value: '4 cameras from day 1' },
+  { label: 'Views', value: '2 cameras from day 1' },
 ]
 
 export default function Phase11Page() {
@@ -391,15 +389,15 @@ export default function Phase11Page() {
                 </p>
               </div>
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
-                <h3 className="text-white font-medium mb-2">Grippers</h3>
+                <h3 className="text-white font-medium mb-2">End-Effectors</h3>
                 <p className="text-[#BABABA] text-sm">
-                  Bimanual parallel-jaw grippers work reliably for basic grasp+lift operations.
+                  Bimanual SAKE EZGripper end-effectors work reliably for basic grasp+lift operations.
                 </p>
               </div>
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
                 <h3 className="text-white font-medium mb-2">Action Contract</h3>
                 <p className="text-[#BABABA] text-sm">
-                  16-D action (Δq + gripper) is frozen and stable under repeated action chunks.
+                  17-D action (Δq spine + bimanual arms + gripper) is frozen and stable under repeated action chunks.
                 </p>
               </div>
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
@@ -411,7 +409,7 @@ export default function Phase11Page() {
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
                 <h3 className="text-white font-medium mb-2">Camera Setup</h3>
                 <p className="text-[#BABABA] text-sm">
-                  4 cameras (overhead, wrist-L, wrist-R, third-person) render reliably and synchronously.
+                  2 cameras (robot camera, third-person) render reliably and synchronously.
                 </p>
               </div>
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">

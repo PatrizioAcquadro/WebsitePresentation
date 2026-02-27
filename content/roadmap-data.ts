@@ -149,7 +149,7 @@ export const roadmapData: RoadmapData = {
           tasks: [
             { title: 'Import/create bimanual robot URDF/MJCF', deliverable: 'Working robot model in sim' },
             { title: 'Configure joint limits, dynamics parameters', deliverable: 'Physically accurate robot' },
-            { title: 'Set up gripper models (parallel jaw or similar)', deliverable: 'Functional grippers' },
+            { title: 'Set up end-effector models (SAKE EZGripper)', deliverable: 'Functional end-effectors' },
             { title: 'Verify kinematics match target (Alex-compatible)', deliverable: 'Kinematics validation report' },
           ],
           detailsLink: '/roadmap/phase-1-1',

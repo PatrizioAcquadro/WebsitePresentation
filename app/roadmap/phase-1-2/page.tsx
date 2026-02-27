@@ -84,13 +84,13 @@ const environmentTasks = [
     description: 'Implement camera and data logging setup that maximizes learning signal, debugging capability, and dataset utility for future methods.',
     why: 'Capturing richer modalities early enables faster iteration, stronger results, and cleaner evaluation.',
     checklist: [
-      'Implement 4 camera mounts (overhead, wrist-L, wrist-R, third-person) with correct tracking',
+      'Implement 2 camera mounts (robot camera, third-person) with correct tracking',
       'Capture RGB + depth + segmentation per camera',
       'Set resolution (320×320 or 384×384) at 20 Hz synchronized with state/action',
       'Implement deterministic alignment with metadata (intrinsics, extrinsics, sim time, episode ID)',
       'Add dataset sanity viewer for validation',
     ],
-    milestone: 'Four-view synchronized recording works reliably headless, RGB/depth/segmentation aligned with state/action',
+    milestone: 'Two-view synchronized recording works reliably headless, RGB/depth/segmentation aligned with state/action',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -140,16 +140,16 @@ const environmentTasks = [
 const fixedDecisions = [
   { label: 'Sim Engine', value: 'MuJoCo (MJCF-first, code-first workflow)' },
   { label: 'Robot', value: 'Existing IHMC Alex model (upper-body fixed-base)' },
-  { label: 'Action Space', value: '16-D Δq (bimanual 14) + gripper (2) @ 20 Hz' },
+  { label: 'Action Space', value: '17-D Δq (spine 1 + bimanual 14) + gripper (2) @ 20 Hz' },
   { label: 'State', value: 'Core (q, q̇, gripper) + EE pose/velocity' },
-  { label: 'Views', value: '4 cameras (overhead, wrist-L, wrist-R, third-person)' },
+  { label: 'Views', value: '2 cameras (robot camera, third-person)' },
 ]
 
 const deliverables = [
   'Procedural LEGO asset generator (2×2/2×4/2×6) with connector metadata',
   'Soft Real Press-Fit model (documented parameters + calibration tests)',
   'Baseplate + workspace with reliable press-fit behavior',
-  'Four-view dataset logging (RGB + depth + segmentation) synchronized with state/action',
+  'Two-view dataset logging (RGB + depth + segmentation) synchronized with state/action',
   'Episode manager with deterministic seeding and reset reliability metrics',
   'MVP-3 multi-step assembly scenario + scripted feasibility rollouts',
   'Validation report: press-fit calibration, reset reliability, example MVP-3 rollouts',
@@ -441,7 +441,7 @@ export default function Phase12Page() {
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">
                 <h3 className="text-white font-medium mb-2">Multi-View Recording</h3>
                 <p className="text-[#BABABA] text-sm">
-                  Four cameras record RGB+depth+segmentation in sync with state/action.
+                  Two cameras record RGB+depth+segmentation in sync with state/action.
                 </p>
               </div>
               <div className="p-4 bg-[#161316] rounded-xl border border-[#453027]/50">

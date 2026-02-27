@@ -152,7 +152,7 @@ This document analyzes limitations and research opportunities specifically at th
 **Cross-action-space learning** refers to the ability to transfer manipulation policies across robots with different:
 - **Degrees of freedom** (7-DoF arm vs. 6-DoF arm vs. humanoid)
 - **Kinematic structure** (serial vs. parallel, different link lengths)
-- **End-effector types** (parallel gripper vs. dexterous hand vs. suction)
+- **End-effector types** (SAKE EZGripper vs. PSYONIC Ability Hand vs. suction)
 - **Control interfaces** (position vs. velocity vs. torque control)
 
 ### 3.2 Why This Matters for LEGO Task
@@ -160,7 +160,7 @@ This document analyzes limitations and research opportunities specifically at th
 | Training Setting | Deployment Setting | Transfer Challenge |
 |------------------|--------------------|--------------------|
 | Simulated dual 7-DoF arms | IHMC Alex arms | Different kinematics |
-| Generic parallel grippers | Alex end-effectors | Different grasping |
+| SAKE EZGripper (sim) | Alex EZGripper / Ability Hand (real) | Different grasping dynamics |
 | Simulated proprioception | Real sensor noise | Observation space |
 | Any sim robot | Franka Panda (teleoperation) | Action space mapping |
 
