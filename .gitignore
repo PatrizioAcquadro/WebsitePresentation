@@ -43,4 +43,7 @@ next-env.d.ts
 # project-specific
 CLAUDE.md
 Phase*.md
+# Roadmap detail pages read these markdown sources at build time.
+!Phase2.1.md
+!Phase2.2.md
 robot.png
