@@ -19,6 +19,8 @@ npm run lint     # Run ESLint
 
 - Do **not** use `next/font/google` in this repo. It can fail production builds and Vercel deployments when Google Fonts cannot be fetched at build time.
 - Prefer a system font stack or bundled local fonts via `next/font/local` so `npm run build` stays fully self-contained.
+- The root-level `Phase*.md` files are build-time inputs for roadmap detail pages. They must stay committed and must not be left ignored by `.gitignore`.
+- When adding a new roadmap markdown source such as `Phase4.1.md`, make sure the file is tracked by git before deploying, or Vercel prerendering will fail with `ENOENT`.
 
 ## Architecture
 
@@ -73,4 +75,3 @@ website/
 ### Path Alias
 
 `@/*` maps to the project root (e.g., `@/components/Navigation`).
-
