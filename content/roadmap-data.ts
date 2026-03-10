@@ -195,6 +195,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Add failure cases and recovery demonstrations', deliverable: 'Failure trajectory dataset' },
             { title: 'Quality control and filtering', deliverable: 'Cleaned dataset' },
           ],
+          detailsLink: '/roadmap/phase-2-1',
         },
         {
           id: '2.2',
@@ -207,6 +208,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Generate task descriptions and reasoning QA', deliverable: 'Language annotations' },
             { title: 'Validate annotation quality', deliverable: 'Quality metrics' },
           ],
+          detailsLink: '/roadmap/phase-2-2',
         },
         {
           id: '2.3',
