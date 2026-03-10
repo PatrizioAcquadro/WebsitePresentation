@@ -15,6 +15,11 @@ npm run start    # Start production server
 npm run lint     # Run ESLint
 ```
 
+## Deployment Note
+
+- Do **not** use `next/font/google` in this repo. It can fail production builds and Vercel deployments when Google Fonts cannot be fetched at build time.
+- Prefer a system font stack or bundled local fonts via `next/font/local` so `npm run build` stays fully self-contained.
+
 ## Architecture
 
 ### Tech Stack
@@ -68,5 +73,4 @@ website/
 ### Path Alias
 
 `@/*` maps to the project root (e.g., `@/components/Navigation`).
-
 
