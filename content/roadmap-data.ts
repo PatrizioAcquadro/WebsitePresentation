@@ -221,6 +221,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Create spatial reasoning data (trajectory prediction, grounding)', deliverable: 'Spatial reasoning subset' },
             { title: 'Create free chatting format data', deliverable: 'Mixed format subset' },
           ],
+          detailsLink: '/roadmap/phase-2-3',
         },
       ],
       milestone: {
@@ -255,6 +256,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Verify VLM inference works', deliverable: 'VLM sanity check' },
             { title: 'Profile memory usage on A100', deliverable: 'Memory characterization' },
           ],
+          detailsLink: '/roadmap/phase-3-1',
         },
         {
           id: '3.2',
@@ -267,6 +269,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Implement noisy action projector', deliverable: 'Action embedding module' },
             { title: 'Configure action chunk size (16)', deliverable: 'Chunked action generation' },
           ],
+          detailsLink: '/roadmap/phase-3-2',
         },
       ],
       milestone: {

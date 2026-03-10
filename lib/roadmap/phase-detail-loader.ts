@@ -29,6 +29,12 @@ interface MarkdownHeadingSection {
   content: string
 }
 
+interface MarkdownHeadingMatch {
+  title: string
+  index: number
+  raw: string
+}
+
 export async function loadPhase21Detail(): Promise<PhaseDetailData> {
   return loadPhaseDetailFromMarkdown({
     fileName: 'Phase2.1.md',
@@ -102,6 +108,209 @@ export async function loadPhase22Detail(): Promise<PhaseDetailData> {
   }
 }
 
+export async function loadPhase23Detail(): Promise<PhaseDetailData> {
+  const detail = await loadPhaseDetailFromMarkdown({
+    fileName: 'Phase2.3.md',
+    backHref: '/roadmap#phase-2',
+  })
+
+  const hiddenDecisionLabels = new Set(['labels', 'composition'])
+
+  return {
+    ...detail,
+    summary:
+      'Build EO-1-style training subsets from Phase 2.1 trajectories and Phase 2.2 annotations so the Phase 3 dataloader can consume them directly.',
+    highlightBody:
+      'Turn trajectories and language annotations into deterministic interleaved training sequences with explicit image, text, and action alignment.',
+    fixedDecisions: detail.fixedDecisions
+      .map((decision) => ({
+        ...decision,
+        value: concisePhase23DecisionValue(decision),
+      }))
+      .filter((decision) => !hiddenDecisionLabels.has(decision.label.toLowerCase())),
+    stanceTitle: 'Key Phase 2.3 Stance: Reference-Based Sequences',
+    stanceIntro:
+      'Keep text inline, keep images and actions as references into the existing HDF5 episodes, and let the Phase 3 dataloader resolve them at load time.',
+    stanceBullets: [
+      'Each JSONL record stores text directly and points to episode seeds, step ranges, and cameras for upstream data.',
+      'Interleaved VLA sequences sample one overhead view plus the active wrist view at each waypoint boundary.',
+      'Action discretization stays in Phase 3; Phase 2.3 only defines the continuous ranges each segment should load.',
+      'Construction is fully deterministic from episode seed, so the same upstream data always yields the same sequences.',
+    ],
+    doneItems: [
+      {
+        title: 'Schema Frozen',
+        description: 'All 4 sequence types are defined, frozen, and validated with JSON Schema.',
+      },
+      {
+        title: 'All Subsets Built',
+        description: 'Interleaved, temporal, spatial, and free-chat subsets are generated at the expected scale.',
+      },
+      {
+        title: 'References Verified',
+        description: 'Every image, action, and state reference resolves cleanly against the upstream HDF5 data.',
+      },
+      {
+        title: 'Training Ready',
+        description: 'Splits are consistent, manifest and stats files exist, and the Phase 3 dataloader can consume every sequence type.',
+      },
+    ],
+    tasks: detail.tasks.map((task) => ({
+      ...task,
+      detailSections: undefined,
+    })),
+  }
+}
+
+export async function loadPhase31Detail(): Promise<PhaseDetailData> {
+  const detail = await loadPhaseDetailFromMarkdown({
+    fileName: 'Phase3.1.md',
+    backHref: '/roadmap#phase-3',
+  })
+
+  const hiddenDecisionLabels = new Set(['sim engine'])
+  const hiddenExtraSectionTitles = new Set([
+    'downstream contract with phase 3.2',
+    'files inventory',
+    'verification plan',
+  ])
+
+  return {
+    ...detail,
+    summary:
+      'Load and validate Qwen3.5-4B as the VLA backbone, reuse EO-1 integration code where available, and confirm it works with 320x320 simulation views within the A100 80 GB budget.',
+    highlightBody:
+      'Replace the current placeholder backbone path with a verified multimodal foundation that Phase 3.2 can attach the action head to safely.',
+    fixedDecisions: detail.fixedDecisions
+      .map((decision) => ({
+        ...decision,
+        value: concisePhase31DecisionValue(decision),
+      }))
+      .filter((decision) => !hiddenDecisionLabels.has(decision.label.toLowerCase())),
+    stanceTitle: 'Key Phase 3.1 Stance: EO-1 Reuse First',
+    stanceIntro:
+      'Inspect EO-1 first, reuse its backbone-loading path where practical, and keep the new VLM branch separate until later phases add the action head and training integration.',
+    stanceBullets: [
+      'EO-1 is the default implementation base wherever its backbone-loading, processor, or integration code already solves the problem.',
+      'Qwen3.5-4B is the backbone target because it matches the Phase 2.2 model family and fits both development and A100 environments.',
+      'This phase stops at loading, validation, and profiling; action heads and training integration stay in Phases 3.2 and 3.3.',
+      'The existing TransformerModel remains intact behind a separate config path for backward compatibility.',
+    ],
+    doneItems: [
+      {
+        title: 'Dependencies Ready',
+        description: 'The vlm dependency group installs, transformers imports, and both VLM Hydra configs parse without breaking existing model configs.',
+      },
+      {
+        title: 'Backbone Loaded',
+        description: 'Qwen3.5-4B loads with bf16 dtype, verified parameter count, valid hidden size, and correct get_model() routing.',
+      },
+      {
+        title: 'Inference Validated',
+        description: 'Processor setup, hidden-state extraction, and multi-view forward passes work on 320x320 MuJoCo images with non-empty generation.',
+      },
+      {
+        title: 'Profiled for Phase 3.2',
+        description: 'Vision token counts, A100 memory measurements, and the action-head VRAM budget are recorded for the next phase.',
+      },
+    ],
+    extraSections: detail.extraSections?.filter(
+      (section) => !hiddenExtraSectionTitles.has(section.title.toLowerCase())
+    ),
+    tasks: detail.tasks.map((task) => ({
+      ...task,
+      ...concisePhase31TaskCopy(task),
+      detailSections: undefined,
+    })),
+  }
+}
+
+export async function loadPhase32Detail(): Promise<PhaseDetailData> {
+  const detail = await loadPhaseDetailFromMarkdown({
+    fileName: 'Phase3.2.md',
+    backHref: '/roadmap#phase-3',
+  })
+
+  const visibleDecisionLabels = new Set([
+    'action space',
+    'robot state',
+    'control rate',
+    'vlm backbone',
+    'training data',
+    'target architecture (eo-1)',
+  ])
+
+  return {
+    ...detail,
+    summary:
+      'Implement the EO-1-style action head on top of the Phase 3.1 backbone so the model can generate continuous 17-D robot actions and Phase 3.3 can integrate full VLA training.',
+    highlightBody:
+      'Phase 3.1 can process vision and language, but it still cannot produce robot actions. Phase 3.2 adds that action-generation path.',
+    fixedDecisionsTitle: 'Fixed Upstream Decisions',
+    fixedDecisions: detail.fixedDecisions
+      .filter((decision) => visibleDecisionLabels.has(decision.label.toLowerCase()))
+      .map((decision) => ({
+        ...decision,
+        value: concisePhase32DecisionValue(decision),
+      })),
+    stanceTitle: 'Key Stance: EO-1 Reuse First',
+    stanceIntro:
+      'Reuse EO-1 wherever it already solves the problem, and only add new modules where the action path is still missing.',
+    stanceBullets: [
+      'Use EO-1 action-head, projector, and decoding code whenever it is already a clean fit.',
+      'Keep the backbone as the denoiser by injecting noisy action tokens into the shared multimodal sequence.',
+      'Use 16-step chunks by default: 0.8 seconds at 20 Hz with comfortable context headroom.',
+      'Keep this phase focused on model components and synthetic-tensor validation; training-loop integration stays in Phase 3.3.',
+    ],
+    tasksSubtitle: 'Six core components to define, build, and validate for the Phase 3.2 action path.',
+    extraSections: undefined,
+    deliverables: [
+      'Flow matching module with conditional flow matching loss and ODE denoising.',
+      'Projection stack: robot state projector, noisy action projector, and action output head.',
+      'VLA model class combining the Phase 3.1 backbone with the full action head.',
+      'Hydra configs for the action head and full VLA model.',
+      'Tests, validation, and memory profiling showing the action head works within the Phase 3.1 budget.',
+    ],
+    doneItems: [
+      {
+        title: 'Core Modules Ready',
+        description:
+          'Flow matching, state projection, action projection, and the output head are implemented and individually tested.',
+      },
+      {
+        title: 'Model Assembled',
+        description:
+          'The VLA model composes the Phase 3.1 backbone with the full action head correctly.',
+      },
+      {
+        title: 'Training Forward Works',
+        description:
+          'Synthetic training batches return finite text and action losses without numerical issues.',
+      },
+      {
+        title: 'Inference Works',
+        description:
+          'The model produces finite `(B, 16, 17)` denoised action chunks through ODE integration.',
+      },
+      {
+        title: 'Gradient Routing Verified',
+        description:
+          'Gradients update the action head while the frozen backbone remains unchanged.',
+      },
+      {
+        title: 'Validation Complete',
+        description:
+          'Configs parse, validation passes, and existing tests continue to run without regression.',
+      },
+    ],
+    tasks: detail.tasks.map((task) => ({
+      ...task,
+      ...concisePhase32TaskCopy(task),
+      detailSections: undefined,
+    })),
+  }
+}
+
 function concisePhase22DecisionValue(decision: PhaseDetailDecision): string {
   const label = decision.label.toLowerCase()
 
@@ -138,6 +347,232 @@ function concisePhase22DecisionValue(decision: PhaseDetailDecision): string {
   }
 
   return decision.value
+}
+
+function concisePhase23DecisionValue(decision: PhaseDetailDecision): string {
+  const label = decision.label.toLowerCase()
+
+  if (label === 'trajectory dataset') {
+    return '10K HDF5 episodes with 80/10/10 manifests and dataset statistics.'
+  }
+
+  if (label === 'per-episode content') {
+    return '4-view RGB, depth, and segmentation plus 52-D state and 17-D actions at 20 Hz.'
+  }
+
+  if (label === 'labels') {
+    return '8 waypoint phases plus grasp, outcome, perturbation, and recovery signals.'
+  }
+
+  if (label === 'composition') {
+    return '7K success, 2K failure, and 1K recovery episodes.'
+  }
+
+  if (label === 'annotations') {
+    return 'About 300K episode-level JSONL annotations across 6 types from Phase 2.2.'
+  }
+
+  if (label === 'temporal anchors') {
+    return 'Step ranges and evidence steps are already defined, so text can be aligned directly to frames and actions.'
+  }
+
+  if (label === 'camera anchors') {
+    return 'Spatial QA and keyframe captions already specify which camera view each sequence should load.'
+  }
+
+  if (label === 'schema') {
+    return 'Phase 2.2 annotations already validate against schema.json and passed upstream quality checks.'
+  }
+
+  return decision.value
+}
+
+function concisePhase31DecisionValue(decision: PhaseDetailDecision): string {
+  const label = decision.label.toLowerCase()
+
+  if (label === 'sim engine') {
+    return 'MuJoCo with MJCF-first assets and headless EGL rendering.'
+  }
+
+  if (label === 'robot') {
+    return 'IHMC Alex upper body, fixed base, with 17-D actions and a 52-D state vector.'
+  }
+
+  if (label === 'views') {
+    return '4 frozen 320x320 cameras at 20 Hz: overhead, left wrist, right wrist, and third person.'
+  }
+
+  if (label === 'data format') {
+    return 'Phase 2.1 HDF5 episodes and Phase 2.2 JSONL annotations are already assembled into Phase 2.3 reference-based sequences.'
+  }
+
+  if (label === 'training infrastructure') {
+    return 'Hydra, PyTorch DDP/DeepSpeed, Gilbreth A100 80 GB nodes, and a lab RTX 4090 dev machine.'
+  }
+
+  if (label === 'model family') {
+    return 'Qwen3.5 is already the Phase 2.2 model family; Phase 3.1 uses the 4B variant as the VLA backbone.'
+  }
+
+  if (label === 'target architecture & codebase (eo-1)') {
+    return 'EO-1 remains the architecture template and preferred reusable codebase for backbone loading and integration.'
+  }
+
+  return decision.value
+}
+
+function concisePhase31TaskCopy(task: PhaseDetailTask): Pick<PhaseDetailTask, 'description' | 'why' | 'milestone'> {
+  if (task.label === '3.1.0') {
+    return {
+      description:
+        'Add the HuggingFace VLM dependencies and define Qwen3.5-4B Hydra configs for both A100 production and lab-PC development.',
+      why:
+        'This is the setup layer the rest of the phase depends on. If the dependencies do not install cleanly or the configs do not parse on both hardware tiers, every later integration step becomes slower and more fragile.',
+      milestone:
+        'This step is complete when the VLM dependency group installs correctly, `transformers` imports without issue, both VLM configs compose cleanly, and the existing model configs still work as before.',
+    }
+  }
+
+  if (task.label === '3.1.1') {
+    return {
+      description:
+        'Inspect EO-1\'s loading path, reuse it where possible, and route architecture.type: "vlm" to a verified Qwen3.5-4B backbone without breaking TransformerModel.',
+      why:
+        'This is the real foundation for the model stack. Phase 3.2 cannot attach an action head until the backbone loads reliably, exposes the right hidden states, and is verified to behave correctly on our hardware.',
+      milestone:
+        'This step is complete when the Qwen3.5-4B backbone loads in bf16 on GPU, reports the expected model size and hidden dimension, passes basic verification checks, and `get_model()` still routes both VLM and non-VLM configs correctly.',
+    }
+  }
+
+  if (task.label === '3.1.2') {
+    return {
+      description:
+        'Configure the Qwen3.5 tokenizer and processor for 320x320 MuJoCo images, then measure the real vision-token cost per image.',
+      why:
+        'This is the bridge between raw simulation data and model-ready inputs. It also tells us how much of the context window is consumed by images, which directly affects how much room remains for text and action tokens later on.',
+      milestone:
+        'This step is complete when the processor accepts 320x320 MuJoCo images and task text correctly, produces valid tensors, and the measured vision-token count is recorded for context-budget planning.',
+    }
+  }
+
+  if (task.label === '3.1.3') {
+    return {
+      description:
+        'Run end-to-end forward passes on real simulation images and prompts to confirm the backbone, processor, hidden states, and generation all work together.',
+      why:
+        'Loading the model is only the first step. This check shows that the full multimodal path works on our actual simulation images and prompts before we start building training and action-generation logic on top of it.',
+      milestone:
+        'This step is complete when multi-view inference runs without errors, logits and hidden states have the expected shapes, outputs remain numerically stable, and generated text is non-empty and coherent enough for a sanity check.',
+    }
+  }
+
+  if (task.label === '3.1.4') {
+    return {
+      description:
+        'Profile Qwen3.5-4B VRAM usage on A100 across sequence lengths, batch sizes, and inference versus training modes.',
+      why:
+        'Phase 3.2 needs measured memory numbers, not rough guesses. This profiling work tells us how much headroom is left for the action head and what training settings are realistic without running into OOM failures.',
+      milestone:
+        'This step is complete when the A100 profiling sweep produces clear VRAM measurements across the target settings and leaves us with a documented memory budget for Phase 3.2.',
+    }
+  }
+
+  return {
+    description: task.description,
+    why: task.why,
+    milestone: task.milestone,
+  }
+}
+
+function concisePhase32DecisionValue(decision: PhaseDetailDecision): string {
+  const label = decision.label.toLowerCase()
+
+  if (label === 'action space') {
+    return '17-D continuous control: spine, both arms, and two grippers.'
+  }
+
+  if (label === 'robot state') {
+    return '52-D normalized proprioception covering joints, velocities, grippers, and end-effector pose and velocity.'
+  }
+
+  if (label === 'control rate') {
+    return '20 Hz control, so a 16-step chunk spans 0.8 seconds.'
+  }
+
+  if (label === 'vlm backbone') {
+    return 'Phase 3.1 already provides the Qwen3.5-4B backbone, hidden states, processor, and freeze control.'
+  }
+
+  if (label === 'training data') {
+    return 'Phase 2.3 action references resolve to continuous 17-D trajectories from HDF5 episodes.'
+  }
+
+  if (label === 'target architecture (eo-1)') {
+    return 'Transfusion-style decoder: text uses AR loss, action positions use conditional flow matching.'
+  }
+
+  return decision.value
+}
+
+function concisePhase32TaskCopy(task: PhaseDetailTask): Pick<PhaseDetailTask, 'why' | 'milestone'> {
+  if (task.label === '3.2.0') {
+    return {
+      why:
+        'This locks the shapes, token layout, and chunking rules before implementation starts. Without that contract, every projector, loss, and dataloader interface becomes easier to break.',
+      milestone:
+        'This step is complete when chunk size, token layout, masks, and interface shapes are fixed and validated on a synthetic example.',
+    }
+  }
+
+  if (task.label === '3.2.1') {
+    return {
+      why:
+        'This is the mechanism that turns backbone context into continuous actions. It gives the model a stable way to generate precise 17-D motion instead of regressing an averaged trajectory.',
+      milestone:
+        'This step is complete when the flow-matching module passes its math, masking, solver, and stability tests with finite outputs.',
+    }
+  }
+
+  if (task.label === '3.2.2') {
+    return {
+      why:
+        'This gives the backbone direct access to robot state instead of forcing it to infer everything from images. That conditioning matters for precise, contact-rich LEGO assembly.',
+      milestone:
+        'This step is complete when the 52-D state maps cleanly to one hidden token and the projector is shape-correct, trainable, and numerically stable.',
+    }
+  }
+
+  if (task.label === '3.2.3') {
+    return {
+      why:
+        'These modules form the action interface around the backbone: one maps noisy actions into hidden tokens, and the other maps hidden states back to 17-D velocity predictions.',
+      milestone:
+        'This step is complete when noisy action tokens, timestep embeddings, and velocity predictions all pass shape, gradient, and stability checks.',
+    }
+  }
+
+  if (task.label === '3.2.4') {
+    return {
+      why:
+        'This is where the separate modules become one working model. If sequence assembly or loss routing is wrong here, training will fail quietly rather than obviously.',
+      milestone:
+        'This step is complete when the full model runs end to end on synthetic batches, returns finite text and action losses, predicts action chunks, and stays within the measured VRAM budget.',
+    }
+  }
+
+  if (task.label === '3.2.5') {
+    return {
+      why:
+        'This confirms the full action path works as a system and that memory use is still safe before Phase 3.3 training begins.',
+      milestone:
+        'This step is complete when the validation suite passes, artifacts are written, and the measured action-head overhead stays within the Phase 3.1 budget.',
+    }
+  }
+
+  return {
+    why: task.why,
+    milestone: task.milestone,
+  }
 }
 
 async function loadPhaseDetailFromMarkdown({
@@ -260,15 +695,30 @@ function parsePhaseMarkdown(source: string, backHref: string): PhaseDetailData {
 }
 
 function parseTasks(sectionSource: string): PhaseDetailTask[] {
-  const matches = [...sectionSource.matchAll(/^##\s+([0-9.]+)\)\s+(.+)$/gm)]
+  const matches = collectHeadingMatches(sectionSource, 2)
+    .map((match) => {
+      const taskMatch = match.title.match(/^([0-9.]+)\)\s+(.+)$/)
+
+      if (!taskMatch) {
+        return null
+      }
+
+      return {
+        index: match.index,
+        raw: match.raw,
+        label: taskMatch[1],
+        title: taskMatch[2],
+      }
+    })
+    .filter((match): match is { index: number; raw: string; label: string; title: string } => Boolean(match))
 
   if (matches.length === 0) {
     throw new Error('Unable to parse task headings from phase markdown.')
   }
 
   return matches.map((match, index) => {
-    const start = (match.index ?? 0) + match[0].length
-    const end = index + 1 < matches.length ? matches[index + 1].index ?? sectionSource.length : sectionSource.length
+    const start = match.index + match.raw.length
+    const end = index + 1 < matches.length ? matches[index + 1].index : sectionSource.length
     const body = sectionSource.slice(start, end).trim()
     const subsections = parseSubsections(body)
     const description = normalizeParagraph(requiredSubsection(subsections, 'What we will do'))
@@ -284,8 +734,8 @@ function parseTasks(sectionSource: string): PhaseDetailTask[] {
       .filter((section) => section.blocks.length > 0)
 
     return {
-      label: match[1],
-      title: match[2].trim(),
+      label: match.label,
+      title: match.title.trim(),
       description,
       why,
       checklist,
@@ -304,13 +754,13 @@ function parseExtraSection(section: MarkdownHeadingSection): PhaseDetailExtraSec
 }
 
 function parseSubsections(sectionBody: string): Map<string, string> {
-  const matches = [...sectionBody.matchAll(/^###\s+(.+)$/gm)]
+  const matches = collectHeadingMatches(sectionBody, 3)
   const sections = new Map<string, string>()
 
   matches.forEach((match, index) => {
-    const start = (match.index ?? 0) + match[0].length
-    const end = index + 1 < matches.length ? matches[index + 1].index ?? sectionBody.length : sectionBody.length
-    sections.set(match[1].trim(), sectionBody.slice(start, end).trim())
+    const start = match.index + match.raw.length
+    const end = index + 1 < matches.length ? matches[index + 1].index : sectionBody.length
+    sections.set(match.title.trim(), sectionBody.slice(start, end).trim())
   })
 
   return sections
@@ -394,18 +844,48 @@ function parseRawBullets(block: string): string[] {
     .map((line) => line.slice(2).trim())
 }
 
+function collectHeadingMatches(source: string, level: 1 | 2 | 3): MarkdownHeadingMatch[] {
+  const matches: MarkdownHeadingMatch[] = []
+  const lines = source.split('\n')
+  const headingPrefix = `${'#'.repeat(level)} `
+  let inCodeBlock = false
+  let offset = 0
+
+  lines.forEach((line, index) => {
+    const trimmed = line.trim()
+
+    if (trimmed.startsWith('```')) {
+      inCodeBlock = !inCodeBlock
+    } else if (!inCodeBlock && line.startsWith(headingPrefix)) {
+      matches.push({
+        title: line.slice(headingPrefix.length).trim(),
+        index: offset,
+        raw: line,
+      })
+    }
+
+    offset += line.length
+
+    if (index < lines.length - 1) {
+      offset += 1
+    }
+  })
+
+  return matches
+}
+
 function parseTopLevelSections(source: string): MarkdownHeadingSection[] {
-  const matches = [...source.matchAll(/^#\s+(.+)$/gm)]
+  const matches = collectHeadingMatches(source, 1)
   const sections: MarkdownHeadingSection[] = []
 
   for (let index = 1; index < matches.length; index += 1) {
     const match = matches[index]
-    const startIndex = match.index ?? 0
-    const contentStart = startIndex + match[0].length
-    const nextIndex = index + 1 < matches.length ? matches[index + 1].index ?? source.length : source.length
+    const startIndex = match.index
+    const contentStart = startIndex + match.raw.length
+    const nextIndex = index + 1 < matches.length ? matches[index + 1].index : source.length
 
     sections.push({
-      title: match[1].trim(),
+      title: match.title.trim(),
       startIndex,
       content: source.slice(contentStart, nextIndex).trim(),
     })
