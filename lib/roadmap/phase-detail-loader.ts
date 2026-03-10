@@ -311,6 +311,92 @@ export async function loadPhase32Detail(): Promise<PhaseDetailData> {
   }
 }
 
+export async function loadPhase41Detail(): Promise<PhaseDetailData> {
+  const detail = await loadPhaseDetailFromMarkdown({
+    fileName: 'Phase4.1.md',
+    backHref: '/roadmap#phase-4',
+  })
+
+  const visibleDecisionLabels = new Set([
+    'action head',
+    'token type mask',
+    'chunk contract',
+    'batch format',
+    'tracking infrastructure',
+    'loss config baseline',
+  ])
+
+  return {
+    ...detail,
+    summary:
+      'Extract the Phase 3.2 inline loss path into standalone text, action, and combined loss modules that are testable, configurable, and validated on real Phase 2.3 data.',
+    highlightBody:
+      'Phase 3.2 proves the architecture, but the loss path is still inline, lightly monitored, and unverified on real training data. Phase 4.1 turns it into production-ready loss modules.',
+    fixedDecisionsTitle: 'Fixed Upstream Decisions',
+    fixedDecisions: detail.fixedDecisions
+      .filter((decision) => visibleDecisionLabels.has(decision.label.toLowerCase()))
+      .map((decision) => ({
+        ...decision,
+        value: concisePhase41DecisionValue(decision),
+      })),
+    stanceTitle: 'Key Stance: Build on Phase 3.2',
+    stanceIntro:
+      'Keep the Phase 3.2 math and interfaces, but move the loss path into standalone modules with monitoring and real-data validation.',
+    stanceBullets: [
+      'Phase 4.1 extracts the existing inline loss logic instead of redesigning the objective.',
+      'No EO-1 code is present locally, so the implementation follows the EO-1 and Pi-0 pattern without local code reuse.',
+      'Fixed-weight balancing stays the default, while dynamic balancing remains available as an optional config path.',
+      'Validation must move from synthetic tensors to real Phase 2.3 data before Phase 4.2 training begins.',
+    ],
+    tasksSubtitle: 'Five core components to formalize, implement, and validate for the Phase 4.1 loss stack.',
+    extraSections: undefined,
+    deliverables: [
+      'Loss contract in models/losses.py: TokenType, LossOutput, and shape verification utilities.',
+      'VLATextLoss with causal-shift cross-entropy, perplexity, top-1 accuracy, label smoothing, and all-ignored handling.',
+      'VLAActionLoss with masked velocity MSE, per-joint breakdown, velocity norms, and mask diagnostics.',
+      'VLACombinedLoss with fixed, normalized, and uncertainty balancing plus merged monitoring metrics.',
+      'VLAModel loss-module integration with updated config, tests, validation checks, and saved loss-validation artifacts.',
+    ],
+    doneItems: [
+      {
+        title: 'Loss Contract Exists',
+        description:
+          'TokenType, LossOutput, and the shape verification utilities exist in models/losses.py.',
+      },
+      {
+        title: 'Text Loss Verified',
+        description:
+          'VLATextLoss computes causal-shift cross-entropy, reports perplexity and top-1 accuracy, and handles all-ignored sequences.',
+      },
+      {
+        title: 'Action Loss Verified',
+        description:
+          'VLAActionLoss computes masked MSE, reports per-joint and velocity diagnostics, and handles all-masked chunks.',
+      },
+      {
+        title: 'Combined Loss Matches Baseline',
+        description:
+          'VLACombinedLoss supports fixed, normalized, and uncertainty balancing, and the fixed default matches the Phase 3.2.4 inline sum.',
+      },
+      {
+        title: 'VLAModel Integrated',
+        description:
+          'VLAModel.forward() uses the new loss modules and still returns the backward-compatible total_loss, text_loss, and action_loss keys, plus metrics.',
+      },
+      {
+        title: 'Validation Complete',
+        description:
+          'The loss config parses, the loss tests and validation checks pass, existing tests stay green, and artifacts are saved to logs/loss_validation/.',
+      },
+    ],
+    tasks: detail.tasks.map((task) => ({
+      ...task,
+      ...concisePhase41TaskCopy(task),
+      detailSections: undefined,
+    })),
+  }
+}
+
 function concisePhase22DecisionValue(decision: PhaseDetailDecision): string {
   const label = decision.label.toLowerCase()
 
@@ -570,6 +656,99 @@ function concisePhase32TaskCopy(task: PhaseDetailTask): Pick<PhaseDetailTask, 'w
   }
 
   return {
+    why: task.why,
+    milestone: task.milestone,
+  }
+}
+
+function concisePhase41DecisionValue(decision: PhaseDetailDecision): string {
+  const label = decision.label.toLowerCase()
+
+  if (label === 'action head') {
+    return 'Phase 3.2 already provides the flow-matching module, state projector, action projector, output head, and VLAModel.'
+  }
+
+  if (label === 'token type mask') {
+    return 'TEXT, IMAGE, STATE, and ACTION positions are already defined to route each token to the correct loss.'
+  }
+
+  if (label === 'chunk contract') {
+    return 'chunk_size=16, action_dim=17, one token per action step, with a binary chunk mask for padded chunks.'
+  }
+
+  if (label === 'batch format') {
+    return 'Phase 3.2.4 already defines the batch dict with input IDs, images, attention masks, robot states, action chunks, chunk masks, token types, and text labels.'
+  }
+
+  if (label === 'tracking infrastructure') {
+    return 'Tracking already supports dict-based loss extraction plus loss_ar and loss_fm logging.'
+  }
+
+  if (label === 'loss config baseline') {
+    return 'configs/model/action_head.yaml already sets loss.lambda_text: 1.0 and loss.lambda_action: 1.0.'
+  }
+
+  return decision.value
+}
+
+function concisePhase41TaskCopy(task: PhaseDetailTask): Pick<PhaseDetailTask, 'description' | 'why' | 'milestone'> {
+  if (task.label === '4.1.0') {
+    return {
+      description:
+        'Turn the Phase 3.2 token-routing rules into a shared loss contract with TokenType, LossOutput, shape checks, and tracking mappings.',
+      why:
+        'Every later loss module depends on one stable interface. Without it, mask values, return structures, and logging keys can drift across the stack.',
+      milestone:
+        'This step is complete when the loss contract, shape checks, and extended loss config exist and the contract tests pass.',
+    }
+  }
+
+  if (task.label === '4.1.1') {
+    return {
+      description:
+        'Implement VLATextLoss as a standalone autoregressive text-loss module with causal shift, ignore masking, and text diagnostics.',
+      why:
+        'The language branch needs a reusable loss module that is correct on full interleaved sequences and exposes perplexity and token accuracy for training diagnostics.',
+      milestone:
+        'This step is complete when VLATextLoss returns correct cross-entropy, perplexity, and accuracy, and safely handles fully ignored sequences.',
+    }
+  }
+
+  if (task.label === '4.1.2') {
+    return {
+      description:
+        'Implement VLAActionLoss as a standalone masked velocity-MSE module with per-joint and velocity diagnostics.',
+      why:
+        'The action branch must exclude padded chunk positions correctly and expose enough diagnostics to detect dead joints, collapse, or unstable velocity scales.',
+      milestone:
+        'This step is complete when VLAActionLoss returns correct masked MSE, per-joint breakdowns, and stable diagnostics, including the all-masked edge case.',
+    }
+  }
+
+  if (task.label === '4.1.3') {
+    return {
+      description:
+        'Implement VLACombinedLoss to merge text and action losses with fixed, normalized, or uncertainty-based balancing.',
+      why:
+        'This module decides how the model shares gradient budget between language and action learning and centralizes the metrics that Phase 4.2 will log.',
+      milestone:
+        'This step is complete when the combined loss supports all three strategies, assembles prefixed metrics, and the fixed default matches the Phase 3.2 inline sum.',
+    }
+  }
+
+  if (task.label === '4.1.4') {
+    return {
+      description:
+        'Integrate the loss modules into VLAModel.forward(), then validate the full path with tests, sanity checks, and overfit-style convergence checks.',
+      why:
+        'Unit tests alone do not prove the end-to-end training signal works. This is where masking, gradient flow, loss scale, and monitoring are verified together before Phase 4.2.',
+      milestone:
+        'This step is complete when VLAModel uses the new modules, the validation checks pass, overfit convergence is demonstrated, and loss-validation artifacts are written.',
+    }
+  }
+
+  return {
+    description: task.description,
     why: task.why,
     milestone: task.milestone,
   }

@@ -304,6 +304,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Implement combined loss with balancing', deliverable: 'Combined training objective' },
             { title: 'Verify loss computation on sample batches', deliverable: 'Loss sanity checks' },
           ],
+          detailsLink: '/roadmap/phase-4-1',
         },
         {
           id: '4.2',
