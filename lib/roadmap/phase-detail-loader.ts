@@ -397,6 +397,92 @@ export async function loadPhase41Detail(): Promise<PhaseDetailData> {
   }
 }
 
+export async function loadPhase42Detail(): Promise<PhaseDetailData> {
+  const detail = await loadPhaseDetailFromMarkdown({
+    fileName: 'Phase4.2.md',
+    backHref: '/roadmap#phase-4',
+  })
+
+  const visibleDecisionLabels = new Set([
+    'vlamodel',
+    'loss modules',
+    'batch format',
+    'cluster',
+    'distributed stack',
+    'precision',
+  ])
+
+  return {
+    ...detail,
+    summary:
+      'Upgrade the training infrastructure into a production-quality distributed pipeline with DeepSpeed ZeRO-1, bf16, gradient accumulation, distributed-safe checkpointing, and validated 8-GPU training mechanics.',
+    highlightBody:
+      'The current trainer can run basic DDP, but it still lacks the distributed features needed for production VLA training. Phase 4.2 closes that gap.',
+    fixedDecisionsTitle: 'Fixed Upstream Decisions',
+    fixedDecisions: detail.fixedDecisions
+      .filter((decision) => visibleDecisionLabels.has(decision.label.toLowerCase()))
+      .map((decision) => ({
+        ...decision,
+        value: concisePhase42DecisionValue(decision),
+      })),
+    stanceTitle: 'Key Stance: Adapt Existing Infrastructure',
+    stanceIntro:
+      'Build on the project’s current trainer, configs, SLURM templates, and tracking stack, then validate distributed mechanics with synthetic VLA batches before real Phase 2.3 data exists.',
+    stanceBullets: [
+      'Upgrade the existing training stack instead of building a parallel one.',
+      'Use synthetic VLA batches to validate sharding, checkpointing, and throughput before the real VLA dataloader is ready.',
+      'DeepSpeed ZeRO-1 is the production path, while local development keeps DDP as the fallback.',
+      'Prioritize distributed correctness before throughput optimization.',
+    ],
+    tasksSubtitle: 'Four core components to build and validate for the Phase 4.2 distributed training stack.',
+    extraSections: undefined,
+    deliverables: [
+      'DeepSpeed-integrated Trainer with ZeRO-1, bf16, gradient accumulation, warmup scheduling, tracking, and the VLAModel training interface.',
+      'Synthetic VLA dataset plus collator for the full 8-key batch format used by the distributed pipeline.',
+      'Distributed checkpointing with collective save and load, resume support, RNG preservation, and checkpoint pruning.',
+      '8-GPU SLURM templates plus throughput benchmarking for the project Trainer on Gilbreth.',
+      'Validation and test coverage for config build, batch format, sharding, checkpoint roundtrip, resume continuity, and throughput checks.',
+    ],
+    doneItems: [
+      {
+        title: 'Distributed Trainer Running',
+        description:
+          'Trainer.setup() initializes DeepSpeed ZeRO-1 with bf16 and gradient accumulation, while the local DDP path still works.',
+      },
+      {
+        title: 'Synthetic Batch Pipeline Ready',
+        description:
+          'SyntheticVLADataset and VLACollator produce the full Phase 3.2.4 batch format with correct padding and distributed sharding behavior.',
+      },
+      {
+        title: 'Checkpoint Resume Verified',
+        description:
+          'DeepSpeed checkpoint save and load, DDP fallback, RNG restoration, and W&B resume all work correctly.',
+      },
+      {
+        title: '8-GPU Smoke Test Passes',
+        description:
+          'The project Trainer completes the 8-GPU smoke test on Gilbreth, including checkpoint save at step 100 and successful resume.',
+      },
+      {
+        title: 'Throughput Baseline Recorded',
+        description:
+          'Measured samples per second, peak VRAM, scaling efficiency, and effective batch size are recorded for 1, 2, and 8 GPU runs.',
+      },
+      {
+        title: 'Validation Complete',
+        description:
+          'Distributed tests pass, the validation script exits with all checks passing, and existing tests stay green.',
+      },
+    ],
+    tasks: detail.tasks.map((task) => ({
+      ...task,
+      ...concisePhase42TaskCopy(task),
+      detailSections: undefined,
+    })),
+  }
+}
+
 function concisePhase22DecisionValue(decision: PhaseDetailDecision): string {
   const label = decision.label.toLowerCase()
 
@@ -744,6 +830,88 @@ function concisePhase41TaskCopy(task: PhaseDetailTask): Pick<PhaseDetailTask, 'd
         'Unit tests alone do not prove the end-to-end training signal works. This is where masking, gradient flow, loss scale, and monitoring are verified together before Phase 4.2.',
       milestone:
         'This step is complete when VLAModel uses the new modules, the validation checks pass, overfit convergence is demonstrated, and loss-validation artifacts are written.',
+    }
+  }
+
+  return {
+    description: task.description,
+    why: task.why,
+    milestone: task.milestone,
+  }
+}
+
+function concisePhase42DecisionValue(decision: PhaseDetailDecision): string {
+  const label = decision.label.toLowerCase()
+
+  if (label === 'vlamodel') {
+    return 'Phase 4.1 already defines the forward(batch) contract with total_loss, text_loss, action_loss, and metrics.'
+  }
+
+  if (label === 'loss modules') {
+    return 'Phase 4.1 already provides the text, action, and combined loss modules, with total_loss as the scalar used for backpropagation.'
+  }
+
+  if (label === 'batch format') {
+    return 'The distributed pipeline must consume the fixed 8-key Phase 3.2.4 batch dict.'
+  }
+
+  if (label === 'cluster') {
+    return 'Gilbreth remains the production target: 4 nodes, 2 A100 80 GB GPUs per node, InfiniBand, SLURM, and torchrun via srun.'
+  }
+
+  if (label === 'distributed stack') {
+    return 'DeepSpeed ZeRO-1 with NCCL is the chosen production distributed stack.'
+  }
+
+  if (label === 'precision') {
+    return 'bf16 remains the training precision defined by the existing trainer and DeepSpeed configs.'
+  }
+
+  return decision.value
+}
+
+function concisePhase42TaskCopy(task: PhaseDetailTask): Pick<PhaseDetailTask, 'description' | 'why' | 'milestone'> {
+  if (task.label === '4.2.0') {
+    return {
+      description:
+        'Upgrade the Trainer to support DeepSpeed ZeRO-1, bf16, gradient accumulation, warmup scheduling, tracking, and the VLAModel training interface.',
+      why:
+        'The current trainer only covers basic DDP. Phase 4.2 needs a real distributed training loop that can support a 4B VLA model at production scale.',
+      milestone:
+        'This step is complete when the Trainer runs 100 distributed steps with DeepSpeed, bf16, accumulation, tracking, and no regressions in the local path.',
+    }
+  }
+
+  if (task.label === '4.2.1') {
+    return {
+      description:
+        'Create a synthetic VLA dataset and collator that match the full Phase 3.2.4 batch contract and validate distributed sharding behavior.',
+      why:
+        'The distributed pipeline cannot be validated with the old dummy dataset because it does not match the VLA model batch format.',
+      milestone:
+        'This step is complete when the synthetic dataset, collator, and distributed sampler tests produce correct shapes, padding, and non-overlapping sample assignment across ranks.',
+    }
+  }
+
+  if (task.label === '4.2.2') {
+    return {
+      description:
+        'Replace rank-0-only checkpointing with collective DeepSpeed checkpoint save and load, while keeping a DDP fallback and full resume state.',
+      why:
+        'Production distributed training needs correct optimizer-shard checkpointing, deterministic resume behavior, and safe restarts without loss corruption.',
+      milestone:
+        'This step is complete when distributed checkpoint save and resume work correctly, RNG states round-trip, and the DDP fallback still loads cleanly.',
+    }
+  }
+
+  if (task.label === '4.2.3') {
+    return {
+      description:
+        'Create production SLURM templates and benchmarking scripts that run the project Trainer on 8 GPUs and record throughput and memory baselines.',
+      why:
+        'The existing smoke test proves infrastructure only in isolation; Phase 4.2 must validate the actual Trainer, data path, and checkpoint flow at distributed scale.',
+      milestone:
+        'This step is complete when the 8-GPU smoke test, throughput benchmark, and distributed validation scripts all run and produce the expected artifacts.',
     }
   }
 

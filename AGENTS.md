@@ -9,7 +9,7 @@ This is a **Next.js 16** thesis portfolio website documenting VLA (Vision-Langua
 ## Development Commands
 
 ```bash
-npm run dev      # Start development server (http://localhost:3000)
+npm run dev      # Start webpack-based development server (http://localhost:3000)
 npm run build    # Production build
 npm run start    # Start production server
 npm run lint     # Run ESLint
@@ -21,6 +21,7 @@ npm run lint     # Run ESLint
 - Prefer a system font stack or bundled local fonts via `next/font/local` so `npm run build` stays fully self-contained.
 - The root-level `Phase*.md` files are build-time inputs for roadmap detail pages. They must stay committed and must not be left ignored by `.gitignore`.
 - When adding a new roadmap markdown source such as `Phase4.1.md`, make sure the file is tracked by git before deploying, or Vercel prerendering will fail with `ENOENT`.
+- Use webpack for local `npm run dev`. Turbopack currently glitches/panics on the roadmap route in local development, which can make navbar navigation appear broken even when the route code is fine.
 
 ## Architecture
 

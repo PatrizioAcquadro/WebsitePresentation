@@ -317,6 +317,7 @@ export const roadmapData: RoadmapData = {
             { title: 'Test distributed checkpointing', deliverable: 'Distributed save/load' },
             { title: 'Profile training throughput', deliverable: 'Throughput benchmarks' },
           ],
+          detailsLink: '/roadmap/phase-4-2',
         },
       ],
       milestone: {

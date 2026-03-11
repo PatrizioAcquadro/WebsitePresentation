@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 
 const navItems = [
@@ -12,8 +12,17 @@ const navItems = [
   { href: '/roadmap', label: 'Roadmap' },
 ]
 
+function isNavItemActive(pathname: string, href: string) {
+  if (href === '/') {
+    return pathname === '/'
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`)
+}
+
 export default function Navigation() {
   const pathname = usePathname()
+  const router = useRouter()
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
@@ -46,19 +55,21 @@ export default function Navigation() {
             {/* Navigation links */}
             <div className="flex items-center space-x-1">
               {navItems.map((item) => {
-                const isActive = pathname === item.href
+                const isActive = isNavItemActive(pathname, item.href)
 
                 return (
-                  <Link
+                  <button
                     key={item.href}
-                    href={item.href}
+                    type="button"
+                    onClick={() => router.push(item.href)}
+                    aria-current={isActive ? 'page' : undefined}
                     className="relative px-4 py-2 rounded-lg text-sm font-medium group"
                   >
                     {/* Animated background pill */}
                     {isActive && (
                       <motion.span
                         layoutId="navbar-active-bg"
-                        className="absolute inset-0 rounded-lg bg-[#FF6D29]/10 border border-[#FF6D29]/30"
+                        className="pointer-events-none absolute inset-0 rounded-lg bg-[#FF6D29]/10 border border-[#FF6D29]/30"
                         transition={{
                           type: 'spring',
                           stiffness: 380,
@@ -69,7 +80,7 @@ export default function Navigation() {
 
                     {/* Hover background (only when not active) */}
                     {!isActive && (
-                      <span className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 bg-[#453027]/50 transition-opacity duration-200" />
+                      <span className="pointer-events-none absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 bg-[#453027]/50 transition-opacity duration-200" />
                     )}
 
                     {/* Text */}
@@ -91,7 +102,7 @@ export default function Navigation() {
                     {isActive && (
                       <motion.span
                         layoutId="navbar-active-indicator"
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-[#FF6D29] rounded-full"
+                        className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-[#FF6D29] rounded-full"
                         transition={{
                           type: 'spring',
                           stiffness: 380,
@@ -99,7 +110,7 @@ export default function Navigation() {
                         }}
                       />
                     )}
-                  </Link>
+                  </button>
                 )
               })}
             </div>
